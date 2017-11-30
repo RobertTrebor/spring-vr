@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet id="0.0.1-setup" author="rl">
+        <createTable tableName="grave">
+            <column name="ID" type="bigint"/>
+            <column name="DATEBIRTH" type="date"/>
+            <column name="DATEDEATH" type="date"/>
+            <column name="FIRSTNAME" type="varchar(255)"/>
+            <column name="LASTNAME" type="varchar(255)"/>
+            <column name="GRAVE_LOC" type="varchar(255)"/>
+            <column name="LATITUDE" type="varchar(255)"/>
+            <column name="LONGITUDE" type="varchar(255)"/>
+            <column name="SEX" type="varchar(255)"/>
+            <column name="TOMBSTONE_PATH" type="varchar(255)"/>
+            <column name="VITA_PATH" type="varchar(255)"/>
+        </createTable>
+        <addPrimaryKey tableName="grave" columnNames="id"/>
+        <rollback>
+            <delete tableName="grave"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="0.0.1-setup-2" author="rl">
+        <createTable tableName="cemetery">
+            <column name="ID" type="bigint"/>
+            <column name="CITY" type="varchar(255)"/>
+            <column name="COUNTRY" type="varchar(255)"/>
+            <column name="LATITUDE" type="varchar(255)"/>
+            <column name="LONGITUDE" type="varchar(255)"/>
+            <column name="NAME" type="varchar(255)"/>
+            <column name="STREET" type="varchar(255)"/>
+            <column name="ZIPCODE" type="varchar(255)"/>
+        </createTable>
+
+        <addPrimaryKey tableName="cemetery" columnNames="ID"/>
+
+        <rollback>
+            <delete tableName="cemetery"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="0.0.1-setup-3" author="rl">
+        <createTable tableName="countries">
+            <column name="COUNTRYCODE" type="varchar(255)"/>
+            <column name="COUNTRYNAME" type="varchar(255)"/>
+        </createTable>
+
+        <addPrimaryKey tableName="countries" columnNames="COUNTRYCODE"/>
+
+        <rollback>
+            <delete tableName="countries"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
