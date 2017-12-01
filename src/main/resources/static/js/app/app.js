@@ -1,28 +1,46 @@
-var app = angular.module('vrApp', ['ui.router', 'ngStorage']);
+var vrApp = angular.module('vrApp', ['ui.router', 'ngStorage']);
 
-app.constant('urls', {
+vrApp.constant('urls', {
     BASE: 'http://localhost:8080/vr',
-    USER_SERVICE_API: 'http://localhost:8080/vr/api/grave/'
+    GRAVE_SERVICE_API: 'http://localhost:8080/vr/api/grave/',
+    CEMETERY_SERVICE_API: 'http://localhost:8080/vr/api/cemetery/'
 });
 
-app.config(['$stateProvider', '$urlRouterProvider',
+vrApp.config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {
+        console.log('Vor stateprovider' + $urlRouterProvider.valueOf().toString());
 
         $stateProvider
-            .state('home', {
+            .state('cemetery', {
                 url: '/',
-                templateUrl: 'partials/list',
-                controller: 'GraveController',
-                controllerAs: 'ctrl',
+                templateUrl: 'partials/cemeterieslist',
+                controller: 'CemeteryController',
+                controllerAs: 'cctrl',
                 resolve: {
                     graves: function ($q, GraveService) {
-                        console.log('Load all graves');
+                        console.log('Load all cemeteries');
                         var deferred = $q.defer();
                         GraveService.loadAllGraves().then(deferred.resolve, deferred.resolve);
                         return deferred.promise;
                     }
                 }
+            })
+            .state('cemetery.graves', {
+                url: '/',
+                templateUrl: 'partials/cemeterieslist',
+                controller: 'CemeteryController',
+                controllerAs: 'cctrl',
+                resolve: {
+                    graves: function ($q, CemeteryService) {
+                        console.log('Load all graves on this cemetery');
+                        var deferred = $q.defer();
+                        CemeteryService.loadAllGraves().then(deferred.resolve, deferred.resolve);
+                        return deferred.promise;
+                    }
+                }
             });
+        //$urlRouterProvider.when('/').then('partials/index');
         $urlRouterProvider.otherwise('/');
+
     }]);
 

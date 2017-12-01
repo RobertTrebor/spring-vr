@@ -1,104 +1,104 @@
 'use strict';
 
-angular.module('vrApp').factory('GraveService',
+angular.module('vrApp').factory('CemeteryService',
     ['$localStorage', '$http', '$q', 'urls',
         function ($localStorage, $http, $q, urls) {
 
             var factory = {
-                loadAllGraves: loadAllGraves,
-                getAllGraves: getAllGraves,
-                getGrave: getGrave,
-                createGrave: createGrave,
-                updateGrave: updateGrave,
-                removeGrave: removeGrave
+                loadAllCemeteries: loadAllCemeteries,
+                getAllCemeteries: getAllCemeteries,
+                getCemetery: getCemetery,
+                createCemetery: createCemetery,
+                updateCemetery: updateCemetery,
+                removeCemetery: removeCemetery
             };
 
             return factory;
 
-            function loadAllGraves() {
-                console.log('Fetching all graves');
+            function loadAllCemeteries() {
+                console.log('Fetching all cemeteries');
                 var deferred = $q.defer();
-                $http.get(urls.GRAVE_SERVICE_API)
+                $http.get(urls.CEMETERY_SERVICE_API)
                     .then(
                         function (response) {
-                            console.log('Fetched successfully all graves');
-                            $localStorage.graves = response.data;
+                            console.log('Fetched successfully all cemeteries');
+                            $localStorage.cemeteries = response.data;
                             deferred.resolve(response);
                         },
                         function (errResponse) {
-                            console.error('Error while loading graves');
+                            console.error('Error while loading cemeteries');
                             deferred.reject(errResponse);
                         }
                     );
                 return deferred.promise;
             }
 
-            function getAllGraves() {
-                return $localStorage.graves;
+            function getAllCemeteries() {
+                return $localStorage.cemeteries;
             }
 
-            function getGrave(id) {
-                console.log('Fetching Grave with id :' + id);
+            function getCemetery(id) {
+                console.log('Fetching Cemetery with id :' + id);
                 var deferred = $q.defer();
-                $http.get(urls.GRAVE_SERVICE_API + id)
+                $http.get(urls.CEMETERY_SERVICE_API + id)
                     .then(
                         function (response) {
-                            console.log('Fetched successfully Grave with id :' + id);
+                            console.log('Fetched successfully Cemetery with id :' + id);
                             deferred.resolve(response.data);
                         },
                         function (errResponse) {
-                            console.error('Error while loading grave with id :' + id);
+                            console.error('Error while loading cemetery with id :' + id);
                             deferred.reject(errResponse);
                         }
                     );
                 return deferred.promise;
             }
 
-            function createGrave(grave) {
-                console.log('Creating Grave');
+            function createCemetery(cemetery) {
+                console.log('Creating Cemetery');
                 var deferred = $q.defer();
-                $http.post(urls.GRAVE_SERVICE_API, grave)
+                $http.post(urls.CEMETERY_SERVICE_API, cemetery)
                     .then(
                         function (response) {
-                            loadAllGraves();
+                            loadAllCemeteries();
                             deferred.resolve(response.data);
                         },
                         function (errResponse) {
-                            console.error('Error while creating Grave : ' + errResponse.data.errorMessage);
+                            console.error('Error while creating Cemetery : ' + errResponse.data.errorMessage);
                             deferred.reject(errResponse);
                         }
                     );
                 return deferred.promise;
             }
 
-            function updateGrave(grave, id) {
-                console.log('Updating Grave with id ' + id);
+            function updateCemetery(cemetery, id) {
+                console.log('Updating Cemetery with id ' + id);
                 var deferred = $q.defer();
-                $http.put(urls.GRAVE_SERVICE_API + id, grave)
+                $http.put(urls.CEMETERY_SERVICE_API + id, cemetery)
                     .then(
                         function (response) {
-                            loadAllGraves();
+                            loadAllCemeteries();
                             deferred.resolve(response.data);
                         },
                         function (errResponse) {
-                            console.error('Error while updating Grave with id :' + id);
+                            console.error('Error while updating Cemetery with id :' + id);
                             deferred.reject(errResponse);
                         }
                     );
                 return deferred.promise;
             }
 
-            function removeGrave(id) {
-                console.log('Removing Grave with id ' + id);
+            function removeCemetery(id) {
+                console.log('Removing Cemetery with id ' + id);
                 var deferred = $q.defer();
-                $http.delete(urls.GRAVE_SERVICE_API + id)
+                $http.delete(urls.CEMETERY_SERVICE_API + id)
                     .then(
                         function (response) {
-                            loadAllGraves();
+                            loadAllCemeteries();
                             deferred.resolve(response.data);
                         },
                         function (errResponse) {
-                            console.error('Error while removing Grave with id :' + id);
+                            console.error('Error while removing Cemetery with id :' + id);
                             deferred.reject(errResponse);
                         }
                     );

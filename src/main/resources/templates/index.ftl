@@ -14,6 +14,8 @@
 <script src="js/lib/localforage.min.js"></script>
 <script src="js/lib/ngStorage.min.js"></script>
 <script src="js/app/app.js"></script>
+<script src="js/app/CemeteryService.js"></script>
+<script src="js/app/CemeteryController.js"></script>
 <script src="js/app/GraveService.js"></script>
 <script src="js/app/GraveController.js"></script>
 </body>
