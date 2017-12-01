@@ -17,10 +17,10 @@ vrApp.config(['$stateProvider', '$urlRouterProvider',
                 controller: 'CemeteryController',
                 controllerAs: 'cctrl',
                 resolve: {
-                    graves: function ($q, GraveService) {
+                    graves: function ($q, CemeteryService) {
                         console.log('Load all cemeteries');
                         var deferred = $q.defer();
-                        GraveService.loadAllGraves().then(deferred.resolve, deferred.resolve);
+                        CemeteryService.loadAllCemeteries().then(deferred.resolve, deferred.resolve);
                         return deferred.promise;
                     }
                 }

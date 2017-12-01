@@ -25,7 +25,7 @@ public class StartupRunner implements CommandLineRunner {
 
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         log.info("Number of graves: " + graveRepository.count());
         Cemetery cemetery = new Cemetery("Dorotheenstädtischer-Friedrichswerderscher Friedh");
         cemeteryRepository.save(cemetery);
@@ -39,6 +39,9 @@ public class StartupRunner implements CommandLineRunner {
         List<Grave> graveList = new ArrayList<>();
         graveList.add(grave);
         graveList.add(grave2);
+        cemetery = cemeteryRepository.findOne(1L);
+        cemetery.setGraves(graveList);
+        cemeteryRepository.save(cemetery);
     }
 
 }

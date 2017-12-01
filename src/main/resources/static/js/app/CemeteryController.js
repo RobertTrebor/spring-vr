@@ -9,6 +9,7 @@ angular.module('vrApp').controller('CemeteryController',
 
         self.submit = submit;
         self.getAllCemeteries = getAllCemeteries;
+        self.getGravesInCemetery = getGravesInCemetery;
         self.createCemetery = createCemetery;
         self.updateCemetery = updateCemetery;
         self.removeCemetery = removeCemetery;
@@ -90,6 +91,17 @@ angular.module('vrApp').controller('CemeteryController',
 
         function getAllCemeteries() {
             return CemeteryService.getAllCemeteries();
+        }
+
+        function getGravesInCemetery(id) {
+            console.log('Get graves in Cemetery with id ' + id);
+            CemeteryService.getGravesInCemetery(id).then(
+                function (cemetery) {
+                    self.cemetery = cemetery;
+                    console.log(cemetery.graves)
+                }
+            )
+
         }
 
 

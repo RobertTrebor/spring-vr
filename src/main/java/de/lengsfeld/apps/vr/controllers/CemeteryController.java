@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/c")
+@RequestMapping("/restcemeteries")
 public class CemeteryController {
 
     @Autowired

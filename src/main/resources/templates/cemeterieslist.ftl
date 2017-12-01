@@ -16,9 +16,12 @@
                                 <input type="text" ng-model="cctrl.cemetery.name" id="uname"
                                        class="username form-control input-sm" placeholder="Enter your name" required
                                        ng-minlength="3"/>
+                                <input type="text" ng-model="cctrl.cemetery.graves" id="gravesInCemetery"
+                                       class="username form-control input-sm" placeholder="Enter your name"/>
                             </div>
                         </div>
                     </div>
+
 
 
                     <div class="row">
@@ -46,12 +49,19 @@
                         <th>NAME</th>
                         <th width="100"></th>
                         <th width="100"></th>
+                        <th width="100"></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="u in cctrl.getAllCemeteries()">
                         <td>{{u.id}}</td>
-                        <td><{{u.name}}</td>
+                        <td>{{u.name}}</td>
+                        <td>
+                            <button type="button" ng-click="cctrl.getGravesInCemetery(u.id)"
+                                    class="btn btn-success custom-width">
+                                Graves
+                            </button>
+                        </td>
                         <td>
                             <button type="button" ng-click="cctrl.editCemetery(u.id)"
                                     class="btn btn-success custom-width">
@@ -64,6 +74,29 @@
                                 Remove
                             </button>
                         </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading"><span class="lead">List of Graves </span></div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>NAME</th>
+                        <th width="100"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="g in ctrl.getGravesInCemetery()">
+                        <td>{{g.id}}</td>
+                        <td>{{g.name}}</td>
+                        <td></td>
                     </tr>
                     </tbody>
                 </table>

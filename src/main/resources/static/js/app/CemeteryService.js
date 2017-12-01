@@ -54,6 +54,24 @@ angular.module('vrApp').factory('CemeteryService',
                 return deferred.promise;
             }
 
+            function getGravesInCemetery(id) {
+                console.log('Fetching Cemetery with id :' + id);
+                var deferred = $q.defer();
+                $http.get(urls.CEMETERY_SERVICE_API + id)
+                    .then(
+                        function (response) {
+                            console.log('Fetched successfully Cemetery with id :' + id);
+                            deferred.resolve(response.data);
+                        },
+                        function (errResponse) {
+                            console.error('Error while loading cemetery with id :' + id);
+                            deferred.reject(errResponse);
+                        }
+                    );
+                return deferred.promise;
+            }
+
+
             function createCemetery(cemetery) {
                 console.log('Creating Cemetery');
                 var deferred = $q.defer();

@@ -13,7 +13,6 @@ public class Cemetery implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
-
     private String name;
 
     @OneToMany

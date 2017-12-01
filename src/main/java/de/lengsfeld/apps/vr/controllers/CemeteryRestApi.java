@@ -1,6 +1,7 @@
 package de.lengsfeld.apps.vr.controllers;
 
 import de.lengsfeld.apps.vr.entity.Cemetery;
+import de.lengsfeld.apps.vr.entity.Grave;
 import de.lengsfeld.apps.vr.service.CemeteryService;
 import de.lengsfeld.apps.vr.util.CustomErrorType;
 import org.slf4j.Logger;
@@ -48,6 +49,20 @@ public class CemeteryRestApi {
                     + " not found"), HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Cemetery>(cemetery, HttpStatus.OK);
+    }
+
+    // -------------------Retrieve Graves in Cemetery------------------------------------------
+
+    @RequestMapping(value = "/cemetery/{id}/graves", method = RequestMethod.GET)
+    public ResponseEntity<?> getGravesInCemetery(@PathVariable("id") long id) {
+        logger.info("Fetching Cemetery with id {}", id);
+        Cemetery cemetery = cemeteryService.findById(id);
+        if (cemetery == null) {
+            logger.error("Cemetery with id {} not found.", id);
+            return new ResponseEntity(new CustomErrorType("Cemetery with id " + id
+                    + " not found"), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Grave>>(cemetery.getGraves(), HttpStatus.OK);
     }
 
     // -------------------Create a Cemetery-------------------------------------------
