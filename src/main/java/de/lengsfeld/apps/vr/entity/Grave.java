@@ -1,22 +1,24 @@
 package de.lengsfeld.apps.vr.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "GRAVE")
 public class Grave implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "FIRSTNAME")
     private String firstName;
+
+    @Column(name = "LASTNAME")
     private String lastName;
 
     @ManyToOne
+    @JoinColumn(name = "CEMETERY_ID")
     private Cemetery cemetery;
 
     protected Grave() {

@@ -1,5 +1,6 @@
 package de.lengsfeld.apps.vr.service;
 
+import de.lengsfeld.apps.vr.entity.Cemetery;
 import de.lengsfeld.apps.vr.entity.Grave;
 import de.lengsfeld.apps.vr.repository.GraveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,13 @@ public class GraveServiceImpl implements GraveService {
 
     @Override
     public Grave findByName(String name) {
-        return graveRepository.findGraveByFirstNameContains(name);
+        return graveRepository.findGraveByFirstName(name);
+    }
+
+    @Override
+    public List<Grave> findByCemetery(Cemetery cemetery) {
+        List<Grave> graves = graveRepository.findGraveByCemetery(cemetery);
+        return graves;
     }
 
     @Override

@@ -1,13 +1,13 @@
 package de.lengsfeld.apps.vr.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
 @Entity
+@Table(name = "cemetery")
 public class Cemetery implements Serializable {
 
     @Id
@@ -15,7 +15,7 @@ public class Cemetery implements Serializable {
     private Long id;
     private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "id")
     private List<Grave> graves;
 
     protected Cemetery() {
@@ -42,6 +42,7 @@ public class Cemetery implements Serializable {
         this.name = name;
     }
 
+    @JsonIgnore
     public List<Grave> getGraves() {
         return graves;
     }

@@ -4,6 +4,8 @@ import de.lengsfeld.apps.vr.entity.Cemetery;
 import de.lengsfeld.apps.vr.entity.Grave;
 import de.lengsfeld.apps.vr.repository.CemeteryRepository;
 import de.lengsfeld.apps.vr.repository.GraveRepository;
+import de.lengsfeld.apps.vr.service.CemeteryService;
+import de.lengsfeld.apps.vr.service.GraveService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,12 @@ public class StartupRunner implements CommandLineRunner {
 
     @Autowired
     private CemeteryRepository cemeteryRepository;
+
+    @Autowired
+    private CemeteryService cemeteryService;
+
+    @Autowired
+    private GraveService graveService;
 
 
     @Override
@@ -42,6 +50,14 @@ public class StartupRunner implements CommandLineRunner {
         cemetery = cemeteryRepository.findOne(1L);
         cemetery.setGraves(graveList);
         cemeteryRepository.save(cemetery);
+        testthis();
     }
 
+    public void testthis() {
+        Cemetery cemetery = cemeteryService.findById(1L);
+        List<Grave> graves = graveService.findAllGraves();
+        log.info(cemetery.getName() + ", " + graves.size() + "graves");
+
+
+    }
 }

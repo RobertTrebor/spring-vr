@@ -56,4 +56,16 @@
         </rollback>
     </changeSet>
 
+    <!--
+    <changeSet id="0.0.1-setup-fk" author="rl">
+        <addForeignKeyConstraint baseTableName="grave" baseColumnNames="CEMETERY_ID" constraintName="FK_CEMETERY_ID"
+                                 referencedTableName="cemetery" referencedColumnNames="ID"/>
+
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="grave"/>
+        </rollback>
+    </changeSet>
+
+    -->
+
 </databaseChangeLog>

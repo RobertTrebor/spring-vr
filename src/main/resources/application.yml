@@ -1,0 +1,35 @@
+server:
+  port: 8080
+  contextPath: /vr
+---
+spring:
+  profiles: local
+datasource:
+  vr:
+    url: jdbc:h2:~/test
+    username: SA
+    password:
+    driverClassName: org.h2.Driver
+    defaultSchema:
+    maxPoolSize: 10
+    hibernate:
+      hbm2ddl.method: create-drop
+      show_sql: true
+      format_sql: true
+      dialect: org.hibernate.dialect.H2Dialect
+---
+spring:
+  profiles: prod, default
+datasource:
+  vr:
+    url: jdbc:mysql://localhost:3306/vr
+    username: rl
+    password: cimitery
+    driverClassName: com.mysql.jdbc.Driver
+    defaultSchema:
+    maxPoolSize: 20
+    hibernate:
+      hbm2ddl.method: update
+      show_sql: true
+      format_sql: true
+      dialect: org.hibernate.dialect.MySQLDialect

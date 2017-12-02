@@ -21,4 +21,5 @@ public interface CemeteryService {
     List<Cemetery> findAllCemeteries();
 
     boolean isCemeteryExist(Cemetery cemetery);
+
 }

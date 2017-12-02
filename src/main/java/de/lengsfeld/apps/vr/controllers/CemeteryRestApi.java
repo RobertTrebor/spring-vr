@@ -3,6 +3,7 @@ package de.lengsfeld.apps.vr.controllers;
 import de.lengsfeld.apps.vr.entity.Cemetery;
 import de.lengsfeld.apps.vr.entity.Grave;
 import de.lengsfeld.apps.vr.service.CemeteryService;
+import de.lengsfeld.apps.vr.service.GraveService;
 import de.lengsfeld.apps.vr.util.CustomErrorType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,9 @@ public class CemeteryRestApi {
 
     @Autowired
     CemeteryService cemeteryService; //Service which will do all data retrieval/manipulation work
+
+    @Autowired
+    GraveService graveService;
 
     // -------------------Retrieve All Cemeteries---------------------------------------------
 
@@ -62,7 +66,8 @@ public class CemeteryRestApi {
             return new ResponseEntity(new CustomErrorType("Cemetery with id " + id
                     + " not found"), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<List<Grave>>(cemetery.getGraves(), HttpStatus.OK);
+        List<Grave> graves = graveService.findByCemetery(cemetery);
+        return new ResponseEntity<List<Grave>>(graves, HttpStatus.OK);
     }
 
     // -------------------Create a Cemetery-------------------------------------------

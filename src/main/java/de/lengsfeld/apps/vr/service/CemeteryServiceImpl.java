@@ -23,7 +23,7 @@ public class CemeteryServiceImpl implements CemeteryService {
 
     @Override
     public Cemetery findByName(String name) {
-        return cemeteryRepository.findAllByGravesContains(name);
+        return cemeteryRepository.findByName(name);
     }
 
     @Override

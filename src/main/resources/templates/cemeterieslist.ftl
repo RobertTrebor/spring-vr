@@ -93,7 +93,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="g in ctrl.getGravesInCemetery()">
+                    <tr ng-repeat="g in cctrl.getGravesInCemetery({{g.id}})">
                         <td>{{g.id}}</td>
                         <td>{{g.name}}</td>
                         <td></td>
