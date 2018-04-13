@@ -38,7 +38,11 @@ public class CemeteryServiceImpl implements CemeteryService {
 
     @Override
     public void deleteCemeteryById(Long id) {
-        cemeteryRepository.delete(id);
+        try {
+            cemeteryRepository.delete(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

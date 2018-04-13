@@ -57,7 +57,6 @@ public class StartupRunner implements CommandLineRunner {
         Cemetery cemetery = cemeteryService.findById(1L);
         List<Grave> graves = graveService.findAllGraves();
         log.info(cemetery.getName() + ", " + graves.size() + "graves");
-
-
     }
+
 }
