@@ -125,6 +125,5 @@ angular.module('vrApp').factory('CemeteryService',
                     );
                 return deferred.promise;
             }
-
         }
     ]);

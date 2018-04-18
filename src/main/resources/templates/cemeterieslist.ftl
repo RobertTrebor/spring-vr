@@ -61,7 +61,13 @@
                             </button>
                         </td>
                         <td>
-                            <button type="button" ng-click="cctrl.editCemetery(u.id)"
+                            <button type="button" ng-click="cctrl.selectCemeteryAndShowGraves(u.id)"
+                                    class="btn btn-success custom-width">
+                                Select
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" ng-click="cctrl.editCemetery(u.id);cctrl.getGravesInCemetery(u.id)"
                                     class="btn btn-success custom-width">
                                 Edit
                             </button>
