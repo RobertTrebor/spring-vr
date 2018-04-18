@@ -1,6 +1,7 @@
 package de.lengsfeld.apps.vr.service;
 
 import de.lengsfeld.apps.vr.entity.Cemetery;
+import de.lengsfeld.apps.vr.entity.Grave;
 import de.lengsfeld.apps.vr.repository.CemeteryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,4 +63,23 @@ public class CemeteryServiceImpl implements CemeteryService {
     public boolean isCemeteryExist(Cemetery cemetery) {
         return findByName(cemetery.getName()) != null;
     }
+
+    public boolean isGraveExist(Long id, Grave grave) {
+        Cemetery cemetery = findById(id);
+        if (cemetery != null) {
+            List<Grave> graves = cemetery.getGraves();
+            return graves.contains(grave);
+        }
+        return false;
+    }
+
+    public void saveGrave(Long id, Grave grave) {
+        Cemetery cemetery = findById(id);
+        if (cemetery != null) {
+            List<Grave> graves = cemetery.getGraves();
+            graves.add(grave);
+            updateCemetery(cemetery);
+        }
+    }
+
 }
