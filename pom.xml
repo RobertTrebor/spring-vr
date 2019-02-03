@@ -107,7 +107,7 @@
                     <contexts>dev</contexts>
                     <diffIncludeCatalog>false</diffIncludeCatalog>
                     <diffIncludeSchema>false</diffIncludeSchema>
-                    <changelogSchemaName>heroku_e5f435f142d9681</changelogSchemaName>
+                    <changelogSchemaName>vr</changelogSchemaName>
                     <outputFileEncoding>UTF-8</outputFileEncoding>
                     <outputDefaultCatalog>false</outputDefaultCatalog>
                     <outputDefaultSchema>false</outputDefaultSchema>
