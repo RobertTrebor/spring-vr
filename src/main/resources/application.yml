@@ -36,3 +36,7 @@ datasource:
 liquibase:
   change-log: classpath:db/liquibase-changelog.xml
   drop-first: true
+  default-schema: heroku_e5f435f142d9681
+  password: 201c397b
+  url: jdbc:mysql://eu-cdbr-west-02.cleardb.net
+  user: b2bce111577fff
