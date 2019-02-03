@@ -22,11 +22,11 @@ spring:
   profiles: prod, default
 datasource:
   vr:
-    url: jdbc:mysql://localhost:3306/vr
-    username: rl
-    password: cimitery
+    url: jdbc:mysql://eu-cdbr-west-02.cleardb.net
+    username: b2bce111577fff
+    password: 201c397b
     driverClassName: com.mysql.jdbc.Driver
-    defaultSchema:
+    defaultSchema: heroku_e5f435f142d9681
     maxPoolSize: 20
     hibernate:
       hbm2ddl.method: update
