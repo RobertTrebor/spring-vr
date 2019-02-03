@@ -97,17 +97,16 @@
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>${liquibase.maven.plugin}</version>
                 <configuration>
-                    <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
                     <driver>com.mysql.jdbc.Driver</driver>
-                    <url>jdbc:mysql://eu-cdbr-west-02.cleardb.net</url>
-                    <defaultSchemaName>heroku_e5f435f142d9681</defaultSchemaName>
-                    <username>b2bce111577fff</username>
-                    <password>201c397b</password>
+                    <url>jdbc:mysql://localhost:3306</url>
+                    <defaultSchemaName>vr</defaultSchemaName>
+                    <username>rl</username>
+                    <password>cimitery</password>
                     <changeLogFile>db/liquibase-changelog.xml</changeLogFile>
                     <contexts>dev</contexts>
                     <diffIncludeCatalog>false</diffIncludeCatalog>
                     <diffIncludeSchema>false</diffIncludeSchema>
-                    <changelogSchemaName>heroku_e5f435f142d9681</changelogSchemaName>
+                    <changelogSchemaName>vr</changelogSchemaName>
                     <outputFileEncoding>UTF-8</outputFileEncoding>
                     <outputDefaultCatalog>false</outputDefaultCatalog>
                     <outputDefaultSchema>false</outputDefaultSchema>

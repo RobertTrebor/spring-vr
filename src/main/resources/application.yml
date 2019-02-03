@@ -1,17 +1,32 @@
 server:
   port: 8080
   contextPath: /vr
-
 ---
 spring:
-  profiles: dev, prod, default
+  profiles: local
 datasource:
   vr:
-    url: jdbc:mysql://eu-cdbr-west-02.cleardb.net
-    username: b2bce111577fff
-    password: 201c397b
+    url: jdbc:h2:~/test
+    username: SA
+    password:
+    driverClassName: org.h2.Driver
+    defaultSchema:
+    maxPoolSize: 10
+    hibernate:
+      hbm2ddl.method: create-drop
+      show_sql: true
+      format_sql: true
+      dialect: org.hibernate.dialect.H2Dialect
+---
+spring:
+  profiles: prod, default
+datasource:
+  vr:
+    url: jdbc:mysql://localhost:3306/vr
+    username: rl
+    password: cimitery
     driverClassName: com.mysql.jdbc.Driver
-    defaultSchema: heroku_e5f435f142d9681
+    defaultSchema:
     maxPoolSize: 20
     hibernate:
       hbm2ddl.method: update
