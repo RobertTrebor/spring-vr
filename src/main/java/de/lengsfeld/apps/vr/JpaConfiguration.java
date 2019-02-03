@@ -1,11 +1,29 @@
 package de.lengsfeld.apps.vr;
 
-/*
+import javax.sql.DataSource;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
+
 @Configuration
-@EnableJpaRepositories(basePackages = "de.lengsfeld.apps.vr.repository",
+/*@EnableJpaRepositories(basePackages = "de.lengsfeld.apps.vr.repository",
         entityManagerFactoryRef = "entityManagerFactory",
         transactionManagerRef = "transactionManager")*/
 public class JpaConfiguration {
+
+    @Bean
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+
+        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        dataSource.setUsername("b2bce111577fff");
+        dataSource.setPassword("201c397b");
+        dataSource.setUrl("jdbc:mysql://eu-cdbr-west-02.cleardb.net");
+        dataSource.setSchema("heroku_e5f435f142d9681");
+
+        return dataSource;
+    }
 /*
     @Autowired
     private Environment environment;
