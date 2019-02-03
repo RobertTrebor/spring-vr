@@ -18,3 +18,5 @@ datasource:
       show_sql: true
       format_sql: true
       dialect: org.hibernate.dialect.MySQLDialect
+liquibase:
+  enabled: false
