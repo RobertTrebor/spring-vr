@@ -97,6 +97,7 @@
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>${liquibase.maven.plugin}</version>
                 <configuration>
+                    <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
                     <driver>com.mysql.jdbc.Driver</driver>
                     <url>jdbc:mysql://eu-cdbr-west-02.cleardb.net</url>
                     <defaultSchemaName>heroku_e5f435f142d9681</defaultSchemaName>
