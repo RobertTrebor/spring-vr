@@ -1,9 +1,9 @@
 var vrApp = angular.module('vrApp', ['ui.router', 'ngStorage']);
 
 vrApp.constant('urls', {
-    BASE: 'http://vr-spring.herokuapp.com/vr/',
-    GRAVE_SERVICE_API: 'http://vr-spring.herokuapp.com/vr/api/grave/',
-    CEMETERY_SERVICE_API: 'http://vr-spring.herokuapp.com/vr/api/cemetery/'
+    BASE: 'http://localhost:8080/vr',
+    GRAVE_SERVICE_API: 'http://localhost:8080/vr/api/grave/',
+    CEMETERY_SERVICE_API: 'http://localhost:8080/vr/api/cemetery/'
 });
 
 vrApp.config(['$stateProvider', '$urlRouterProvider',
