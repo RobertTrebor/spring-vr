@@ -20,11 +20,11 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
-
+/*
 @Configuration
 @EnableJpaRepositories(basePackages = "de.lengsfeld.apps.vr.repository",
         entityManagerFactoryRef = "entityManagerFactory",
-        transactionManagerRef = "transactionManager")
+        transactionManagerRef = "transactionManager")*/
 public class JpaConfiguration {
 
     @Autowired
