@@ -1,6 +1,9 @@
 package de.lengsfeld.apps.vr;
 
 import com.zaxxer.hikari.HikariDataSource;
+import java.util.Properties;
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,10 +19,6 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
-
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
-import java.util.Properties;
 
 @Configuration
 @EnableJpaRepositories(basePackages = "de.lengsfeld.apps.vr.repository",
@@ -42,7 +41,9 @@ public class JpaConfiguration {
     @Primary
     @ConfigurationProperties(prefix = "datasource.vr")
     public DataSourceProperties dataSourceProperties() {
-        return new DataSourceProperties();
+        DataSourceProperties dataSourceProperties = new DataSourceProperties();
+
+        return dataSourceProperties;
     }
 
     /*
