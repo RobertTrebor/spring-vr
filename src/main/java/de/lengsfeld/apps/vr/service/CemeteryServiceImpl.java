@@ -3,12 +3,11 @@ package de.lengsfeld.apps.vr.service;
 import de.lengsfeld.apps.vr.entity.Cemetery;
 import de.lengsfeld.apps.vr.entity.Grave;
 import de.lengsfeld.apps.vr.repository.CemeteryRepository;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service("cemeteryService")
 @Transactional
@@ -19,7 +18,7 @@ public class CemeteryServiceImpl implements CemeteryService {
 
     @Override
     public Cemetery findById(Long id) {
-        return cemeteryRepository.findOne(id);
+        return cemeteryRepository.findById(id).get();
     }
 
     @Override
@@ -40,7 +39,7 @@ public class CemeteryServiceImpl implements CemeteryService {
     @Override
     public void deleteCemeteryById(Long id) {
         try {
-            cemeteryRepository.delete(id);
+            cemeteryRepository.deleteById(id);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,38 +1,49 @@
 server:
   port: 8080
-  contextPath: /vr
----
-spring:
-  profiles: local
-datasource:
-  vr:
-    url: jdbc:h2:~/test
-    username: SA
-    password:
-    driverClassName: org.h2.Driver
-    defaultSchema:
-    maxPoolSize: 10
-    hibernate:
-      hbm2ddl.method: create-drop
-      show_sql: true
-      format_sql: true
-      dialect: org.hibernate.dialect.H2Dialect
+  servlet:
+    context-path: /vr
+#---
+#spring:
+#  profiles: local
+#datasource:
+#  vr:
+#    url: jdbc:h2:~/test
+#    username: SA
+#    password:
+#    driverClassName: org.h2.Driver
+#    defaultSchema:
+#    maxPoolSize: 10
+#    hibernate:
+#      hbm2ddl.method: create-drop
+#      show_sql: true
+#      format_sql: true
+#      dialect: org.hibernate.dialect.H2Dialect
 ---
 spring:
   profiles: prod, default
-datasource:
-  vr:
-    url: jdbc:mysql://localhost:3306/vr
+  liquibase:
+    change-log: classpath:db/liquibase-changelog.xml
+    drop-first: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/vr?useLegacyDatetimeCode=false&serverTimezone=America/New_York
     username: rl
     password: cimitery
-    driverClassName: com.mysql.jdbc.Driver
-    defaultSchema:
-    maxPoolSize: 20
+  jpa:
     hibernate:
-      hbm2ddl.method: update
-      show_sql: true
-      format_sql: true
-      dialect: org.hibernate.dialect.MySQLDialect
-liquibase:
-  change-log: classpath:db/liquibase-changelog.xml
-  drop-first: true
+      ddl-auto: create
+#datasource:
+#  vr:
+#    url: jdbc:mysql://localhost:3306/vr?useLegacyDatetimeCode=false&serverTimezone=America/New_York
+#    username: rl
+#    password: cimitery
+#    driverClassName: com.mysql.cj.jdbc.Driver
+#    defaultSchema:
+#    maxPoolSize: 20
+#    hibernate:
+#      hbm2ddl.method: update
+#      show_sql: true
+#      format_sql: true
+#      dialect: org.hibernate.dialect.MySQLDialect
+#liquibase:
+#  change-log: classpath:db/liquibase-changelog.xml
+#  drop-first: true

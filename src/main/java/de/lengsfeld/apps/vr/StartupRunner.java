@@ -6,13 +6,12 @@ import de.lengsfeld.apps.vr.repository.CemeteryRepository;
 import de.lengsfeld.apps.vr.repository.GraveRepository;
 import de.lengsfeld.apps.vr.service.CemeteryService;
 import de.lengsfeld.apps.vr.service.GraveService;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class StartupRunner implements CommandLineRunner {
 
@@ -47,7 +46,7 @@ public class StartupRunner implements CommandLineRunner {
         List<Grave> graveList = new ArrayList<>();
         graveList.add(grave);
         graveList.add(grave2);
-        cemetery = cemeteryRepository.findOne(1L);
+        cemetery = cemeteryRepository.findById(1L).get();
         cemetery.setGraves(graveList);
         cemeteryRepository.save(cemetery);
         testthis();

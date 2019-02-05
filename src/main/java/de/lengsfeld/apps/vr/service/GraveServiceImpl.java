@@ -3,12 +3,11 @@ package de.lengsfeld.apps.vr.service;
 import de.lengsfeld.apps.vr.entity.Cemetery;
 import de.lengsfeld.apps.vr.entity.Grave;
 import de.lengsfeld.apps.vr.repository.GraveRepository;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service("graveService")
 @Transactional
@@ -19,7 +18,7 @@ public class GraveServiceImpl implements GraveService {
 
     @Override
     public Grave findById(Long id) {
-        return graveRepository.findOne(id);
+        return graveRepository.findById(id).get();
     }
 
     @Override
@@ -45,7 +44,7 @@ public class GraveServiceImpl implements GraveService {
 
     @Override
     public void deleteGraveById(Long id) {
-        graveRepository.delete(id);
+        graveRepository.deleteById(id);
     }
 
     @Override
