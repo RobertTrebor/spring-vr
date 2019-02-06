@@ -1,0 +1,27 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+  <div class="container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>First Name</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+      <!--/*@thymesVar id="grave" type="de.lengsfeld.apps.vr.entity.Grave"*/-->
+      <tr th:each="grave:${graves}">
+        <td th:text="${grave.id}">Id</td>
+        <td th:text="${grave.firstName}">Name</td>
+        <td><a th:href="@{/edit/{id}(id=${grave.id})}" class="btn btn-primary"></a></td>
+        <td><a th:href="@{/edit/{id}(id=${grave.firstName})}" class="btn btn-primary"></a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

@@ -22,12 +22,12 @@
         </tr>
       </thead>
       <tbody>
-      <tr th:each="cemetery:${cemeteries}">
-        <td th:text="${cemetery.id}">Id</td>
-        <td><a th:href="@{/show-graves/{id}(id=${cemetery.id})}" class="btn btn-primary"></a></td>
-        <td th:text="${cemetery.name}">Name</td>
-        <td><a th:href="@{/edit/{id}(id=${cemetery.id})}" class="btn btn-primary"></a></td>
-        <td><a th:href="@{/edit/{id}(id=${cemetery.id})}" class="btn btn-primary"></a></td>
+      <tr th:each="grave:${graves}">
+        <td th:text="${grave.id}">Id</td>
+        <td><a th:href="@{/show-graves/{id}(id=${grave.id})}" class="btn btn-primary"></a></td>
+        <td th:text="${grave.firstName}">Name</td>
+        <td><a th:href="@{/edit/{id}(id=${grave.id})}" class="btn btn-primary"></a></td>
+        <td><a th:href="@{/edit/{id}(id=${grave.id})}" class="btn btn-primary"></a></td>
       </tr>
       </tbody>
     </table>
@@ -36,7 +36,6 @@
     </form>
   </div>
 
-  <div th:insert="fragments/gravesfragment"></div>
 
 </body>
 </html>
