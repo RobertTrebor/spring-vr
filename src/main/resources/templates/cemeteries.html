@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Virtual Remembrance Thyme</title>
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+  <h1>Hello Spring MVC, Cemeteries</h1>
+
+  <div class="container">
+    <h1>Virtual Remembrance</h1>
+    <table class="table">
+      <tr th:each="cemetery :${cemeteries}">
+        <td th:text="${cemetery.id}">Id</td>
+        <td th:text="${cemetery.name}">Name</td>
+      </tr>
+    </table>
+    <form method="POST" th:action="@{/logout}">
+      <button class="btn btn-primary" type="submit">Logout</button>
+    </form>
+  </div>
+
+</body>
+</html>
