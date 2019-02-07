@@ -18,7 +18,7 @@ public class Cemetery implements Serializable {
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "cemetery")
     private List<Grave> graves;
 
     public Cemetery() {

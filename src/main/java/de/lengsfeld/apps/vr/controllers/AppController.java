@@ -115,12 +115,14 @@ public class AppController {
         if(result.hasErrors()){
             return "/add-grave";
         }
-       // grave.setCemetery(cemeteryRepository.findById(1L).get());
         Cemetery cemetery = cemeteryRepository.findById(grave.getCemetery().getId()).get();
         cemetery.getGraves().add(grave);
         grave.setCemetery(cemetery);
         graveRepository.save(grave);
         model.addAttribute("cemeteries", cemeteryRepository.findAll());
+        model.addAttribute("selectedcemetery", cemetery);
+        List<Grave> graves = graveRepository.findGraveByCemetery(cemetery);
+        model.addAttribute("graves", graves);
         return "cemeteries";
     }
 
