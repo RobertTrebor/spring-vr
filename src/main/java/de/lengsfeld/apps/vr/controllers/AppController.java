@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -101,21 +102,18 @@ public class AppController {
     public String showAddGrave(Grave grave, @PathVariable("id") long id, Model model){
         Cemetery cemetery = cemeteryRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid: " + id));
         model.addAttribute("selectedcemetery", cemetery);
-        //Grave grave = new Grave();
-        //grave.setCemetery(cemetery);
-        //model.addAttribute("grave", grave);
         return "add-grave";
     }
 
-    @PostMapping(value = "/addgrave")
-    public String addGrave(@Valid Grave grave, BindingResult result, Model model){
-        if(model.containsAttribute("selectedcemetery")){
-            String s = "hello";
+    @PostMapping(value = "/addgrave/{id}")
+    public String addGrave(@PathVariable("id") long id, @Valid Grave grave, BindingResult result, Model model){
+        if(!cemeteryRepository.findById(id).isPresent()){
+            result.addError(new ObjectError("Cemetery", "Does Not Exist"));
         }
         if(result.hasErrors()){
             return "/add-grave";
         }
-        Cemetery cemetery = cemeteryRepository.findById(grave.getCemetery().getId()).get();
+        Cemetery cemetery = cemeteryRepository.findById(id).get();
         cemetery.getGraves().add(grave);
         grave.setCemetery(cemetery);
         graveRepository.save(grave);
