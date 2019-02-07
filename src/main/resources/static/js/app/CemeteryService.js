@@ -35,7 +35,7 @@ angular.module('vrApp').factory('CemeteryService',
             }
 
             function getAllCemeteries() {
-                console.log('localStorace.cemeteries');
+                console.log('localStorage.cemeteries');
                 return $localStorage.cemeteries;
             }
 

@@ -32,11 +32,24 @@
       </tbody>
     </table>
     <form method="GET" th:action="@{/add-cemetery}">
-      <button class="btn btn-primary" type="submit">Add Cemetery</button>
+      <button id="add_cemetery_btn" class="btn btn-primary" type="submit">Add Cemetery</button>
     </form>
   </div>
 
   <div th:insert="fragments/gravesfragment"></div>
 
+  <div class="container">
+    <div class="panel-group">
+      <button id="try" name="try" class="btn btn-primary" type="button"> value="PUSH TRY"></button>
+      <button id="try2" name="try2" class="btn btn-primary" type="button"> value="PUSH TRY"></button>
+    </div>
+    <div class="panel-group">
+      <div class="text-area">
+        <textarea id="textarea"></textarea>
+      </div>
+      <div id="textarea2" class="text-area"></div>
+    </div>
+  </div>
+  <script th:src="@{|/js/script/main.js|}"></script>
 </body>
 </html>
