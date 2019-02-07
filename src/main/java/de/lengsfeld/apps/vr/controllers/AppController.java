@@ -46,8 +46,9 @@ public class AppController {
         List<Cemetery> cemeteries = cemeteryRepository.findAll();
         model.addAttribute("cemeteries", cemeteries);
         Cemetery cemetery = cemeteryRepository.findById(1L).get();
+        model.addAttribute("selectedcemetery", cemetery);
         List<Grave> graves = graveRepository.findGraveByCemetery(cemetery);
-        //model.addAttribute("graves", graves);
+        model.addAttribute("graves", graves);
         return "cemeteries";
     }
 
@@ -63,9 +64,9 @@ public class AppController {
         }
         cemeteryRepository.save(cemetery);
         model.addAttribute("cemeteries", cemeteryRepository.findAll());
+        model.addAttribute("selectedcemetery", cemetery);
         return "cemeteries";
     }
-
 
     @GetMapping(value = "/edit/{id}")
     public String showUpdateForm(@PathVariable("id") long id, Model model){
@@ -82,6 +83,7 @@ public class AppController {
         }
         cemeteryRepository.save(cemetery);
         model.addAttribute("cemeteries", cemeteryRepository.findAll());
+        model.addAttribute("selectedcemetery", cemetery);
         return "cemeteries";
     }
 
@@ -89,8 +91,36 @@ public class AppController {
     public String showGraves(@PathVariable("id") long id, Model model){
         model.addAttribute("cemeteries", cemeteryRepository.findAll());
         Cemetery cemetery = cemeteryRepository.findById(id).get();
+        model.addAttribute("selectedcemetery", cemetery);
         List<Grave> graves = graveRepository.findGraveByCemetery(cemetery);
         model.addAttribute("graves", graves);
+        return "cemeteries";
+    }
+
+    @GetMapping(value = "/add-grave/{id}")
+    public String showAddGrave(Grave grave, @PathVariable("id") long id, Model model){
+        Cemetery cemetery = cemeteryRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid: " + id));
+        model.addAttribute("selectedcemetery", cemetery);
+        //Grave grave = new Grave();
+        //grave.setCemetery(cemetery);
+        //model.addAttribute("grave", grave);
+        return "add-grave";
+    }
+
+    @PostMapping(value = "/addgrave")
+    public String addGrave(@Valid Grave grave, BindingResult result, Model model){
+        if(model.containsAttribute("selectedcemetery")){
+            String s = "hello";
+        }
+        if(result.hasErrors()){
+            return "/add-grave";
+        }
+       // grave.setCemetery(cemeteryRepository.findById(1L).get());
+        Cemetery cemetery = cemeteryRepository.findById(grave.getCemetery().getId()).get();
+        cemetery.getGraves().add(grave);
+        grave.setCemetery(cemetery);
+        graveRepository.save(grave);
+        model.addAttribute("cemeteries", cemeteryRepository.findAll());
         return "cemeteries";
     }
 

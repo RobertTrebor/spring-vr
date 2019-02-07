@@ -1,7 +1,14 @@
 package de.lengsfeld.apps.vr.entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "GRAVE")
@@ -21,7 +28,7 @@ public class Grave implements Serializable {
     @JoinColumn(name = "CEMETERY_ID")
     private Cemetery cemetery;
 
-    protected Grave() {
+    public Grave() {
     }
 
     public Grave(String firstName, String lastName) {

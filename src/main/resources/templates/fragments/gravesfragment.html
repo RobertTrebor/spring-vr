@@ -22,6 +22,9 @@
       </tr>
       </tbody>
     </table>
+    <form method="GET" th:action="@{/add-grave/{id}(id=${selectedcemetery.id})}">
+      <button class="btn btn-primary" type="submit">Add Grave</button>
+    </form>
   </div>
 </body>
 </html>
