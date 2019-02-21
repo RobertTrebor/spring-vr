@@ -17,8 +17,8 @@
       <tr th:each="grave:${graves}">
         <td th:text="${grave.id}">Id</td>
         <td th:text="${grave.firstName}">Name</td>
-        <td><a th:href="@{/edit/{id}(id=${grave.id})}" class="btn btn-primary"></a></td>
-        <td><a th:href="@{/edit/{id}(id=${grave.firstName})}" class="btn btn-primary"></a></td>
+        <td><a th:href="@{/editgrave/{id}(id=${grave.id})}" class="btn btn-primary"></a></td>
+        <td><a th:href="@{/editgrave/{id}(id=${grave.firstName})}" class="btn btn-primary"></a></td>
       </tr>
       </tbody>
     </table>

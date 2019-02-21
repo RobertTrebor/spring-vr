@@ -4,8 +4,6 @@ import de.lengsfeld.apps.vr.entity.Cemetery;
 import de.lengsfeld.apps.vr.entity.Grave;
 import de.lengsfeld.apps.vr.repository.CemeteryRepository;
 import de.lengsfeld.apps.vr.repository.GraveRepository;
-import java.util.List;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class AppController {
@@ -120,6 +121,26 @@ public class AppController {
         model.addAttribute("selectedcemetery", cemetery);
         List<Grave> graves = graveRepository.findGraveByCemetery(cemetery);
         model.addAttribute("graves", graves);
+        return "cemeteries";
+    }
+
+    @GetMapping(value = "/editgrave/{id}")
+    public String showUpdateGraveForm(@PathVariable("id") long id, Model model){
+        Grave grave = graveRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid: " + id));
+        model.addAttribute("grave", grave);
+        model.addAttribute("selectedcemeteryid", grave.getCemetery().getId());
+        return "update-grave";
+    }
+
+    @PostMapping(value = "/updategrave/{id}")
+    public String showUpdateGrave(@PathVariable("id") long id, @Valid Grave grave, BindingResult result, Model model){
+        if(result.hasErrors()){
+            grave.setId(id);
+            return "update-grave";
+        }
+        graveRepository.save(grave);
+        model.addAttribute("cemeteries", cemeteryRepository.findAll());
+        model.addAttribute("selectedcemetery", grave.getCemetery());
         return "cemeteries";
     }
 

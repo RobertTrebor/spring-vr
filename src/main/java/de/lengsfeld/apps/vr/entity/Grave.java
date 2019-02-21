@@ -1,14 +1,8 @@
 package de.lengsfeld.apps.vr.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "grave")
@@ -28,16 +22,21 @@ public class Grave implements Serializable {
     @JoinColumn(foreignKey = @ForeignKey(name = "FK_CEMETERY_ID"))
     private Cemetery cemetery;
 
+    private LocalDateTime created;
+    private LocalDateTime modified;
 
     public Grave() {
+        created = LocalDateTime.now();
     }
 
     public Grave(String firstName, String lastName) {
+        this();
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
     public Grave(String firstName, String lastName, Cemetery cemetery) {
+        this();
         this.firstName = firstName;
         this.lastName = lastName;
         this.cemetery = cemetery;
@@ -74,4 +73,21 @@ public class Grave implements Serializable {
     public void setCemetery(Cemetery cemetery) {
         this.cemetery = cemetery;
     }
+
+    public LocalDateTime getCreated(){
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created){
+        this.created = created;
+    }
+
+    public LocalDateTime getModified(){
+        return modified;
+    }
+
+    public void setModified(LocalDateTime modified){
+        this.modified = modified;
+    }
+
 }

@@ -13,4 +13,6 @@ public interface GraveRepository extends JpaRepository<Grave, Long> {
     Grave findGraveByFirstName(String string);
 
     List<Grave> findGraveByCemetery(Cemetery cemetery);
+
+    Grave save(Grave grave);
 }

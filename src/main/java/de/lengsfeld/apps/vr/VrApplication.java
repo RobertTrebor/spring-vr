@@ -4,6 +4,8 @@ import de.lengsfeld.apps.vr.repository.CemeteryRepository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -32,4 +34,16 @@ public class VrApplication {
     public StartupRunner schedulerRunner() {
         return new StartupRunner();
     }
+
+
+    @Value("${server.port}")
+    String serverPort;
+
+    @Bean
+    CommandLineRunner values(){
+        return args -> {
+            log.info("Server Port is: " + serverPort);
+        };
+    }
+
 }

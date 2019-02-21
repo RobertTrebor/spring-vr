@@ -3,11 +3,13 @@ package de.lengsfeld.apps.vr.service;
 import de.lengsfeld.apps.vr.entity.Cemetery;
 import de.lengsfeld.apps.vr.entity.Grave;
 import de.lengsfeld.apps.vr.repository.GraveRepository;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service("graveService")
 @Transactional
@@ -34,11 +36,13 @@ public class GraveServiceImpl implements GraveService {
 
     @Override
     public void saveGrave(Grave grave) {
+        grave.setModified(LocalDateTime.now());
         graveRepository.save(grave);
     }
 
     @Override
     public void updateGrave(Grave grave) {
+        grave.setModified(LocalDateTime.now());
         saveGrave(grave);
     }
 
