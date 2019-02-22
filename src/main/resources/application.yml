@@ -33,6 +33,30 @@ spring:
       use-new-id-generator-mappings: false
       ddl-auto: update
     show-sql: true
+  security:
+    user:
+      name: user
+      password: password
+    oauth2:
+      client:
+        provider: github
+        clientId: 6fe891c133ea9427131a
+        clientSecret: 97f73f8c8f5271c3ed174e46b8fd7fa3b0160435
+        redirectUri: http://localhost:8080/vr/login/oauth2/code/github
+        clientName: Virtual Remembrance
+        scope: user
+
+#    oauth2:
+#      client:
+#        provider: github
+#        registration:
+#          github:
+#            scope: user
+#            client-id: 6fe891c133ea9427131a
+#            client-secret: 97f73f8c8f5271c3ed174e46b8fd7fa3b0160435
+#            client-name: Virtual Remembrance
+#            redirect-uri-template: http://localhost:8080/vr/login/oauth2/code/github
+
 #datasource:
 #  vr:
 #    url: jdbc:mysql://localhost:3306/vr?useLegacyDatetimeCode=false&serverTimezone=America/New_York
