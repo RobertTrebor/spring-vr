@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class AppController {
@@ -34,6 +35,18 @@ public class AppController {
 
     @RequestMapping(value = {"/"})
     String home(ModelMap modal) {
+        modal.addAttribute("title", "Virtual Remembrance");
+        return "oauth";
+    }
+
+    @PostMapping(value = {"/signin"})
+    public String getLogin(Model model){
+        Map<String, Object> map = model.asMap();
+        return "";
+    }
+
+    @RequestMapping(value = {"/index"})
+    String index(ModelMap modal) {
         modal.addAttribute("title", "Virtual Remembrance");
         return "index";
     }
