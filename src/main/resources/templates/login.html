@@ -51,16 +51,16 @@
     </div>
   </div>
   <div class="container">
-    <div>
-      <button onClick="logout()" class="btn btn-primary">Logout</button>
-    </div>
+  <div>
+    <button onClick="logout()" class="btn btn-primary">Logout</button>
+  </div>
   </div>
   <div class="container">
     <div>
-      <a th:href="@{/cemeteries/}">Login for Cemeteries</a>
+      <a th:href="@{/cemeteries/}">Show Cemeteries</a>
     </div>
     <div>
-      <a th:href="@{/index}">Login for Angular Cemeteries</a>
+      <a th:href="@{/index}">Show Angular Cemeteries</a>
     </div>
   </div>
 <div th:replace="fragments/footer :: footer"/>
@@ -80,7 +80,8 @@
       }
     });
     $.get("/user", function(data) {
-      $("#user").html(data.userAuthentication.details.name);
+      ///$("#user").html(data.userAuthentication.details.name);
+      $("#user").html(data.fullname);
       $(".unauthenticated").hide();
       $(".authenticated").show();
     });
