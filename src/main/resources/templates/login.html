@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
 <head>
   <meta charset="UTF-8">
   <title>Virtual Remembrance Thyme</title>
@@ -7,9 +9,18 @@
         href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
-  <h1>Hello Spring MVC, Cemeteries</h1>
-
   <div class="container">
+    <p>
+      <span sec:authorize="isAuthenticated()" style="display: inline-block;">
+                    | Logged user: <span sec:authentication="name"></span> |
+                    Roles: <span sec:authentication="principal.authorities"></span> |
+                    <a th:href="@{/logout}">Sign Out</a>
+                </span>
+    <h2>Logged in user: <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b></h2>
+    </p>
+  </div>
+  <div class="container" th:if="${#httpServletRequest.remoteUser == null}">
+    Logged in user: <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b>
     <h1>Virtual Remembrance</h1>
     <form class="form-signin" th:action="@{/login}" method="POST">
       <h2 class="form-signin-heading">Please sign in</h2>
