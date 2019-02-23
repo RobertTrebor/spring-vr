@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+                xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
   <meta charset="UTF-8">
   <title>Virtual Remembrance Thyme</title>
-  <link rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <div th:replace="fragments/header :: header-css"/>
 </head>
 <body>
+<div th:replace="fragments/header :: header"/>
   <div class="container">
     <p>
       <span sec:authorize="isAuthenticated()" style="display: inline-block;">
@@ -35,5 +35,64 @@
       <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     </form>
   </div>
+
+  <div class="container unauthenticated">
+    <div>
+      With Facebook: <a href="/login/facebook">click here</a>
+    </div>
+    <div>
+      With Github: <a href="/login/github">click here</a>
+    </div>
+  </div>
+  <div class="container authenticated" style="display: none">
+    Logged in as: <span id="user"></span>
+    <div>
+      <button onClick="logout()" class="btn btn-primary">Logout</button>
+    </div>
+  </div>
+  <div class="container">
+    <div>
+      <button onClick="logout()" class="btn btn-primary">Logout</button>
+    </div>
+  </div>
+  <div class="container">
+    <div>
+      <a th:href="@{/cemeteries/}">Login for Cemeteries</a>
+    </div>
+    <div>
+      <a th:href="@{/index}">Login for Angular Cemeteries</a>
+    </div>
+  </div>
+<div th:replace="fragments/footer :: footer"/>
+  <script type="text/javascript" src="/webjars/js-cookie/js.cookie.js"></script>
+  <script type="text/javascript">
+    $.ajaxSetup({
+      beforeSend : function(xhr, settings) {
+        if (settings.type == 'POST' || settings.type == 'PUT'
+                || settings.type == 'DELETE') {
+          if (!(/^http:.*/.test(settings.url) || /^https:.*/
+                  .test(settings.url))) {
+            // Only send the token to relative URLs i.e. locally.
+            xhr.setRequestHeader("X-XSRF-TOKEN", Cookies
+                    .get('XSRF-TOKEN'));
+          }
+        }
+      }
+    });
+    $.get("/user", function(data) {
+      $("#user").html(data.userAuthentication.details.name);
+      $(".unauthenticated").hide();
+      $(".authenticated").show();
+    });
+    var logout = function() {
+      $.post("/logout", function() {
+        console.log("logout");
+        $("#user").html('');
+        $(".unauthenticated").show();
+        $(".authenticated").hide();
+      })
+      return true;
+    }
+  </script>
 </body>
 </html>

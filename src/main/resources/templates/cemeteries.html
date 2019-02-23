@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Virtual Remembrance Thyme</title>
-  <link rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <div th:replace="fragments/header :: header-css"/>
 </head>
 <body>
+<div th:replace="fragments/header :: header"/>
   <div class="container">
     <h1>Virtual Remembrance</h1>
     <table class="table">
@@ -49,5 +49,6 @@
     </div>
   </div>
   <script th:src="@{|/js/script/main.js|}"></script>
+<div th:replace="fragments/footer :: footer"/>
 </body>
 </html>

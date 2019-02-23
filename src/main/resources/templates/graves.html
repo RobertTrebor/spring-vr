@@ -3,12 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Virtual Remembrance Thyme</title>
-  <link rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <div th:replace="fragments/header :: header-css"/>
 </head>
 <body>
-  <h1>Hello Spring MVC, Cemeteries</h1>
-
+<div th:replace="fragments/header :: header"/>
   <div class="container">
     <h1>Virtual Remembrance</h1>
     <table class="table">
@@ -35,7 +33,6 @@
       <button class="btn btn-primary" type="submit">Add Cemetery</button>
     </form>
   </div>
-
-
+<div th:replace="fragments/footer :: footer"/>
 </body>
 </html>

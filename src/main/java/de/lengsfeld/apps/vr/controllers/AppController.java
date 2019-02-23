@@ -36,7 +36,7 @@ public class AppController {
     @RequestMapping(value = {"/"})
     String home(ModelMap modal) {
         modal.addAttribute("title", "Virtual Remembrance");
-        return "oauth";
+        return "login";
     }
 
     @PostMapping(value = {"/signin"})
