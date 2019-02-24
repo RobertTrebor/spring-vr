@@ -19,14 +19,29 @@
             </ul>
         </div>
         <div class="collapse navbar-collapse" id="navbarNav2">
-            <div class="authenticated" style="display: none">
+            <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Social Logins
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/login/facebook">Login with Facebook</a>
+                    <a class="dropdown-item" href="/login/github">Login with Github</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>
+            </ul>
+
+            <div class="container" th:if="${#httpServletRequest.remoteUser != null}">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><button class="btn btn-danger" onClick="logout();location.reload();">Logout</button></li>
+                    <span class="navbar-text">Logged in as: <span id="user"></span></span>
+                    <li style="padding-left:10px" class="nav-item"><button class="btn btn-danger" onClick="logout();location.reload();">Logout</button></li>
                 </ul>
             </div>
-            <div class="unauthenticated">
+            <div class="container" th:if="${#httpServletRequest.remoteUser == null}">
                 <ul class="navbar-nav">
-                    <li class="nav-item">Not Logged In></li>
+                    <li class="nav-item"><p class="btn btn-info"> Not Logged In</p></li>
                 </ul>
             </div>
         </div>

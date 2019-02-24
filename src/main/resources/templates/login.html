@@ -9,9 +9,6 @@
 </head>
 <body>
   <div th:replace="fragments/header :: header"/>
-  <div class="container-fluid" th:if="${#httpServletRequest.remoteUser != null}">
-    <p>Logged in user: <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b></p>
-  </div>
   <div class="container-fluid">
       <div th:if="${#httpServletRequest.remoteUser == null}">
         <form class="form-signin" th:action="@{/login}" method="POST">
@@ -28,10 +25,26 @@
         </form>
       </div>
   </div>
-
-  <div class="container-fluid">
-      With Facebook: <a href="/login/facebook">click here</a>
-      With Github: <a href="/login/github">click here</a>
+  <p></p>
+  <div class="container-fluid" th:if="${#httpServletRequest.remoteUser == null}">
+      <div class="card bg-primary">
+          <div class="card-header">
+              <h2>Social Login</h2>
+          </div>
+          <div class="card-body bg-dark">
+              <div>
+                  <p></p>
+                  <a class="btn btn-primary" href="/login/facebook">Login with Facebook</a>
+                  <a class="btn btn-primary" href="/login/github">Login with Github</a>
+              </div>
+          </div>
+          <div class="card-footer">
+              <p></p>
+          </div>
+      </div>
+  </div>
+  <div class="jumbotron-fluid min-vh-100">
+      <h1>Welcome to Virtual Remembrance</h1>
   </div>
 
 <div th:replace="fragments/footer :: footer"/>

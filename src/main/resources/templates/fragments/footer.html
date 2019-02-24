@@ -1,5 +1,5 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+>
 <head>
 </head>
 <body>
@@ -8,11 +8,9 @@
     <div class="container-fluid">
 
         <footer>
-            <span sec:authorize="isAuthenticated()">
-                | Logged user: <span sec:authentication="name"></span> |
-                Roles: <span sec:authentication="principal.authorities"></span> |
-                <a th:href="@{/logout}">Sign Out</a>
-            </span>
+            <div class="container-fluid" th:if="${#httpServletRequest.remoteUser != null}">
+                <p>Logged in user: <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b></p>
+            </div>
             <script type="text/javascript" src="/webjars/jquery/3.3.1/jquery.min.js"></script>
             <script type="text/javascript" src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
             <script type="text/javascript" src="/webjars/js-cookie/js.cookie.js"></script>
