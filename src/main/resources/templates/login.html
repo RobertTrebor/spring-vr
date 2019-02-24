@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-                xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+>
 
 <head>
   <meta charset="UTF-8">
@@ -8,92 +8,33 @@
   <div th:replace="fragments/header :: header-css"/>
 </head>
 <body>
-<div th:replace="fragments/header :: header"/>
-  <div class="container">
-    <p>
-      <span sec:authorize="isAuthenticated()" style="display: inline-block;">
-                    | Logged user: <span sec:authentication="name"></span> |
-                    Roles: <span sec:authentication="principal.authorities"></span> |
-                    <a th:href="@{/logout}">Sign Out</a>
-                </span>
-    <h2>Logged in user: <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b></h2>
-    </p>
+  <div th:replace="fragments/header :: header"/>
+  <div class="container-fluid" th:if="${#httpServletRequest.remoteUser != null}">
+    <p>Logged in user: <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b></p>
   </div>
-  <div class="container" th:if="${#httpServletRequest.remoteUser == null}">
-    Logged in user: <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b>
-    <h1>Virtual Remembrance</h1>
-    <form class="form-signin" th:action="@{/login}" method="POST">
-      <h2 class="form-signin-heading">Please sign in</h2>
-      <label for="username" class="sr-only">Username</label>
-      <input id="username" type="text" name="username" class="form-control"
-             placeholder="Username" required autofocus>
-      <label for="inputPassword" class="sr-only">Password</label>
-      <input id="inputPassword" type="password" name="password" class="form-control"
-             placeholder="Password" required>
-      <button class="btn btn-lg btn-primary btn-block" id="login"
-              type="submit">Sign in</button>
-      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-    </form>
+  <div class="container-fluid">
+      <div th:if="${#httpServletRequest.remoteUser == null}">
+        <form class="form-signin" th:action="@{/login}" method="POST">
+          <h2 class="form-signin-heading">Please sign in</h2>
+          <label for="username" class="sr-only">Username</label>
+          <input id="username" type="text" name="username" class="form-control"
+                 placeholder="Username" required autofocus>
+          <label for="inputPassword" class="sr-only">Password</label>
+          <input id="inputPassword" type="password" name="password" class="form-control"
+                 placeholder="Password" required>
+          <button class="btn btn-lg btn-primary btn-block" id="login"
+                  type="submit">Sign in</button>
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        </form>
+      </div>
   </div>
 
-  <div class="container unauthenticated">
-    <div>
+  <div class="container-fluid">
       With Facebook: <a href="/login/facebook">click here</a>
-    </div>
-    <div>
       With Github: <a href="/login/github">click here</a>
-    </div>
   </div>
-  <div class="container authenticated" style="display: none">
-    Logged in as: <span id="user"></span>
-    <div>
-      <button onClick="logout()" class="btn btn-primary">Logout</button>
-    </div>
-  </div>
-  <div class="container">
-  <div>
-    <button onClick="logout()" class="btn btn-primary">Logout</button>
-  </div>
-  </div>
-  <div class="container">
-    <div>
-      <a th:href="@{/cemeteries/}">Show Cemeteries</a>
-    </div>
-    <div>
-      <a th:href="@{/index}">Show Angular Cemeteries</a>
-    </div>
-  </div>
+
 <div th:replace="fragments/footer :: footer"/>
-  <script type="text/javascript" src="/webjars/js-cookie/js.cookie.js"></script>
-  <script type="text/javascript">
-    $.ajaxSetup({
-      beforeSend : function(xhr, settings) {
-        if (settings.type == 'POST' || settings.type == 'PUT'
-                || settings.type == 'DELETE') {
-          if (!(/^http:.*/.test(settings.url) || /^https:.*/
-                  .test(settings.url))) {
-            // Only send the token to relative URLs i.e. locally.
-            xhr.setRequestHeader("X-XSRF-TOKEN", Cookies
-                    .get('XSRF-TOKEN'));
-          }
-        }
-      }
-    });
-    $.get("/user", function(data) {
-      ///$("#user").html(data.userAuthentication.details.name);
-      $("#user").html(data.fullname);
-      $(".unauthenticated").hide();
-      $(".authenticated").show();
-    });
-    var logout = function() {
-      $.post("/logout", function() {
-        console.log("logout");
-        $("#user").html('');
-        $(".unauthenticated").show();
-        $(".authenticated").hide();
-      })
-      return true;
-    }
-  </script>
+
 </body>
 </html>

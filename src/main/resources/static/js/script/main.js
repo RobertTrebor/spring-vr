@@ -1,33 +1,29 @@
-document.addEventListener('DOMContentLoaded',function(){
-  document.getElementById('try').onclick=function(){
-    console.log('try');
-    req=new XMLHttpRequest();
-    req.withCredentials=true;
-    req.open("GET",'http://localhost:8080/restcemeteries',true);
-    req.send();
-    req.onload=function(){
-      json=JSON.parse(req.responseText);
-      document.getElementById('textarea').innerHTML=JSON.stringify(json);
-    };
-  };
-  document.getElementById('try2').onclick=function(){
-    console.log('try2');
-    req=new XMLHttpRequest();
-    req.open("GET",'http://localhost:8080/restcemeteries',true);
-    req.send();
-    req.onload=function(){
-      json=JSON.parse(req.responseText);
-      var html = "";
-      json.forEach(function (val) {
-        var keys = Object.keys(val);
-        html += "<div class = 'cat'>";
-        keys.forEach(function(key){
-          html += "<strong>" + key + "</strong>: " + val[key] + "<br>";
-        })
-      });
-      html += "</div><br>";
-      document.getElementById('textarea2').innerHTML=html;
-    };
-  };
+$.ajaxSetup({
+  beforeSend : function(xhr, settings) {
+    if (settings.type == 'POST' || settings.type == 'PUT'
+        || settings.type == 'DELETE') {
+      if (!(/^http:.*/.test(settings.url) || /^https:.*/
+          .test(settings.url))) {
+        // Only send the token to relative URLs i.e. locally.
+        xhr.setRequestHeader("X-XSRF-TOKEN", Cookies
+            .get('XSRF-TOKEN'));
+      }
+    }
+  }
 });
 
+$.get("/user", function(data) {
+  ///$("#user").html(data.userAuthentication.details.name);
+  $("#user").html(data.fullname);
+  $(".unauthenticated").hide();
+  $(".authenticated").show();
+});
+var logout = function() {
+  $.post("/logout", function() {
+    console.log("logout");
+    $("#user").html('');
+    $(".unauthenticated").show();
+    $(".authenticated").hide();
+  })
+  return true;
+}
