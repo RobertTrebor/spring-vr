@@ -18,8 +18,8 @@ spring:
     show-sql: true
   security:
     user:
-      name:
-      password:
+      name: user
+      password: password
 security:
   oauth2:
     client:
