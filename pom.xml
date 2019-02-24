@@ -151,6 +151,7 @@
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>${liquibase.maven.plugin}</version>
                 <configuration>
+                    <skip>true</skip>
                     <driver>com.mysql.jdbc.Driver</driver>
                     <url>jdbc:mysql://localhost:3306</url>
                     <defaultSchemaName>vr</defaultSchemaName>
