@@ -31,7 +31,7 @@ security:
 github:
   client:
     clientId: 67dd380e2dd4c0a0d6ff
-    clientSecret:
+    clientSecret: 2383143b68a258d63bc6ffc4caa12abcdf0ce324
     accessTokenUri: https://github.com/login/oauth/access_token
     userAuthorizationUri: https://github.com/login/oauth/authorize
     clientAuthenticationScheme: form
