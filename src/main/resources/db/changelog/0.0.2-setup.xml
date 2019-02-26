@@ -4,68 +4,56 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
 
-    <changeSet id="0.0.1-setup" author="rl">
-        <createTable tableName="grave">
-            <column name="ID" type="bigint"/>
+    <changeSet id="0.0.2-setup" author="rl">
+        <addColumn tableName="grave">
             <column name="DATEBIRTH" type="date"/>
             <column name="DATEDEATH" type="date"/>
-            <column name="FIRSTNAME" type="varchar(255)"/>
-            <column name="LASTNAME" type="varchar(255)"/>
             <column name="GRAVE_LOC" type="varchar(255)"/>
             <column name="LATITUDE" type="varchar(255)"/>
             <column name="LONGITUDE" type="varchar(255)"/>
             <column name="SEX" type="varchar(255)"/>
             <column name="TOMBSTONE_PATH" type="varchar(255)"/>
             <column name="VITA_PATH" type="varchar(255)"/>
-        </createTable>
-        <addPrimaryKey tableName="grave" columnNames="id"/>
+        </addColumn>
         <rollback>
-            <delete tableName="grave"/>
+            <dropColumn tableName="grave">
+                <column name="DATEBIRTH" type="date"/>
+                <column name="DATEDEATH" type="date"/>
+                <column name="GRAVE_LOC" type="varchar(255)"/>
+                <column name="LATITUDE" type="varchar(255)"/>
+                <column name="LONGITUDE" type="varchar(255)"/>
+                <column name="SEX" type="varchar(255)"/>
+                <column name="TOMBSTONE_PATH" type="varchar(255)"/>
+                <column name="VITA_PATH" type="varchar(255)"/>
+            </dropColumn>
         </rollback>
     </changeSet>
 
-    <changeSet id="0.0.1-setup-2" author="rl">
-        <createTable tableName="cemetery">
-            <column name="ID" type="bigint"/>
+    <changeSet id="0.0.2-setup-2" author="rl">
+        <addColumn tableName="cemetery">
             <column name="CITY" type="varchar(255)"/>
             <column name="COUNTRY" type="varchar(255)"/>
             <column name="LATITUDE" type="varchar(255)"/>
             <column name="LONGITUDE" type="varchar(255)"/>
-            <column name="NAME" type="varchar(255)"/>
             <column name="STREET" type="varchar(255)"/>
             <column name="ZIPCODE" type="varchar(255)"/>
-        </createTable>
-
-        <addPrimaryKey tableName="cemetery" columnNames="ID"/>
+        </addColumn>
 
         <rollback>
-            <delete tableName="cemetery"/>
+            <dropColumn tableName="cemetery">
+                <column name="CITY"/>
+                <column name="COUNTRY"/>
+                <column name="LATITUDE"/>
+                <column name="LONGITUDE"/>
+                <column name="STREET"/>
+                <column name="ZIPCODE"/>
+            </dropColumn>
         </rollback>
     </changeSet>
 
-    <changeSet id="0.0.1-setup-3" author="rl">
-        <createTable tableName="countries">
-            <column name="COUNTRYCODE" type="varchar(255)"/>
-            <column name="COUNTRYNAME" type="varchar(255)"/>
-        </createTable>
-
-        <addPrimaryKey tableName="countries" columnNames="COUNTRYCODE"/>
-
-        <rollback>
-            <delete tableName="countries"/>
-        </rollback>
+    <changeSet id="initial_data" author="rl">
+        <sqlFile path="sql/initial.sql" relativeToChangelogFile="true"/>
+        <rollback/>
     </changeSet>
-
-    <!--
-    <changeSet id="0.0.1-setup-fk" author="rl">
-        <addForeignKeyConstraint baseTableName="grave" baseColumnNames="CEMETERY_ID" constraintName="FK_CEMETERY_ID"
-                                 referencedTableName="cemetery" referencedColumnNames="ID"/>
-
-        <rollback>
-            <dropForeignKeyConstraint baseTableName="grave"/>
-        </rollback>
-    </changeSet>
-
-    -->
 
 </databaseChangeLog>

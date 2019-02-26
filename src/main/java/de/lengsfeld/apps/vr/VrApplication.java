@@ -26,7 +26,7 @@ public class VrApplication {
         this.cemeteryRepository = cemeteryRepository;
     }
 
-    @Scheduled(initialDelay = 1000, fixedRate = 5000)
+    @Scheduled(initialDelay = 1000, fixedRate = 15000)
     public void run() {
         log.info("Number of cemeteries: " + cemeteryRepository.count());
     }

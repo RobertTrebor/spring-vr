@@ -1,0 +1,52 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row justify-content-end">
+      <form method="GET" th:action="@{/add-grave/{id}(id=${selectedcemetery.id})}">
+        <button class="btn btn-info" type="submit">Add Grave</button>
+      </form>
+    </div>
+    <ul class="list-unstyled">
+      <li th:each="grave:${graves}">
+        <!--/*@thymesVar id="grave" type="de.lengsfeld.apps.vr.entity.Grave"*/-->
+
+            <div class="card bg-transparent rounded-bottom">
+              <div class="card-header rounded-top">
+                  <span th:text="${grave.id}"/>
+                  <span class="font-weight-bold" th:text="${grave.firstName}"/>
+                  <span class="font-weight-bold" th:text="${grave.lastName}"/>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-8">
+                    <div class="row">
+                      <div class="col-6">
+                        <span th:inline="text">Date of Birth: </span>
+                      </div>
+                      <div class="col-6">
+                        <span th:text="${grave.datebirth}"/>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-6">
+                        <span th:inline="text">Date of Death: </span>
+                      </div>
+                      <div class="col-6">
+                        <span th:text="${grave.datedeath}"/>
+                      </div>
+                    </div>
+                  </div>
+                <div class="col-4">
+                  <a th:href="@{/editgrave/{id}(id=${grave.id})}" class="btn btn-primary">Edit</a>
+                </div>
+              </div>
+            </div>
+        </div>
+        </br>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>

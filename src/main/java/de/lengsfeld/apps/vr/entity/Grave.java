@@ -1,9 +1,17 @@
 package de.lengsfeld.apps.vr.entity;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
+@EqualsAndHashCode
+@Getter
+@Setter
 @Entity
 @Table(name = "grave")
 public class Grave implements Serializable {
@@ -21,6 +29,15 @@ public class Grave implements Serializable {
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "FK_CEMETERY_ID"))
     private Cemetery cemetery;
+
+    private Date datebirth;
+    private Date datedeath;
+    private String graveLoc;
+    private String latitude;
+    private String longitude;
+    private String sex;
+    private String tombstonePath;
+    private String vitaPath;
 
     private LocalDateTime created;
     private LocalDateTime modified;
@@ -40,54 +57,6 @@ public class Grave implements Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
         this.cemetery = cemetery;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Cemetery getCemetery() {
-        return cemetery;
-    }
-
-    public void setCemetery(Cemetery cemetery) {
-        this.cemetery = cemetery;
-    }
-
-    public LocalDateTime getCreated(){
-        return created;
-    }
-
-    public void setCreated(LocalDateTime created){
-        this.created = created;
-    }
-
-    public LocalDateTime getModified(){
-        return modified;
-    }
-
-    public void setModified(LocalDateTime modified){
-        this.modified = modified;
     }
 
 }

@@ -2,39 +2,48 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Virtual Remembrance Thyme</title>
+  <title>Virtual Remembrance</title>
   <div th:replace="fragments/header :: header-css"/>
 </head>
 <body>
 <div th:replace="fragments/header :: header"/>
   <div class="container-fluid">
-    <h1>Virtual Remembrance</h1>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>graves</th>
-          <th>Name</th>
-          <th>Edit</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-      <tr th:each="cemetery:${cemeteries}">
-        <td th:text="${cemetery.id}">Id</td>
-        <td><a th:href="@{/show-graves/{id}(id=${cemetery.id})}" class="btn btn-primary"></a></td>
-        <td th:text="${cemetery.name}">Name</td>
-        <td><a th:href="@{/edit/{id}(id=${cemetery.id})}" class="btn btn-primary"></a></td>
-        <td><a th:href="@{/edit/{id}(id=${cemetery.id})}" class="btn btn-primary"></a></td>
-      </tr>
-      </tbody>
-    </table>
-    <form method="GET" th:action="@{/add-cemetery}">
-      <button id="add_cemetery_btn" class="btn btn-primary" type="submit">Add Cemetery</button>
-    </form>
+    <div class="row">
+      <div class="col-6">
+        <div class="row justify-content-end">
+            <form method="GET" th:action="@{/add-cemetery}">
+              <button id="add_cemetery_btn" class="btn btn-info" type="submit">Add Cemetery</button>
+            </form>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>City</th>
+              <th>Street</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr th:each="cemetery:${cemeteries}">
+            <td th:text="${cemetery.id}">Id</td>
+            <td th:text="${cemetery.name}">Name</td>
+            <td th:text="${cemetery.name}">City</td>
+            <td th:text="${cemetery.name}">Street</td>
+            <td><a th:href="@{/edit/{id}(id=${cemetery.id})}" class="btn btn-primary">Edit</a></td>
+            <td><a th:href="@{/show-graves/{id}(id=${cemetery.id})}" class="btn btn-primary">Graves</a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-6">
+        <div th:insert="fragments/gravesfragment2"></div>
+      </div>
+    </div>
   </div>
 
-  <div th:insert="fragments/gravesfragment"></div>
 
   <div class="container-fluid">
     <div class="panel-group">
