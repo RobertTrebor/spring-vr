@@ -9,7 +9,7 @@
 <div th:replace="fragments/header :: header"/>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-6">
+      <div class="col-xl-8">
         <div class="row justify-content-end">
             <form method="GET" th:action="@{/add-cemetery}">
               <button id="add_cemetery_btn" class="btn btn-info" type="submit">Add Cemetery</button>
@@ -38,7 +38,7 @@
           </tbody>
         </table>
       </div>
-      <div class="col-6">
+      <div class="col-xl-4">
         <div th:insert="fragments/gravesfragment2"></div>
       </div>
     </div>
