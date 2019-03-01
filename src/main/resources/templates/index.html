@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Virtual Remembrance Thyme</title>
+    <!--<div th:replace="fragments/header :: header-css"/>-->
+    <link rel="stylesheet" type="text/css"
+          href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+    <link th:href="@{/css/app.css}" rel="stylesheet"/>
+</head>
+
+
+<body ng-app="vrApp">
+    <div th:replace="fragments/header :: header"/>
+    <div ui-view/>
+    <div th:replace="fragments/footer :: footer"/>
+</body>
+
+</html>
