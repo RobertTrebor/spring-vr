@@ -13,7 +13,7 @@ vrApp.config(['$stateProvider', '$urlRouterProvider',
         $stateProvider
             .state('cemetery', {
                 url: '/',
-                templateUrl: 'partials/cemeterieslist',
+                templateUrl: 'partials/angular',
                 controller: 'CemeteryController',
                 controllerAs: 'cctrl',
                 resolve: {

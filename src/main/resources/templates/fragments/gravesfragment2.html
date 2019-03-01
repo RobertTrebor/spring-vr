@@ -12,7 +12,7 @@
       <li th:each="grave:${graves}">
         <!--/*@thymesVar id="grave" type="de.lengsfeld.apps.vr.entity.Grave"*/-->
 
-            <div class="card bg-transparent rounded-bottom">
+            <div class="card rounded-bottom" style="background-color: #EAE7E7;">
               <div class="card-header rounded-top">
                   <span th:text="${grave.id}"/>
                   <span class="font-weight-bold" th:text="${grave.firstName}"/>

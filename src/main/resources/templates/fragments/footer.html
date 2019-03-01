@@ -1,23 +1,29 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 </head>
 <body>
-<div th:fragment="footer">
+    <div th:fragment="footer">
+        <div class="container-fluid">
+            <footer>
+                <div class="container-fluid" th:if="${#httpServletRequest.remoteUser != null}">
+                    <p>Logged in user: <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b></p>
+                </div>
+            </footer>
+        </div>
+        <script type="text/javascript" src="/webjars/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/webjars/js-cookie/js.cookie.js"></script>
+        <script type="text/javascript" th:src="@{|/js/script/main.js|}"></script>
 
-    <div class="container-fluid">
-
-        <footer>
-            <div class="container-fluid" th:if="${#httpServletRequest.remoteUser != null}">
-                <p>Logged in user: <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b></p>
-            </div>
-            <script type="text/javascript" src="/webjars/jquery/3.3.1/jquery.min.js"></script>
-            <script type="text/javascript" src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-            <script type="text/javascript" src="/webjars/js-cookie/js.cookie.js"></script>
-            <script type="text/javascript" th:src="@{|/js/script/main.js|}"></script>
-        </footer>
+        <script type="text/javascript" th:src="@{|/js/lib/angular.min.js|}"></script>
+        <script type="text/javascript" th:src="@{|/js/lib/angular-ui-router.min.js|}"></script>
+        <script type="text/javascript" th:src="@{|/js/lib/localforage.min.js|}"></script>
+        <script type="text/javascript" th:src="@{|/js/lib/ngStorage.min.js|}"></script>
+        <script type="text/javascript" th:src="@{|/js/app/app.js|}"></script>
+        <script type="text/javascript" th:src="@{|/js/app/CemeteryService.js|}"></script>
+        <script type="text/javascript" th:src="@{|/js/app/CemeteryController.js|}"></script>
+        <script type="text/javascript" th:src="@{|/js/app/GraveService.js|}"></script>
+        <script type="text/javascript" th:src="@{|/js/app/GraveController.js|}"></script>
     </div>
-
-</div>
 </body>
 </html>

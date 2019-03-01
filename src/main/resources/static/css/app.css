@@ -3,11 +3,11 @@ body, #mainWrapper {
     height: 100%;
     //background-color: rgb(245, 245, 245);
 }
-
+/*
 body, .form-control {
     font-size: 12px !important;
 }
-
+*/
 .floatRight {
     float: right;
     margin-right: 18px;
@@ -18,7 +18,7 @@ body, .form-control {
 }
 
 .generic-container {
-    width: 80%;
+    width: 75%;
     margin-left: 20px;
     margin-top: 20px;
     margin-bottom: 20px;

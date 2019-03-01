@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 
-<html lang="en" ng-app="vrApp">
+<html lang="en" ng-app="vrApp" >
 <head>
     <title>${title}</title>
-    <link href="css/bootstrap.css" rel="stylesheet"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css"
+          href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"/>
     <link href="css/app.css" rel="stylesheet"/>
+    <link href="css/main.css" rel="stylesheet"/>
 </head>
 <body>
 
-<div ui-view></div>
+<body ng-app="vrApp">
+<div ui-view/>
+</body>
 <script src="js/lib/angular.min.js"></script>
 <script src="js/lib/angular-ui-router.min.js"></script>
 <script src="js/lib/localforage.min.js"></script>
