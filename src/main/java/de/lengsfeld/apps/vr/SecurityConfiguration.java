@@ -1,5 +1,11 @@
 package de.lengsfeld.apps.vr;
 
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import javax.servlet.Filter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +35,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.filter.CompositeFilter;
-
-import javax.servlet.Filter;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 @Configuration
 @RestController
@@ -116,14 +115,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     @ConfigurationProperties("github")
-    public de.lengsfeld.apps.vr.ClientResources github() {
-        return new de.lengsfeld.apps.vr.ClientResources();
+    public ClientResources github() {
+        return new ClientResources();
     }
 
     @Bean
     @ConfigurationProperties("facebook")
-    public de.lengsfeld.apps.vr.ClientResources facebook() {
-        return new de.lengsfeld.apps.vr.ClientResources();
+    public ClientResources facebook() {
+        return new ClientResources();
     }
 
     private Filter ssoFilter() {
@@ -135,7 +134,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return filter;
     }
 
-    private Filter ssoFilter(de.lengsfeld.apps.vr.ClientResources client, String path) {
+    private Filter ssoFilter(ClientResources client, String path) {
         OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(
                 path);
         OAuth2RestTemplate template = new OAuth2RestTemplate(client.getClient(), oauth2ClientContext);

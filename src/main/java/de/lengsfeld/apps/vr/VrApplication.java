@@ -12,6 +12,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
+/*
+    mvn spring-boot:run -Dspring.profiles.active=dev
+ */
+
 @SpringBootApplication
 @EnableScheduling
 public class VrApplication {
