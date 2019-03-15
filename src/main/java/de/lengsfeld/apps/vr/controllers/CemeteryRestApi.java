@@ -21,13 +21,13 @@ import java.util.List;
 @RequestMapping("/api")
 public class CemeteryRestApi {
 
-    public static final Logger logger = LoggerFactory.getLogger(CemeteryRestApi.class);
+    private static final Logger logger = LoggerFactory.getLogger(CemeteryRestApi.class);
 
     @Autowired
-    CemeteryService cemeteryService; //Service which will do all data retrieval/manipulation work
+    private CemeteryService cemeteryService; //Service which will do all data retrieval/manipulation work
 
     @Autowired
-    GraveService graveService;
+    private GraveService graveService;
 
     // -------------------Retrieve All Cemeteries---------------------------------------------
 
@@ -59,7 +59,7 @@ public class CemeteryRestApi {
 
     @RequestMapping(value = "/cemetery/{id}/graves", method = RequestMethod.GET)
     public ResponseEntity<?> getGravesInCemetery(@PathVariable("id") long id) {
-        logger.info("Fetching Cemetery with id {}", id);
+        logger.info("Fetching graves in Cemetery with id {}", id);
         Cemetery cemetery = cemeteryService.findById(id);
         if (cemetery == null) {
             logger.error("Cemetery with id {} not found.", id);

@@ -6,6 +6,7 @@ angular.module('vrApp').controller('CemeteryController',
         var self = this;
         self.cemetery = {};
         self.cemeteries = [];
+        self.graves = [];
 
         self.submit = submit;
         self.getAllCemeteries = getAllCemeteries;
@@ -14,6 +15,7 @@ angular.module('vrApp').controller('CemeteryController',
         self.updateCemetery = updateCemetery;
         self.removeCemetery = removeCemetery;
         self.editCemetery = editCemetery;
+        self.selectCemeteryAndShowGraves = selectCemeteryAndShowGraves;
         self.reset = reset;
 
         self.successMessage = '';
@@ -32,6 +34,12 @@ angular.module('vrApp').controller('CemeteryController',
                 updateCemetery(self.cemetery, self.cemetery.id);
                 console.log('Cemetery updated with id ', self.cemetery.id);
             }
+        }
+
+        function selectCemeteryAndShowGraves(id) {
+            console.log('Select Cemetery and show Graves');
+            editCemetery(id);
+            getGravesInCemetery(id);
         }
 
         function createCemetery(cemetery) {
@@ -77,8 +85,7 @@ angular.module('vrApp').controller('CemeteryController',
 
         function removeCemetery(id) {
             console.log('About to remove Cemetery with id ' + id);
-            CemeteryService.removeCemetery(id)
-                .then(
+            CemeteryService.removeCemetery(id).then(
                     function () {
                         console.log('Cemetery ' + id + ' removed successfully');
                     },
@@ -90,35 +97,41 @@ angular.module('vrApp').controller('CemeteryController',
 
 
         function getAllCemeteries() {
+            console.log('getAllCemeteries');
             return CemeteryService.getAllCemeteries();
         }
 
         function getGravesInCemetery(id) {
-            console.log('Get graves in Cemetery with id ' + id);
+            console.log('Get graves in selected Cemetery');
             CemeteryService.getGravesInCemetery(id).then(
-                function (cemetery) {
-                    self.cemetery = cemetery;
-                    console.log(cemetery.graves)
+                function (graves) {
+                    self.graves = graves;
+                    console.log('getGravesInCemetery SUCCESS');
+                },
+                function (errResponse) {
+                    console.log('getGravesInCemetery FAIL');
                 }
-            )
-
+            );
         }
 
 
         function editCemetery(id) {
+            console.log('Edit Cemetery with id ' + id);
             self.successMessage = '';
             self.errorMessage = '';
             CemeteryService.getCemetery(id).then(
                 function (cemetery) {
                     self.cemetery = cemetery;
+                    console.log('editCemetery with id: ' + id);
                 },
                 function (errResponse) {
-                    console.error('Error while removing cemetery ' + id + ', Error :' + errResponse.data);
+                    console.error('Error while editing cemetery ' + id + ', Error :' + errResponse.data);
                 }
             );
         }
 
         function reset() {
+            console.log('reset');
             self.successMessage = '';
             self.errorMessage = '';
             self.cemetery = {};

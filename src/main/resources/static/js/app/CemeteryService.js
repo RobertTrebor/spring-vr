@@ -10,7 +10,8 @@ angular.module('vrApp').factory('CemeteryService',
                 getCemetery: getCemetery,
                 createCemetery: createCemetery,
                 updateCemetery: updateCemetery,
-                removeCemetery: removeCemetery
+                removeCemetery: removeCemetery,
+                getGravesInCemetery: getGravesInCemetery
             };
 
             return factory;
@@ -34,6 +35,7 @@ angular.module('vrApp').factory('CemeteryService',
             }
 
             function getAllCemeteries() {
+                console.log('localStorace.cemeteries');
                 return $localStorage.cemeteries;
             }
 
@@ -55,16 +57,16 @@ angular.module('vrApp').factory('CemeteryService',
             }
 
             function getGravesInCemetery(id) {
-                console.log('Fetching Cemetery with id :' + id);
+                console.log('Fetching Graves in Cemetery with id :' + id);
                 var deferred = $q.defer();
-                $http.get(urls.CEMETERY_SERVICE_API + id)
+                $http.get(urls.CEMETERY_SERVICE_API + id + '/graves')
                     .then(
                         function (response) {
-                            console.log('Fetched successfully Cemetery with id :' + id);
+                            console.log('Fetched successfully Graves in Cemetery with id :' + id);
                             deferred.resolve(response.data);
                         },
                         function (errResponse) {
-                            console.error('Error while loading cemetery with id :' + id);
+                            console.error('Error while loading Graves in Cemetery with id :' + id);
                             deferred.reject(errResponse);
                         }
                     );
@@ -95,11 +97,12 @@ angular.module('vrApp').factory('CemeteryService',
                 $http.put(urls.CEMETERY_SERVICE_API + id, cemetery)
                     .then(
                         function (response) {
+                            console.log('Loading all Cemeteres after update');
                             loadAllCemeteries();
                             deferred.resolve(response.data);
                         },
                         function (errResponse) {
-                            console.error('Error while updating Cemetery with id :' + id);
+                            console.error('Error while Loading all Cemeteres after update' + id);
                             deferred.reject(errResponse);
                         }
                     );
@@ -122,6 +125,5 @@ angular.module('vrApp').factory('CemeteryService',
                     );
                 return deferred.promise;
             }
-
         }
     ]);

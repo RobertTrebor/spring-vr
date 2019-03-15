@@ -16,13 +16,11 @@
                                 <input type="text" ng-model="cctrl.cemetery.name" id="uname"
                                        class="username form-control input-sm" placeholder="Enter your name" required
                                        ng-minlength="3"/>
-                                <input type="text" ng-model="cctrl.cemetery.graves" id="gravesInCemetery"
-                                       class="username form-control input-sm" placeholder="Enter your name"/>
+                                <!--<input type="text" ng-model="cctrl.cemetery.graves" id="gravesInCemetery"
+                                       class="username form-control input-sm" placeholder="Enter your name"/>-->
                             </div>
                         </div>
                     </div>
-
-
 
                     <div class="row">
                         <div class="form-actions floatRight">
@@ -63,7 +61,13 @@
                             </button>
                         </td>
                         <td>
-                            <button type="button" ng-click="cctrl.editCemetery(u.id)"
+                            <button type="button" ng-click="cctrl.selectCemeteryAndShowGraves(u.id)"
+                                    class="btn btn-success custom-width">
+                                Select
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" ng-click="cctrl.editCemetery(u.id);cctrl.getGravesInCemetery(u.id)"
                                     class="btn btn-success custom-width">
                                 Edit
                             </button>
@@ -93,9 +97,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="g in cctrl.getGravesInCemetery({{g.id}})">
+                    <tr ng-model="cemetery" ng-repeat="g in cctrl.graves">
                         <td>{{g.id}}</td>
-                        <td>{{g.name}}</td>
+                        <td>{{g.lastName}}</td>
                         <td></td>
                     </tr>
                     </tbody>
