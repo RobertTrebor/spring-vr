@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,8 +47,9 @@ public class AppController {
         List<Cemetery> cemeteries = cemeteryRepository.findAll();
         model.addAttribute("cemeteries", cemeteries);
         Cemetery cemetery = cemeteryRepository.findById(1L).get();
+        model.addAttribute("selectedcemetery", cemetery);
         List<Grave> graves = graveRepository.findGraveByCemetery(cemetery);
-        //model.addAttribute("graves", graves);
+        model.addAttribute("graves", graves);
         return "cemeteries";
     }
 
@@ -63,9 +65,9 @@ public class AppController {
         }
         cemeteryRepository.save(cemetery);
         model.addAttribute("cemeteries", cemeteryRepository.findAll());
+        model.addAttribute("selectedcemetery", cemetery);
         return "cemeteries";
     }
-
 
     @GetMapping(value = "/edit/{id}")
     public String showUpdateForm(@PathVariable("id") long id, Model model){
@@ -82,6 +84,7 @@ public class AppController {
         }
         cemeteryRepository.save(cemetery);
         model.addAttribute("cemeteries", cemeteryRepository.findAll());
+        model.addAttribute("selectedcemetery", cemetery);
         return "cemeteries";
     }
 
@@ -89,6 +92,32 @@ public class AppController {
     public String showGraves(@PathVariable("id") long id, Model model){
         model.addAttribute("cemeteries", cemeteryRepository.findAll());
         Cemetery cemetery = cemeteryRepository.findById(id).get();
+        model.addAttribute("selectedcemetery", cemetery);
+        List<Grave> graves = graveRepository.findGraveByCemetery(cemetery);
+        model.addAttribute("graves", graves);
+        return "cemeteries";
+    }
+
+    @GetMapping(value = "/add-grave/{id}")
+    public String showAddGrave(Grave grave, @PathVariable("id") long id, Model model){
+        Cemetery cemetery = cemeteryRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid: " + id));
+        model.addAttribute("selectedcemeteryid", cemetery.getId());
+        return "add-grave";
+    }
+
+    @PostMapping(value = "/addgrave")
+    public String addGrave(@Valid Grave grave, BindingResult result, Model model){
+        if(!cemeteryRepository.findById(grave.getCemetery().getId()).isPresent()){
+            result.addError(new ObjectError("Cemetery", "Does Not Exist"));
+        }
+        if(result.hasErrors()){
+            return "/add-grave";
+        }
+        Cemetery cemetery = cemeteryRepository.findById(grave.getCemetery().getId()).get();
+        grave.setCemetery(cemetery);
+        graveRepository.save(grave);
+        model.addAttribute("cemeteries", cemeteryRepository.findAll());
+        model.addAttribute("selectedcemetery", cemetery);
         List<Grave> graves = graveRepository.findGraveByCemetery(cemetery);
         model.addAttribute("graves", graves);
         return "cemeteries";

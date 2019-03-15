@@ -1,14 +1,21 @@
 package de.lengsfeld.apps.vr.entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "GRAVE")
+@Table(name = "grave")
 public class Grave implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @Column(name = "FIRSTNAME")
@@ -18,10 +25,11 @@ public class Grave implements Serializable {
     private String lastName;
 
     @ManyToOne
-    @JoinColumn(name = "CEMETERY_ID")
+    @JoinColumn(foreignKey = @ForeignKey(name = "FK_CEMETERY_ID"))
     private Cemetery cemetery;
 
-    protected Grave() {
+
+    public Grave() {
     }
 
     public Grave(String firstName, String lastName) {
