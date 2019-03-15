@@ -1,6 +1,7 @@
 package de.lengsfeld.apps.vr.service;
 
 import de.lengsfeld.apps.vr.entity.Cemetery;
+import de.lengsfeld.apps.vr.entity.Grave;
 
 import java.util.List;
 
@@ -21,5 +22,9 @@ public interface CemeteryService {
     List<Cemetery> findAllCemeteries();
 
     boolean isCemeteryExist(Cemetery cemetery);
+
+    boolean isGraveExist(Long id, Grave grave);
+
+    void saveGrave(Long id, Grave grave);
 
 }

@@ -70,6 +70,26 @@ public class CemeteryRestApi {
         return new ResponseEntity<List<Grave>>(graves, HttpStatus.OK);
     }
 
+    // -------------------Create a Grave in Cemetery-------------------------------------------
+
+    @RequestMapping(value = "/cemetery/{id}/graves/", method = RequestMethod.POST)
+    public ResponseEntity<?> createCemetery(@PathVariable("id") long id,
+                                            @RequestBody Grave grave, UriComponentsBuilder ucBuilder) {
+        logger.info("Creating Grave : {}", grave);
+
+        if (cemeteryService.isGraveExist(id, grave)) {
+            logger.error("Unable to create. A Grave with name {} already exist", grave.getLastName());
+            return new ResponseEntity(new CustomErrorType("Unable to create. A Grave with name " +
+                    grave.getLastName() + " already exists."), HttpStatus.CONFLICT);
+        }
+        //graveService.saveGrave(grave);
+        cemeteryService.saveGrave(id, grave);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ucBuilder.path("/api/cemetery/{id}/graves/{gid}").buildAndExpand(grave.getId()).toUri());
+        return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+    }
+
     // -------------------Create a Cemetery-------------------------------------------
 
     @RequestMapping(value = "/cemetery/", method = RequestMethod.POST)
@@ -79,7 +99,7 @@ public class CemeteryRestApi {
         if (cemeteryService.isCemeteryExist(cemetery)) {
             logger.error("Unable to create. A Cemetery with name {} already exist", cemetery.getName());
             return new ResponseEntity(new CustomErrorType("Unable to create. A Cemetery with name " +
-                    cemetery.getName() + " already exist."), HttpStatus.CONFLICT);
+                    cemetery.getName() + " already exists."), HttpStatus.CONFLICT);
         }
         cemeteryService.saveCemetery(cemetery);
 
