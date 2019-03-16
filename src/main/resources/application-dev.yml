@@ -39,8 +39,8 @@ facebook:
     userInfoUri: https://graph.facebook.com/me
 github:
   client:
-    clientId: 67dd380e2dd4c0a0d6ff
-    clientSecret: 2383143b68a258d63bc6ffc4caa12abcdf0ce324
+    clientId: 6fe891c133ea9427131a
+    clientSecret: 97f73f8c8f5271c3ed174e46b8fd7fa3b0160435
     accessTokenUri: https://github.com/login/oauth/access_token
     userAuthorizationUri: https://github.com/login/oauth/authorize
     clientAuthenticationScheme: form
