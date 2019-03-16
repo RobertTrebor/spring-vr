@@ -1,15 +1,9 @@
 var vrApp = angular.module('vrApp', ['ui.router', 'ngStorage']);
-var addr = function(){
-    if((window.location.href.substr(0, 21) == 'http://localhost:8080')) {
-        return 'http://localhost:8080';
-    } else {
-        return 'https://vr-spring.herokuapp.com:8080';
-    }
-}
+
 vrApp.constant('urls', {
-    BASE: addr(), // 'http://localhost:8080',
-    GRAVE_SERVICE_API: addr() + '/api/grave/',
-    CEMETERY_SERVICE_API: addr() + '/api/cemetery/'
+    BASE: window.location.origin,
+    GRAVE_SERVICE_API: window.location.origin + '/api/grave/',
+    CEMETERY_SERVICE_API: window.location.origin + '/api/cemetery/'
 });
 
 vrApp.config(['$stateProvider', '$urlRouterProvider',
