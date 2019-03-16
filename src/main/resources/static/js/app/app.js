@@ -1,9 +1,15 @@
 var vrApp = angular.module('vrApp', ['ui.router', 'ngStorage']);
-
+var addr = function(){
+    if((window.location.href.substr(0, 21) == 'http://localhost:8080')) {
+        return 'http://localhost:8080';
+    } else {
+        return 'https://nundinae.de:8080';
+    }
+}
 vrApp.constant('urls', {
-    BASE: 'http://localhost:8080',
-    GRAVE_SERVICE_API: 'http://localhost:8080/api/grave/',
-    CEMETERY_SERVICE_API: 'http://localhost:8080/api/cemetery/'
+    BASE: addr(), // 'http://localhost:8080',
+    GRAVE_SERVICE_API: addr() + '/api/grave/',
+    CEMETERY_SERVICE_API: addr() + '/api/cemetery/'
 });
 
 vrApp.config(['$stateProvider', '$urlRouterProvider',

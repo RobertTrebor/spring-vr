@@ -3,7 +3,7 @@ server:
 spring:
   liquibase:
     change-log: classpath:db/liquibase-changelog.xml
-    drop-first: true
+    drop-first: false
     enabled: true
   datasource:
     url:
@@ -16,8 +16,8 @@ spring:
     show-sql: true
   security:
     user:
-      name: user
-      password: password
+      name:
+      password:
 security:
   oauth2:
     client:
@@ -41,7 +41,7 @@ facebook:
 github:
   client:
     clientId: 67dd380e2dd4c0a0d6ff
-    clientSecret: 2383143b68a258d63bc6ffc4caa12abcdf0ce324
+    clientSecret:
     accessTokenUri: https://github.com/login/oauth/access_token
     userAuthorizationUri: https://github.com/login/oauth/authorize
     clientAuthenticationScheme: form
