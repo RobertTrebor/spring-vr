@@ -3,7 +3,7 @@ var addr = function(){
     if((window.location.href.substr(0, 21) == 'http://localhost:8080')) {
         return 'http://localhost:8080';
     } else {
-        return 'https://nundinae.de:8080';
+        return 'https://vr-spring.herokuapp.com:8080';
     }
 }
 vrApp.constant('urls', {
