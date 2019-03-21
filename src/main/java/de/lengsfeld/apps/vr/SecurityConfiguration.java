@@ -1,11 +1,5 @@
 package de.lengsfeld.apps.vr;
 
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import javax.servlet.Filter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +30,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.filter.CompositeFilter;
 
+import javax.servlet.Filter;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 @Configuration
 @RestController
 @EnableOAuth2Client
@@ -52,11 +53,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         this.oauth2ClientContext = oauth2ClientContext;
     }
 
-    @RequestMapping({ "/user", "/me" })
+    @RequestMapping({"/user", "/me"})
     public Map<String, String> user(Principal principal) {
         Map<String, String> map = new LinkedHashMap<>();
         map.put("name", principal.getName());
-        if(principal instanceof OAuth2Authentication) {
+        if (principal instanceof OAuth2Authentication) {
             OAuth2Authentication auth = (OAuth2Authentication) principal;
             Authentication userAuthentication = auth.getUserAuthentication();
             Map details = (LinkedHashMap) userAuthentication.getDetails();

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet id="0.0.3-image" author="rl">
+        <createTable tableName="IMAGE">
+            <column name="ID" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_IMAGE_ID"/>
+            </column>
+            <column name="FILE_NAME" type="varchar(255)"/>
+            <column name="FORMAT" type="varchar(255)"/>
+            <column name="IMAGE_DATA" type="longblob"/>
+            <column name="GRAVE_ID" type="bigint"/>
+        </createTable>
+        <rollback>
+            <delete tableName="IMAGE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="0.0.3-image-fk" author="rl">
+        <addForeignKeyConstraint baseTableName="IMAGE" baseColumnNames="GRAVE_ID" constraintName="FK_GRAVE_ID"
+                                 referencedTableName="GRAVE" referencedColumnNames="ID"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="IMAGE" constraintName="FK_GRAVE_ID"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
