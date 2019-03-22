@@ -26,6 +26,9 @@ public class Image implements Serializable {
     @Column(name = "FILE_NAME")
     private String fileName;
 
+    @Column(name = "URL")
+    private String URL;
+
     @Column(name = "FORMAT", length = 8)
     private String format;
 
@@ -42,6 +45,10 @@ public class Image implements Serializable {
         this.fileName = fileName;
         this.format = format;
         this.imageData = imageData;
+    }
+
+    public Image(String fileName, String URI){
+
     }
 
     public BufferedImage getBufferedImage() {

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Virtual Remembrance Thyme</title>
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container my-5">
+  <h2 class="mb-5">Update Grave</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <form action="#" th:action="@{/updategrave/{id}(id=${grave.id})}" th:object="${grave}" method="post">
+        <div class="row">
+          <div class="form-group col-md-6">
+            <input type="hidden" th:value="${selectedcemeteryid}" name="cemetery"
+                   class="form-control" id="cemetery">
+            <label for="firstName" class="col-form-label">Name</label>
+            <input type="text" th:field="*{firstName}" class="form-control" id="firstName" placeholder="Name">
+            <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="text-danger"></span>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mt-5">
+            <input type="submit" class="btn btn-primary" value="Update Cemetery">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="container my-5">
+  <h2 class="mb-5">Update Grave</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <form action="#" enctype="multipart/form-data" id="fileUploadForm"
+            th:action="@{/updategraveimg/{id}(id=${grave.id})}" method="post">
+        <div class="form-group">
+          <label class="control-label" for="files">Upload Multiple Files:</label>
+          <input type="file" class="form-control" id="files"
+                 placeholder="Upload Multiple Files"  name="files"/>
+        </div>
+        <button type="submit" class="btn btn-default" id="btnSubmit">Upload</button>
+        <a href="/files" class="btn btn-default" role="button">Files</a>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

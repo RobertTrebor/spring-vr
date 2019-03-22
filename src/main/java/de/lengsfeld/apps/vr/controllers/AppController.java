@@ -2,18 +2,20 @@ package de.lengsfeld.apps.vr.controllers;
 
 import de.lengsfeld.apps.vr.entity.Cemetery;
 import de.lengsfeld.apps.vr.entity.Grave;
+import de.lengsfeld.apps.vr.entity.Image;
 import de.lengsfeld.apps.vr.repository.CemeteryRepository;
 import de.lengsfeld.apps.vr.repository.GraveRepository;
+import de.lengsfeld.apps.vr.repository.ImageRepository;
+import de.lengsfeld.apps.vr.service.ImageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -27,6 +29,12 @@ public class AppController {
 
     @Autowired
     private GraveRepository graveRepository;
+
+    @Autowired
+    private ImageRepository imageRepository;
+
+    @Autowired
+    private ImageServiceImpl imageService;
 
     @RequestMapping("**/partials/{page}")
     String partialHandler(@PathVariable("page") final String page) {
@@ -145,6 +153,28 @@ public class AppController {
         return "update-grave";
     }
 
+    @GetMapping(value = "/editgraveimage/{id}")
+    public String showUpdateGraveImageForm(@PathVariable("id") long id, Model model){
+        Grave grave = graveRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid: " + id));
+        model.addAttribute("grave", grave);
+        model.addAttribute("selectedcemeteryid", grave.getCemetery().getId());
+        return "update-grave-image";
+    }
+
+    @PostMapping(value = "/updategraveimg/{id}/{imageupload}")
+    public String uploadImage(@RequestParam("id") long id,
+                              @RequestParam("imageupload") MultipartFile file, Model model) {
+        Model m = model;
+        Image dbFile = imageService.storeFile(file);
+
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/downloadFile/")
+                .path(dbFile.getId())
+                .toUriString();
+        return "update-grave-image";
+        //return new UploadFileResponse(dbFile.getFileName(), fileDownloadUri, file.getContentType(), file.getSize());
+    }
+
     @PostMapping(value = "/updategrave/{id}")
     public String showUpdateGrave(@PathVariable("id") long id, @Valid Grave grave, BindingResult result, Model model){
         if(result.hasErrors()){
@@ -155,6 +185,12 @@ public class AppController {
         model.addAttribute("cemeteries", cemeteryRepository.findAll());
         model.addAttribute("selectedcemetery", grave.getCemetery());
         return "cemeteries";
+    }
+
+    @GetMapping(value = "/updatecemeteryimg")
+    public String showUpdateCemeteryImg(Model model){
+        model.addAttribute("cemetery", cemeteryRepository.findById(1000L));
+        return "uploadform";
     }
 
 }

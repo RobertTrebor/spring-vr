@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Virtual Remembrance</title>
+  <div th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+<div th:replace="fragments/header :: header"/>
+  <div class="container-fluid">
+    <div class="container h-100">
+      <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-md-7 table-responsive">
+          <h2>Uploaded Files</h2>
+          <table id="customerTable" class="table">
+            <thead>
+            <tr>
+              <th>No</th>
+              <th>Filename</th>
+              <th>Download</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="file, rowStat: ${files}">
+              <td th:text="${rowStat.count}">1</td>
+              <td th:text="${file.filename}">File-Name</td>
+              <td><a th:href="${file.url}">Link</a></td>
+            </tr>
+            </tbody>
+          </table>
+          <div>
+            <a href="uploadform" class="btn btn-light btn-block" role="button">Back to Upload Form</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>

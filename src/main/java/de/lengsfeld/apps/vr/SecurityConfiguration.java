@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -42,6 +43,7 @@ import java.util.Map;
 @EnableOAuth2Client
 @EnableAuthorizationServer
 @Order(200)
+@ConditionalOnProperty(value = "app.security.basic.enabled", havingValue = "true")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     protected final Log log = LogFactory.getLog(getClass());
@@ -62,7 +64,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             Authentication userAuthentication = auth.getUserAuthentication();
             Map details = (LinkedHashMap) userAuthentication.getDetails();
             map.put("fullname", (String) details.get("name"));
-            map.put("id", (String) details.get("id"));
+            //map.put("id", (String) details.get("id"));
         }
         return map;
     }

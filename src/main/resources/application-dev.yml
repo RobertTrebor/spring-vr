@@ -17,6 +17,12 @@ spring:
     user:
       name: user
       password: password
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 20MB
+      max-request-size: 25MB
 security:
   oauth2:
     client:
@@ -51,3 +57,7 @@ github:
 logging:
   level:
     org.springframework.security: DEBUG
+app:
+  security:
+    basic:
+      enabled: true

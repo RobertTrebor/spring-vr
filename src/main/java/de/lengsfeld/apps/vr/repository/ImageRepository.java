@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ImageRepository extends JpaRepository<Image, String> {
 
-    //Image findFirstImageByGrave(Grave grave);
-    //List<Image> findAllBy(Grave grave);
+    Image findImageByFileName(String filename);
 
 }

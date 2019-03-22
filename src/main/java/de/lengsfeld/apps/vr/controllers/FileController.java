@@ -1,6 +1,8 @@
 package de.lengsfeld.apps.vr.controllers;
 
 import de.lengsfeld.apps.vr.entity.Image;
+import de.lengsfeld.apps.vr.repository.CemeteryRepository;
+import de.lengsfeld.apps.vr.repository.GraveRepository;
 import de.lengsfeld.apps.vr.service.ImageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -22,6 +24,29 @@ public class FileController {
     @Autowired
     private ImageServiceImpl imageService;
 
+    @Autowired
+    private CemeteryRepository cemeteryRepository;
+
+    @Autowired
+    private GraveRepository graveRepository;
+/*
+    @PostMapping("/updategraveimg/{id}/{imageupload}")
+    public String uploadImage(@RequestParam("id") long id,
+                                         @RequestParam("imageupload") MultipartFile file,
+                                          Model model) {
+        Image dbFile = imageService.storeFile(file);
+
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/downloadFile/")
+                .path(dbFile.getId())
+                .toUriString();
+        model.addAttribute("cemeteries", cemeteryRepository.findAll());
+        Grave grave = graveRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid: " + id));
+        model.addAttribute("selectedcemetery", grave.getCemetery());
+        return "cemeteries";
+        //return new UploadFileResponse(dbFile.getFileName(), fileDownloadUri, file.getContentType(), file.getSize());
+    }
+*/
     @PostMapping("/uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
         Image dbFile = imageService.storeFile(file);
