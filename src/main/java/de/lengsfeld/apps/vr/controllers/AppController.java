@@ -6,7 +6,6 @@ import de.lengsfeld.apps.vr.entity.Image;
 import de.lengsfeld.apps.vr.repository.CemeteryRepository;
 import de.lengsfeld.apps.vr.repository.GraveRepository;
 import de.lengsfeld.apps.vr.repository.ImageRepository;
-import de.lengsfeld.apps.vr.service.ImageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,9 +31,6 @@ public class AppController {
 
     @Autowired
     private ImageRepository imageRepository;
-
-    @Autowired
-    private ImageServiceImpl imageService;
 
     @RequestMapping("**/partials/{page}")
     String partialHandler(@PathVariable("page") final String page) {
@@ -126,8 +122,7 @@ public class AppController {
         return "update-grave-image";
     }
 
-    //@PostMapping(value = "updategraveimg")
-    @PostMapping(value = "/editgraveimage/{id}/updategraveimage")
+    @PostMapping(value = "/updategraveimage/{id}")
     public String uploadImage(@PathVariable("id") long id,
                               @RequestParam("files") MultipartFile[] files, Model model) {
         Grave grave = graveRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid: " + id));
@@ -159,7 +154,6 @@ public class AppController {
             model.addAttribute("files", fileNames);
         }
         return "update-grave-image";
-        //return new UploadFileResponse(dbFile.getFileName(), fileDownloadUri, file.getContentType(), file.getSize());
     }
 
     @GetMapping(value = "/updatecemeteryimg")
