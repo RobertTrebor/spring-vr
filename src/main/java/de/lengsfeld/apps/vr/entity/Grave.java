@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @EqualsAndHashCode
 @Getter
@@ -29,6 +30,9 @@ public class Grave implements Serializable {
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "FK_CEMETERY_ID"))
     private Cemetery cemetery;
+
+    @OneToMany(mappedBy = "grave", fetch = FetchType.EAGER)
+    private List<Image> images;
 
     private Date datebirth;
     private Date datedeath;

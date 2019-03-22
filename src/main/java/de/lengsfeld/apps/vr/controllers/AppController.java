@@ -12,14 +12,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 public class AppController {
@@ -110,49 +110,6 @@ public class AppController {
         return "cemeteries";
     }
 
-    @GetMapping(value = "show-graves/{id}")
-    public String showGraves(@PathVariable("id") long id, Model model){
-        model.addAttribute("cemeteries", cemeteryRepository.findAll());
-        Cemetery cemetery = cemeteryRepository.findById(id).get();
-        model.addAttribute("selectedcemetery", cemetery);
-        List<Grave> graves = graveRepository.findGraveByCemetery(cemetery);
-        model.addAttribute("graves", graves);
-        return "cemeteries";
-    }
-
-    @GetMapping(value = "/add-grave/{id}")
-    public String showAddGrave(Grave grave, @PathVariable("id") long id, Model model){
-        Cemetery cemetery = cemeteryRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid: " + id));
-        model.addAttribute("selectedcemeteryid", cemetery.getId());
-        return "add-grave";
-    }
-
-    @PostMapping(value = "/addgrave")
-    public String addGrave(@Valid Grave grave, BindingResult result, Model model){
-        if(!cemeteryRepository.findById(grave.getCemetery().getId()).isPresent()){
-            result.addError(new ObjectError("Cemetery", "Does Not Exist"));
-        }
-        if(result.hasErrors()){
-            return "/add-grave";
-        }
-        Cemetery cemetery = cemeteryRepository.findById(grave.getCemetery().getId()).get();
-        grave.setCemetery(cemetery);
-        graveRepository.save(grave);
-        model.addAttribute("cemeteries", cemeteryRepository.findAll());
-        model.addAttribute("selectedcemetery", cemetery);
-        List<Grave> graves = graveRepository.findGraveByCemetery(cemetery);
-        model.addAttribute("graves", graves);
-        return "cemeteries";
-    }
-
-    @GetMapping(value = "/editgrave/{id}")
-    public String showUpdateGraveForm(@PathVariable("id") long id, Model model){
-        Grave grave = graveRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid: " + id));
-        model.addAttribute("grave", grave);
-        model.addAttribute("selectedcemeteryid", grave.getCemetery().getId());
-        return "update-grave";
-    }
-
     @GetMapping(value = "/editgraveimage/{id}")
     public String showUpdateGraveImageForm(@PathVariable("id") long id, Model model){
         Grave grave = graveRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid: " + id));
@@ -161,30 +118,48 @@ public class AppController {
         return "update-grave-image";
     }
 
-    @PostMapping(value = "/updategraveimg/{id}/{imageupload}")
-    public String uploadImage(@RequestParam("id") long id,
-                              @RequestParam("imageupload") MultipartFile file, Model model) {
-        Model m = model;
-        Image dbFile = imageService.storeFile(file);
-
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/downloadFile/")
-                .path(dbFile.getId())
-                .toUriString();
+    @GetMapping(value = "/editgraveimage/{id}/updategraveimage")
+    public String showUpdateGraveImageForm2(@PathVariable("id") long id, Model model){
+        Grave grave = graveRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid: " + id));
+        model.addAttribute("grave", grave);
+        model.addAttribute("selectedcemeteryid", grave.getCemetery().getId());
         return "update-grave-image";
-        //return new UploadFileResponse(dbFile.getFileName(), fileDownloadUri, file.getContentType(), file.getSize());
     }
 
-    @PostMapping(value = "/updategrave/{id}")
-    public String showUpdateGrave(@PathVariable("id") long id, @Valid Grave grave, BindingResult result, Model model){
-        if(result.hasErrors()){
-            grave.setId(id);
-            return "update-grave";
+    //@PostMapping(value = "updategraveimg")
+    @PostMapping(value = "/editgraveimage/{id}/updategraveimage")
+    public String uploadImage(@PathVariable("id") long id,
+                              @RequestParam("files") MultipartFile[] files, Model model) {
+        Grave grave = graveRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid: " + id));
+        List<String> fileNames = new ArrayList<>();
+        try {
+            List<Image> storedFile = new ArrayList<>();
+
+            for(MultipartFile file: files) {
+                Optional<Image> optionalImage = imageRepository.findById(file.getOriginalFilename());
+                Image image = null;
+                if(optionalImage.isPresent()){
+                    image = optionalImage.get();
+                }
+                if(image != null) {
+                    image.setImageData(file.getBytes());
+                } else {
+                    image = new Image(file.getOriginalFilename(), file.getContentType(), file.getBytes());
+                }
+                fileNames.add(file.getOriginalFilename());
+                image.setGrave(grave);
+                storedFile.add(image);
+            }
+            imageRepository.saveAll(storedFile);
+            model.addAttribute("message", "Files uploaded successfully!");
+            model.addAttribute("files", fileNames);
+            model.addAttribute("grave", grave);
+        } catch (Exception e) {
+            model.addAttribute("message", "Fail!");
+            model.addAttribute("files", fileNames);
         }
-        graveRepository.save(grave);
-        model.addAttribute("cemeteries", cemeteryRepository.findAll());
-        model.addAttribute("selectedcemetery", grave.getCemetery());
-        return "cemeteries";
+        return "update-grave-image";
+        //return new UploadFileResponse(dbFile.getFileName(), fileDownloadUri, file.getContentType(), file.getSize());
     }
 
     @GetMapping(value = "/updatecemeteryimg")
