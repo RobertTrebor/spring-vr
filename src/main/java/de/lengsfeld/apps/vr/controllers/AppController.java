@@ -60,7 +60,7 @@ public class AppController {
         return "home";
     }
 
-    @GetMapping(value = "cemeteries")
+    @GetMapping(value = "listcemeteries")
     public String showCemeteries(Model model){
         List<Cemetery> cemeteries = cemeteryRepository.findAll();
         model.addAttribute("cemeteries", cemeteries);
