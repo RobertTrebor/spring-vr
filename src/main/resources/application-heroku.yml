@@ -52,3 +52,7 @@ github:
 logging:
   level:
     org.springframework.security: DEBUG
+app:
+  security:
+    basic:
+      enabled: true
