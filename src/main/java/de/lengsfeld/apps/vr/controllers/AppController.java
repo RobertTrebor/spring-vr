@@ -7,6 +7,7 @@ import de.lengsfeld.apps.vr.repository.CemeteryRepository;
 import de.lengsfeld.apps.vr.repository.GraveRepository;
 import de.lengsfeld.apps.vr.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -32,6 +33,9 @@ public class AppController {
     @Autowired
     private ImageRepository imageRepository;
 
+    @Value("${app.security.basic.enabled}")
+    private String security;
+
     @RequestMapping("**/partials/{page}")
     String partialHandler(@PathVariable("page") final String page) {
         return page;
@@ -39,6 +43,7 @@ public class AppController {
 
     @RequestMapping(value = {"/"})
     String home(ModelMap modal) {
+        modal.addAttribute("security", security);
         modal.addAttribute("title", "Virtual Remembrance");
         return "login";
     }
