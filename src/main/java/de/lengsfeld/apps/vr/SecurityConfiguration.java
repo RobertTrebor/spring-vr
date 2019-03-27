@@ -4,12 +4,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,11 +32,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@Profile("heroku")
+//@Profile("heroku")
 @EnableOAuth2Client
 @EnableAuthorizationServer
 @Order(200)
-//@ConditionalOnProperty(value = "app.security.basic.enabled", havingValue = "true")
+@ConditionalOnProperty("app.security.basic.enabled")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     protected final Log log = LogFactory.getLog(getClass());
@@ -85,7 +85,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Configuration
-    @Profile("heroku")
+    @ConditionalOnProperty("app.security.basic.enabled")
+    //@Profile("heroku")
     @EnableResourceServer
     protected static class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
         @Override
