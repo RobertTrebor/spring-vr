@@ -21,7 +21,7 @@ public class RestApiController {
     public static final Logger logger = LoggerFactory.getLogger(RestApiController.class);
 
     @Autowired
-    GraveService graveService; //Service which will do all data retrieval/manipulation work
+    private GraveService graveService; //Service which will do all data retrieval/manipulation work
 
     // -------------------Retrieve All Graves---------------------------------------------
 
