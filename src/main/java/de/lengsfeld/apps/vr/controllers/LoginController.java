@@ -20,7 +20,9 @@ public class LoginController {
     @RequestMapping({"/user", "/me"})
     public Map<String, String> user(Principal principal) {
         Map<String, String> map = new LinkedHashMap<>();
-        map.put("name", principal.getName());
+        if(principal != null) {
+            map.put("name", principal.getName());
+        }
         if (principal instanceof OAuth2Authentication) {
             OAuth2Authentication auth = (OAuth2Authentication) principal;
             Authentication userAuthentication = auth.getUserAuthentication();
