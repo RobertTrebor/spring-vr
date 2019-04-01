@@ -49,9 +49,11 @@ public class GraveController {
     public String showAddGrave(Grave grave, @PathVariable("id") long id, Model model){
         Cemetery cemetery = cemeteryRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid: " + id));
         model.addAttribute("selectedcemeteryid", cemetery.getId());
-        return "add-grave";
+        model.addAttribute("grave", grave);
+        return "update-grave";
     }
 
+    //@TODO: 01.04.2019 deprecated
     @PostMapping(value = "/addgrave")
     public String addGrave(@Valid Grave grave, BindingResult result, Model model){
         if(!cemeteryRepository.findById(grave.getCemetery().getId()).isPresent()){

@@ -14,4 +14,6 @@ public interface ImageRepository extends JpaRepository<Image, String> {
 
     List<Image> findImagesByGrave(Grave grave);
 
+    Image findImageById(String id);
+
 }
