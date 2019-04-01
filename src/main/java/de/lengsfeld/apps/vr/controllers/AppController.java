@@ -116,7 +116,7 @@ public class AppController {
         Grave grave = graveRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid: " + id));
         model.addAttribute("grave", grave);
         model.addAttribute("selectedcemeteryid", grave.getCemetery().getId());
-        return "update-grave-image";
+        return "update-grave";
     }
 
     @GetMapping(value = "/editgraveimage/{id}/updategraveimage")
@@ -124,7 +124,7 @@ public class AppController {
         Grave grave = graveRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid: " + id));
         model.addAttribute("grave", grave);
         model.addAttribute("selectedcemeteryid", grave.getCemetery().getId());
-        return "update-grave-image";
+        return "update-grave";
     }
 
     @PostMapping(value = "/updategraveimage/{id}")
@@ -154,11 +154,12 @@ public class AppController {
             model.addAttribute("message", "Files uploaded successfully!");
             model.addAttribute("files", fileNames);
             model.addAttribute("grave", grave);
+            model.addAttribute("selectedcemeteryid", grave.getCemetery().getId());
         } catch (Exception e) {
             model.addAttribute("message", "Fail!");
             model.addAttribute("files", fileNames);
         }
-        return "update-grave-image";
+        return "update-grave";
     }
 
     @GetMapping(value = "/updatecemeteryimg")

@@ -30,8 +30,8 @@
           <tr th:each="cemetery:${cemeteries}">
             <td th:text="${cemetery.id}">Id</td>
             <td th:text="${cemetery.name}">Name</td>
-            <td th:text="${cemetery.name}">City</td>
-            <td th:text="${cemetery.name}">Street</td>
+              <td th:text="${cemetery.city}">City</td>
+              <td th:text="${cemetery.street}">Street</td>
             <td><a th:href="@{/edit/{id}(id=${cemetery.id})}" class="btn btn-primary">Edit</a></td>
             <td><a th:href="@{/show-graves/{id}(id=${cemetery.id})}" class="btn btn-primary">Graves</a></td>
           </tr>
@@ -59,7 +59,7 @@
         </div>
       </div>
       <div class="col-xl-4">
-        <div th:insert="fragments/uploadGraveImage"></div>
+          <!--<div th:insert="fragments/uploadGraveImage"></div>-->
       </div>
     </div>
   </div>

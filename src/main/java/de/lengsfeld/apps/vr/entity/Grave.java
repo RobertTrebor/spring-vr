@@ -3,6 +3,7 @@ package de.lengsfeld.apps.vr.entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -34,8 +35,14 @@ public class Grave implements Serializable {
     @OneToMany(mappedBy = "grave", fetch = FetchType.EAGER)
     private List<Image> images;
 
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     private Date datebirth;
+
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd.MM.YYYY")
     private Date datedeath;
+
     private String graveLoc;
     private String latitude;
     private String longitude;
