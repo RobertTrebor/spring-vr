@@ -3,7 +3,7 @@ package de.lengsfeld.apps.vr.service;
 public interface ImageService {
 
     /*
-    Image findFirstImageByGrave(Grave grave);
-    List<Image> findByGrave(Grave grave);
+    GraveImage findFirstImageByGrave(Grave grave);
+    List<GraveImage> findByGrave(Grave grave);
     */
 }

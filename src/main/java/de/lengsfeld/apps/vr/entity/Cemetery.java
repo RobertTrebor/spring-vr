@@ -32,6 +32,9 @@ public class Cemetery implements Serializable {
     @OneToMany(mappedBy = "cemetery")
     private List<Grave> graves;
 
+    @OneToMany(mappedBy = "cemetery")
+    private List<CemeteryImage> images;
+
     public Cemetery(String name) {
         this.name = name;
     }
@@ -39,5 +42,12 @@ public class Cemetery implements Serializable {
     @JsonIgnore
     public List<Grave> getGraves() {
         return graves;
+    }
+
+    public Image getImage() {
+        if (images != null && !images.isEmpty()) {
+            return images.get(0);
+        }
+        return null;
     }
 }

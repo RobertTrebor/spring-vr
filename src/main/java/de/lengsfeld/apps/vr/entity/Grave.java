@@ -33,7 +33,7 @@ public class Grave implements Serializable {
     private Cemetery cemetery;
 
     @OneToMany(mappedBy = "grave", fetch = FetchType.EAGER)
-    private List<Image> images;
+    private List<GraveImage> images;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd.MM.yyyy")

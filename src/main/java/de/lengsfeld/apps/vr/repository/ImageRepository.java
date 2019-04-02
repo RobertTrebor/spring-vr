@@ -1,7 +1,6 @@
 package de.lengsfeld.apps.vr.repository;
 
-import de.lengsfeld.apps.vr.entity.Grave;
-import de.lengsfeld.apps.vr.entity.Image;
+import de.lengsfeld.apps.vr.entity.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +11,9 @@ public interface ImageRepository extends JpaRepository<Image, String> {
 
     Image findImageByFileName(String filename);
 
-    List<Image> findImagesByGrave(Grave grave);
+    List<GraveImage> findImagesByGrave(Grave grave);
+
+    List<CemeteryImage> findImagesByCemetery(Cemetery cemetery);
 
     Image findImageById(String id);
 

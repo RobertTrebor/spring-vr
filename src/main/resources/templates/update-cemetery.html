@@ -27,6 +27,27 @@
       </form>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-6">
+      <form action="#" enctype="multipart/form-data" id="fileUploadForm"
+            th:action="@{/updatecemeteryimage/{id}(id=${cemetery.id})}" method="POST">
+        <div class="form-group">
+          <label class="control-label" for="files">Upload Multiple Files:</label>
+          <input type="file" class="form-control" id="files"
+                 placeholder="Upload Multiple Files" name="files" multiple/>
+        </div>
+        <button type="submit" class="btn btn-default" id="btnSubmit">Upload</button>
+        <a th:href="@{/files/{id}(id=${cemetery.id})}" class="btn btn-default" role="button">Files</a>
+      </form>
+      <div th:if="${message}">
+        <strong><span th:text="${message}"/></strong>
+        <hr>
+      </div>
+      <ul th:each="filename: ${files}">
+        <li><span th:text="${filename}"/></li>
+      </ul>
+    </div>
+  </div>
 </div>
 </body>
 </html>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet id="0.0.4-cemetery-image" author="rl">
+        <addColumn tableName="IMAGE">
+            <column name="CEMETERY_ID" type="bigint"/>
+            <column name="DTYPE" type="varchar(31)"/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="IMAGE" columnName="CEMETERY_ID"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="0.0.4-cemetery-image-fk" author="rl">
+        <addForeignKeyConstraint baseTableName="IMAGE" baseColumnNames="CEMETERY_ID"
+                                 constraintName="FK_CEMETERY_IMAGE_ID"
+                                 referencedTableName="CEMETERY" referencedColumnNames="ID"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="IMAGE" constraintName="FK_CEMETERY_IMAGE_ID"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

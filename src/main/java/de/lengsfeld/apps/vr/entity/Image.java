@@ -15,8 +15,9 @@ import java.io.*;
 @Setter
 @Entity
 @Table(name = "IMAGE")
+@Inheritance
+@DiscriminatorColumn
 public class Image implements Serializable {
-    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(generator = "uuid")
@@ -35,11 +36,6 @@ public class Image implements Serializable {
     @Lob
     @Column(name = "IMAGE_DATA", nullable = true, columnDefinition = "longblob")
     private byte[] imageData;
-
-    @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "FK_GRAVE_ID"))
-    private Grave grave;
-
 
     public Image(String fileName, String format, byte[] imageData) {
         this.fileName = fileName;
