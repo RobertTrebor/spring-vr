@@ -21,8 +21,8 @@ spring:
     multipart:
       enabled: true
       file-size-threshold: 2KB
-      max-file-size: 20MB
-      max-request-size: 25MB
+      max-file-size: 128MB
+      max-request-size: 128MB
 security:
   oauth2:
     client:
@@ -60,4 +60,4 @@ logging:
 app:
   security:
     basic:
-      enabled: false
+      enabled: true

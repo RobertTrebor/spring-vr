@@ -11,7 +11,6 @@
     <ul class="list-unstyled">
         <li th:each="grave:${graves}">
             <!--/*@thymesVar id="grave" type="de.lengsfeld.apps.vr.entity.Grave"*/-->
-
             <div class="card rounded-bottom" style="background-color: #EAE7E7;">
                 <div class="card-header rounded-top">
                     <div class="row">
@@ -27,15 +26,11 @@
                 </div>
                 <div class="row no-gutters">
                     <div class="col-md-4">
-
                         <img th:src="@{/graveimageDisplay/{id}(id=${grave.id})}"
-                             th:alt="${grave.id}" class="thumbnail"
-                        />
+                             th:alt="${grave.id}" class="img-thumbnail"/>
                     </div>
-
                     <div class="col-md-8">
                         <div class="card-body">
-
                             <div class="row">
                                 <div class="col-6">
                                     <span th:inline="text">Date of Birth: </span>
@@ -52,13 +47,9 @@
                                     <span th:text="${#dates.format(grave.datedeath, 'dd-MMM-yyyy')}"/>
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <a th:href="@{/editgrave/{id}(id=${grave.id})}" class="btn btn-primary">Edit</a>
-                            </div>
                         </div>
                     </div>
-            </div>
+                </div>
             </div>
             </br>
         </li>
