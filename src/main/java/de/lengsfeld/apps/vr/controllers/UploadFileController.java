@@ -8,7 +8,6 @@ import de.lengsfeld.apps.vr.util.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,12 +25,6 @@ public class UploadFileController {
 
     @Autowired
     private CemeteryRepository cemeteryRepository;
-
-    @GetMapping(value = "/uploadform")
-    public String showUploadForm(Model model){
-        model.addAttribute("cemetery", cemeteryRepository.findById(1000L));
-        return "uploadform";
-    }
 
     @PostMapping(value = "/updatecemeteryimage/{id}")
     public String updateCemeteryImg(@PathVariable("id") long id,

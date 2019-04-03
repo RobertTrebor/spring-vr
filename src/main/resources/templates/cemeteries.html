@@ -1,90 +1,65 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Virtual Remembrance</title>
-  <div th:replace="fragments/header :: header-css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Virtual Remembrance</title>
+    <div th:replace="fragments/header :: header-css"/>
 </head>
 <body>
 <div th:replace="fragments/header :: header"/>
-  <div class="container-fluid">
+<div class="container-fluid">
     <div class="row">
         <div class="col-xl-12 col-lg-12">
-        <div class="row justify-content-end">
-            <form method="GET" th:action="@{/add-cemetery}">
-              <button id="add_cemetery_btn" class="btn btn-info" type="submit">Add Cemetery</button>
-            </form>
-        </div>
-        <table class="table-responsive">
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Name</th>
-              <th>City</th>
-              <th>Street</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-          <tr th:each="cemetery:${cemeteries}">
-            <td th:text="${cemetery.id}">Id</td>
-            <td th:text="${cemetery.name}">Name</td>
-              <td th:text="${cemetery.city}">City</td>
-              <td th:text="${cemetery.street}">Street</td>
-            <td><a th:href="@{/edit/{id}(id=${cemetery.id})}" class="btn btn-primary">Edit</a></td>
-            <td><a th:href="@{/show-graves/{id}(id=${cemetery.id})}" class="btn btn-primary">Graves</a></td>
-          </tr>
-          </tbody>
-        </table>
-    </div>
-    <div class="container-fluid">
-    <div class="row">
-        <div class="col-xl-6">
-            <div class="row">
-                <button class="btn btn-info " type="submit">Images</button>
+            <div class="row justify-content-end">
+                <form method="GET" th:action="@{/add-cemetery}">
+                    <button id="add_cemetery_btn" class="btn btn-info" type="submit">Add Cemetery</button>
+                </form>
             </div>
-            <div class="card rounded-bottom" style="background-color: #EAE7E7;">
-                <div class="card-header rounded-top">
-                    <img th:src="@{/imageDisplay/{id}(id=${selectedcemetery.id})}"
-                         th:class="img-thumbnail" th:alt="${selectedcemetery.id}"/>
-                </div>
-            </div>
+            <table class="table-responsive">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>City</th>
+                        <th>Street</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="cemetery:${cemeteries}">
+                        <td th:text="${cemetery.id}">Id</td>
+                        <td th:text="${cemetery.name}">Name</td>
+                        <td th:text="${cemetery.city}">City</td>
+                        <td th:text="${cemetery.street}">Street</td>
+                        <td><a th:href="@{/edit/{id}(id=${cemetery.id})}" class="btn btn-primary">Edit</a></td>
+                        <td><a th:href="@{/show-graves/{id}(id=${cemetery.id})}" class="btn btn-primary">Graves</a></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="col-xl-6 col-lg-12">
-        <div th:insert="fragments/gravesfragment2"></div>
-      </div>
-
         <div class="container-fluid">
-            <form action="#" enctype="multipart/form-data" id="fileUploadForm"
-                  th:action="@{/updatecemeteryimg/{id}(id=${selectedcemetery.id})}" method="post">
-                <div class="form-group">
-                    <label class="control-label" for="files">Upload Multiple Files:</label>
-                    <input type="file" class="form-control" id="files"
-                           placeholder="Upload Multiple Files" name="files"/>
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="row">
+                        <button class="btn btn-info " type="submit">Images</button>
+                    </div>
+                    <div class="card rounded-bottom" style="background-color: #EAE7E7;">
+                        <div class="card-header rounded-top">
+                            <img th:src="@{/imageDisplay/{id}(id=${selectedcemetery.id})}"
+                                 th:class="img-thumbnail" th:alt="${selectedcemetery.id}"/>
+                        </div>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-default" id="btnSubmit">Upload</button>
-                <a th:href="@{/files/{id}(id=${selectedcemetery.id})}" class="btn btn-default"
-                   role="button">Files</a>
-            </form>
+                <div class="col-xl-6 col-lg-12">
+                    <div th:insert="fragments/gravesfragment2"></div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  </div>
+</div>
 
-  <div class="container-fluid">
-    <div class="panel-group">
-      <button id="try" name="try" class="btn btn-primary" type="button"> value="PUSH TRY"></button>
-      <button id="try2" name="try2" class="btn btn-primary" type="button"> value="PUSH TRY"></button>
-    </div>
-    <div class="panel-group">
-      <div class="text-area">
-        <textarea id="textarea"></textarea>
-      </div>
-      <div id="textarea2" class="text-area"></div>
-    </div>
-  </div>
 <div th:replace="fragments/footer :: footer"/>
 <script type="text/javascript" th:src="@{|/js/script/tryout.js|}"></script>
 </body>
