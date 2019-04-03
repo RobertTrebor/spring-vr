@@ -15,7 +15,7 @@
               <button id="add_cemetery_btn" class="btn btn-info" type="submit">Add Cemetery</button>
             </form>
         </div>
-        <table class="table">
+        <table class="table-responsive">
           <thead>
             <tr>
               <th>Id</th>
@@ -46,7 +46,6 @@
             </div>
             <div class="card rounded-bottom" style="background-color: #EAE7E7;">
                 <div class="card-header rounded-top">
-                    <p>Images</p>
                     <img th:src="@{/imageDisplay/{id}(id=${selectedcemetery.id})}"
                          th:class="img-thumbnail" th:alt="${selectedcemetery.id}"/>
                 </div>
