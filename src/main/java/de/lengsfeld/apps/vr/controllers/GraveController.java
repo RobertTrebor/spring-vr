@@ -1,9 +1,13 @@
 package de.lengsfeld.apps.vr.controllers;
 
-import de.lengsfeld.apps.vr.entity.*;
+import de.lengsfeld.apps.vr.entity.Cemetery;
+import de.lengsfeld.apps.vr.entity.FileInfo;
+import de.lengsfeld.apps.vr.entity.Grave;
+import de.lengsfeld.apps.vr.entity.GraveImage;
 import de.lengsfeld.apps.vr.repository.CemeteryRepository;
 import de.lengsfeld.apps.vr.repository.GraveRepository;
 import de.lengsfeld.apps.vr.repository.ImageRepository;
+import de.lengsfeld.apps.vr.util.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +24,6 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -71,21 +74,13 @@ public class GraveController {
                               @RequestParam("files") MultipartFile[] files, Model model) {
         Grave grave = graveRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid: " + id));
         List<String> fileNames = new ArrayList<>();
+        List<GraveImage> storedFile = new ArrayList<>();
         try {
-            List<GraveImage> storedFile = new ArrayList<>();
-
             for (MultipartFile file : files) {
-                Optional<Image> optionalImage = imageRepository.findById(file.getOriginalFilename());
-                GraveImage image;
-                if (optionalImage.isPresent()) {
-                    image = (GraveImage) optionalImage.get();
-                    image.setImageData(file.getBytes());
-                } else {
-                    image = new GraveImage(file.getOriginalFilename(), file.getContentType(), file.getBytes());
-                }
-                fileNames.add(file.getOriginalFilename());
+                GraveImage image = (GraveImage) ImageUtils.getImage(file, new GraveImage());
                 image.setGrave(grave);
                 storedFile.add(image);
+                fileNames.add(file.getOriginalFilename());
             }
             imageRepository.saveAll(storedFile);
             model.addAttribute("message", "Files uploaded successfully!");

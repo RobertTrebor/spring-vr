@@ -60,4 +60,4 @@ logging:
 app:
   security:
     basic:
-      enabled: true
+      enabled: false

@@ -2,9 +2,9 @@ package de.lengsfeld.apps.vr.controllers;
 
 import de.lengsfeld.apps.vr.entity.Cemetery;
 import de.lengsfeld.apps.vr.entity.CemeteryImage;
-import de.lengsfeld.apps.vr.entity.Image;
 import de.lengsfeld.apps.vr.repository.CemeteryRepository;
 import de.lengsfeld.apps.vr.repository.ImageRepository;
+import de.lengsfeld.apps.vr.util.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class UploadFileController {
@@ -42,7 +41,7 @@ public class UploadFileController {
         List<CemeteryImage> storedFiles = new ArrayList<>();
         try {
             for(MultipartFile file: files) {
-                CemeteryImage image = (CemeteryImage) getImage(file);
+                CemeteryImage image = (CemeteryImage) ImageUtils.getImage(file, new CemeteryImage());
                 image.setCemetery(cemetery);
                 storedFiles.add(image);
                 fileNames.add(file.getOriginalFilename());
@@ -58,16 +57,6 @@ public class UploadFileController {
         return "update-cemetery";
     }
 
-    private Image getImage(MultipartFile file) throws IOException {
-        Image image;
-        Optional<Image> optionalImage = imageRepository.findById(file.getOriginalFilename());
-        if (optionalImage.isPresent()) {
-            image = optionalImage.get();
-            image.setImageData(file.getBytes());
-        } else {
-            image = new CemeteryImage(file.getOriginalFilename(), file.getContentType(), file.getBytes());
-        }
-        return image;
-    }
+
 
 }
