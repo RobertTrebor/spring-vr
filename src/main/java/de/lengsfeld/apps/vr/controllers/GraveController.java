@@ -24,6 +24,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -111,19 +112,23 @@ public class GraveController {
         return "cemeteries";
     }
 
-    @GetMapping("/files/{id}")
+    @GetMapping("/gravefiles/{id}")
     public String getListFiles(@PathVariable("id") long id, Model model) {
-        Grave grave = graveRepository.getOne(id);
-        List<FileInfo> fileInfos = imageRepository.findImagesByGrave(grave).stream().map(
-                fileModel -> {
-                    String filename = fileModel.getFileName();
-                    String url = MvcUriComponentsBuilder.fromMethodName(DownloadFileController.class,
-                            "downloadFile", fileModel.getFileName().toString()).build().toString();
-                    return new FileInfo(filename, url);
-                }
-        ).collect(Collectors.toList());
-        model.addAttribute("grave", grave);
-        model.addAttribute("files", fileInfos);
+        Optional<Grave> optionalGrave = graveRepository.findById(id);
+        if(optionalGrave.isPresent()){
+            Grave grave = optionalGrave.get();
+            List<FileInfo> fileInfos = imageRepository.findImagesByGrave(grave).stream().map(
+                    fileModel -> {
+                        String filename = fileModel.getFileName();
+                        String url = MvcUriComponentsBuilder.fromMethodName(DownloadFileController.class,
+                                "downloadFile", fileModel.getFileName().toString()).build().toString();
+                        return new FileInfo(filename, url);
+                    }
+            ).collect(Collectors.toList());
+            model.addAttribute("name", grave.getFirstName() + " " + grave.getLastName());
+            model.addAttribute("grave", grave);
+            model.addAttribute("files", fileInfos);
+        }
         return "listfiles";
     }
 

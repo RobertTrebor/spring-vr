@@ -43,7 +43,7 @@ public class ImageUtils {
         baos.close();
         imageOutputStream.close();
         imageWriter.dispose();
-        image.setFileName(file.getName());
+        image.setFileName(file.getOriginalFilename());
         image.setFormat(file.getContentType());
         image.setImageData(imageInByte);
         return image;

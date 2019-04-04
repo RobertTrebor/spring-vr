@@ -2,6 +2,7 @@ package de.lengsfeld.apps.vr.controllers;
 
 import de.lengsfeld.apps.vr.entity.Cemetery;
 import de.lengsfeld.apps.vr.entity.CemeteryImage;
+import de.lengsfeld.apps.vr.entity.FileInfo;
 import de.lengsfeld.apps.vr.entity.Grave;
 import de.lengsfeld.apps.vr.repository.CemeteryRepository;
 import de.lengsfeld.apps.vr.repository.GraveRepository;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +23,8 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class AppController {
@@ -111,6 +115,26 @@ public class AppController {
         model.addAttribute("cemetery", cemetery);
         model.addAttribute("selectedcemetery", cemetery);
         return "cemeteries";
+    }
+
+    @GetMapping("/files/{id}")
+    public String getListFiles(@PathVariable("id") long id, Model model) {
+        Optional<Cemetery> optional = cemeteryRepository.findById(id);
+        if(optional.isPresent()){
+            Cemetery cemetery = optional.get();
+            List<FileInfo> fileInfos = imageRepository.findImagesByCemetery(cemetery).stream().map(
+                    fileModel -> {
+                        String filename = fileModel.getFileName();
+                        String url = MvcUriComponentsBuilder.fromMethodName(DownloadFileController.class,
+                                "downloadFile", fileModel.getFileName().toString()).build().toString();
+                        return new FileInfo(filename, url);
+                    }
+            ).collect(Collectors.toList());
+            model.addAttribute("name", cemetery.getName() + ", " + cemetery.getCity());
+            model.addAttribute("cemetery", cemetery);
+            model.addAttribute("files", fileInfos);
+        }
+        return "listfiles";
     }
 
     @GetMapping(value = "/imageDisplay/{id}")

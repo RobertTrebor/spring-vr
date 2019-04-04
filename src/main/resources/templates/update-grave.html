@@ -64,7 +64,7 @@
                            placeholder="Upload Multiple Files" name="files" multiple/>
                 </div>
                 <button type="submit" class="btn btn-light" id="btnSubmit">Upload</button>
-                <a th:href="@{/files/{id}(id=${grave.id})}" class="btn btn-light" role="button">Files</a>
+                <a th:href="@{/gravefiles/{id}(id=${grave.id})}" class="btn btn-light" role="button">Files</a>
             </form>
             </div>
             <div th:if="${message}">
