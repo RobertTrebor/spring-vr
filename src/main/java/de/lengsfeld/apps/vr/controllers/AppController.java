@@ -82,19 +82,10 @@ public class AppController {
     }
 
     @GetMapping(value = "/add-cemetery")
-    public String showAddCemetery(Cemetery cemetery){
-        return "add-cemetery";
-    }
-
-    @PostMapping("/addcemetery")
-    public String addCemetery(@Valid Cemetery cemetery, BindingResult result, Model model){
-        if(result.hasErrors()){
-            return "/add-cemetery";
-        }
-        cemeteryRepository.save(cemetery);
-        model.addAttribute("cemeteries", cemeteryRepository.findAll());
-        model.addAttribute("selectedcemetery", cemetery);
-        return "cemeteries";
+    public String showAddCemetery(Cemetery cemetery, Model model){
+        cemetery.setId(0L);
+        model.addAttribute("cemetery", cemetery);
+        return "update-cemetery";
     }
 
     @GetMapping(value = "/edit/{id}")

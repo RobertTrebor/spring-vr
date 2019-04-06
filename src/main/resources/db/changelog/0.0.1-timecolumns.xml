@@ -17,6 +17,18 @@
         </rollback>
     </changeSet>
 
+    <changeSet id="0.0.1-setup-cemetery" author="rl">
+        <addColumn tableName="cemetery">
+            <column name="CREATED" type="DATETIME"/>
+            <column name="MODIFIED" type="DATETIME"/>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="cemetery" columnName="CREATED"/>
+            <dropColumn tableName="cemetery" columnName="MODIFIED"/>
+        </rollback>
+    </changeSet>
+
 
 
 
