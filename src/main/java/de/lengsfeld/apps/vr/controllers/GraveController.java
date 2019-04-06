@@ -86,12 +86,12 @@ public class GraveController {
             imageRepository.saveAll(storedFile);
             model.addAttribute("message", "Files uploaded successfully!");
             model.addAttribute("files", fileNames);
-            model.addAttribute("grave", grave);
-            model.addAttribute("selectedcemeteryid", grave.getCemetery().getId());
         } catch (Exception e) {
             model.addAttribute("message", "Fail!");
             model.addAttribute("files", fileNames);
         }
+        model.addAttribute("grave", grave);
+        model.addAttribute("selectedcemeteryid", grave.getCemetery().getId());
         return "update-grave";
     }
 
@@ -108,7 +108,8 @@ public class GraveController {
         model.addAttribute("cemeteries", cemeteryRepository.findAll());
         model.addAttribute("grave", grave);
         model.addAttribute("selectedcemetery", grave.getCemetery());
-        model.addAttribute("selectedcemeteryid", grave.getCemetery().getId());
+        List<Grave> graves = graveRepository.findGraveByCemetery(grave.getCemetery());
+        model.addAttribute("graves", graves);
         return "cemeteries";
     }
 
