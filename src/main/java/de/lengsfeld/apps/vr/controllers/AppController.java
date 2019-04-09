@@ -83,7 +83,6 @@ public class AppController {
 
     @GetMapping(value = "/add-cemetery")
     public String showAddCemetery(Cemetery cemetery, Model model){
-        cemetery.setId(0L);
         model.addAttribute("cemetery", cemetery);
         return "update-cemetery";
     }
@@ -95,16 +94,32 @@ public class AppController {
         return "update-cemetery";
     }
 
+    @PostMapping(value = "/update")
+    public String showUpdateCemetery(@Valid Cemetery cemetery, BindingResult result, Model model){
+        if(result.hasErrors()){
+            return "update-cemetery";
+        }
+        cemetery = cemeteryRepository.save(cemetery);
+        model.addAttribute("cemeteries", cemeteryRepository.findAll());
+        model.addAttribute("cemetery", cemetery);
+        model.addAttribute("selectedcemetery", cemetery);
+        List<Grave> graves = graveRepository.findGraveByCemetery(cemetery);
+        model.addAttribute("graves", graves);
+        return "cemeteries";
+    }
+
     @PostMapping(value = "/update/{id}")
     public String showUpdateCemetery(@PathVariable("id") long id, @Valid Cemetery cemetery, BindingResult result, Model model){
         if(result.hasErrors()){
             cemetery.setId(id);
             return "update-cemetery";
         }
-        cemeteryRepository.save(cemetery);
+        cemetery = cemeteryRepository.save(cemetery);
         model.addAttribute("cemeteries", cemeteryRepository.findAll());
         model.addAttribute("cemetery", cemetery);
         model.addAttribute("selectedcemetery", cemetery);
+        List<Grave> graves = graveRepository.findGraveByCemetery(cemetery);
+        model.addAttribute("graves", graves);
         return "cemeteries";
     }
 

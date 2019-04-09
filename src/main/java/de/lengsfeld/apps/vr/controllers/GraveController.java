@@ -54,9 +54,9 @@ public class GraveController {
         return "cemeteries";
     }
 
-    @GetMapping(value = "/add-grave/{id}")
-    public String showAddGrave(Grave grave, @PathVariable("id") long id, Model model){
-        Cemetery cemetery = cemeteryRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid: " + id));
+    @PostMapping(value = "/add-grave")
+    public String showAddGrave(Grave grave, Model model){
+        Cemetery cemetery = grave.getCemetery();
         model.addAttribute("selectedcemeteryid", cemetery.getId());
         model.addAttribute("grave", grave);
         return "update-grave";
@@ -95,6 +95,25 @@ public class GraveController {
         return "update-grave";
     }
 
+    @PostMapping(value = "/updategrave")
+    public String showUpdateGrave(@Valid Grave grave, BindingResult result, Model model){
+        if (!cemeteryRepository.findById(grave.getCemetery().getId()).isPresent()) {
+            result.addError(new ObjectError("Cemetery", "Does Not Exist"));
+        }
+        if(result.hasErrors()){ ;
+            model.addAttribute("grave", grave);
+            model.addAttribute("selectedcemeteryid", grave.getCemetery().getId());
+            return "update-grave";
+        }
+        grave = graveRepository.save(grave);
+        model.addAttribute("cemeteries", cemeteryRepository.findAll());
+        model.addAttribute("grave", grave);
+        model.addAttribute("selectedcemetery", grave.getCemetery());
+        List<Grave> graves = graveRepository.findGraveByCemetery(grave.getCemetery());
+        model.addAttribute("graves", graves);
+        return "cemeteries";
+    }
+
     @PostMapping(value = "/updategrave/{id}")
     public String showUpdateGrave(@PathVariable("id") long id, @Valid Grave grave, BindingResult result, Model model){
         if (!cemeteryRepository.findById(grave.getCemetery().getId()).isPresent()) {
@@ -104,7 +123,7 @@ public class GraveController {
             grave.setId(id);
             return "update-grave";
         }
-        graveRepository.save(grave);
+        grave = graveRepository.save(grave);
         model.addAttribute("cemeteries", cemeteryRepository.findAll());
         model.addAttribute("grave", grave);
         model.addAttribute("selectedcemetery", grave.getCemetery());

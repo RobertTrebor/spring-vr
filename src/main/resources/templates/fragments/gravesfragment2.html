@@ -4,7 +4,9 @@
 <body>
 <div class="container-fluid">
     <div class="row justify-content-end">
-        <form method="GET" th:action="@{/add-grave/{id}(id=${selectedcemetery.id})}">
+        <form action="#" th:action="@{/add-grave}" method="post">
+            <input type="hidden" th:value="${selectedcemetery.id}" name="cemetery"
+                   class="form-control" id="cemetery">
             <button class="btn btn-info" type="submit">Add Grave</button>
         </form>
     </div>
