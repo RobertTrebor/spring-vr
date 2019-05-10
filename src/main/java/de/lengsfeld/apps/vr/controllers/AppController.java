@@ -66,7 +66,7 @@ public class AppController {
         return "home";
     }
 
-    @GetMapping(value = "listcemeteries")
+    @GetMapping(value = "/cemeteries")
     public String showCemeteries(Model model){
         List<Cemetery> cemeteries = cemeteryRepository.findAll();
         model.addAttribute("cemeteries", cemeteries);
@@ -93,14 +93,14 @@ public class AppController {
         return "cemeteries";
     }
 
-    @GetMapping(value = "/edit/{id}")
+    @GetMapping(value = "{id}/edit")
     public String showUpdateForm(@PathVariable("id") long id, Model model){
         Cemetery cemetery = cemeteryRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid: " + id));
         model.addAttribute("cemetery", cemetery);
         return "update-cemetery";
     }
 
-    @PostMapping(value = "/update/{id}")
+    @PostMapping(value = "{id}/update")
     public String showUpdateCemetery(@PathVariable("id") long id, @Valid Cemetery cemetery, BindingResult result, Model model){
         if(result.hasErrors()){
             cemetery.setId(id);

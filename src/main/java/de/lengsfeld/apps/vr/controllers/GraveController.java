@@ -40,7 +40,7 @@ public class GraveController {
         return graveRepository.findAll();
     }
 
-    @GetMapping(value = "show-graves/{id}")
+    @GetMapping(value = "{id}/graves")
     public String showGraves(@PathVariable("id") long id, Model model){
         model.addAttribute("cemeteries", cemeteryRepository.findAll());
         Cemetery cemetery = cemeteryRepository.findById(id).get();
@@ -50,7 +50,7 @@ public class GraveController {
         return "cemeteries";
     }
 
-    @GetMapping(value = "/add-grave/{id}")
+    @GetMapping(value = "{id}/add-grave")
     public String showAddGrave(Grave grave, @PathVariable("id") long id, Model model){
         Cemetery cemetery = cemeteryRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid: " + id));
         model.addAttribute("selectedcemeteryid", cemetery.getId());
@@ -58,7 +58,7 @@ public class GraveController {
         return "update-grave";
     }
 
-    @GetMapping(value = "/editgrave/{id}")
+    @GetMapping(value = "{id}/editgrave")
     public String showUpdateGraveForm(@PathVariable("id") long id, Model model){
         Grave grave = graveRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid: " + id));
         model.addAttribute("grave", grave);
@@ -99,7 +99,7 @@ public class GraveController {
         return "update-grave";
     }
 
-    @PostMapping(value = "/updategrave/{id}")
+    @PostMapping(value = "{id}/updategrave")
     public String showUpdateGrave(@PathVariable("id") long id, @Valid Grave grave, BindingResult result, Model model){
         if (!cemeteryRepository.findById(grave.getCemetery().getId()).isPresent()) {
             result.addError(new ObjectError("Cemetery", "Does Not Exist"));

@@ -11,7 +11,7 @@
     <h2 class="mb-5">Update Grave</h2>
     <div class="row">
         <div class="col-md-6">
-            <form action="#" th:action="@{/updategrave/{id}(id=${grave.id})}" th:object="${grave}" method="post">
+            <form action="#" th:action="@{/{id}/updategrave (id=${grave.id})}" th:object="${grave}" method="post">
                 <div class="row">
                     <div class="form-group col-md-6">
                         <input type="hidden" th:value="${selectedcemeteryid}" name="cemetery"

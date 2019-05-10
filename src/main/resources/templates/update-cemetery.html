@@ -11,7 +11,7 @@
   <h2 class="mb-5">Update Cemetery</h2>
   <div class="row">
     <div class="col-md-6">
-      <form action="#" th:action="@{/update/{id}(id=${cemetery.id})}" th:object="${cemetery}" method="post">
+        <form action="#" th:action="@{/{id}/update (id=${cemetery.id})}" th:object="${cemetery}" method="post">
         <div class="row">
           <div class="form-group col-md-6">
             <label for="name" class="col-form-label">Name</label>

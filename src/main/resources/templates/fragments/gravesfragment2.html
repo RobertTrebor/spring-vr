@@ -4,7 +4,7 @@
 <body>
 <div class="container-fluid">
     <div class="row justify-content-end">
-        <form method="GET" th:action="@{/add-grave/{id}(id=${selectedcemetery.id})}">
+        <form method="GET" th:action="@{/{id}/add-grave (id=${selectedcemetery.id})}">
             <button class="btn btn-info" type="submit">Add Grave</button>
         </form>
     </div>
@@ -21,7 +21,7 @@
                             <span class="font-weight-bold" th:text="${grave.lastName}"/>
                         </div>
                         <div class="col-md-2">
-                            <a th:href="@{/editgrave/{id}(id=${grave.id})}" class="btn btn-primary a">Edit</a>
+                            <a th:href="@{/{id}/editgrave (id=${grave.id})}" class="btn btn-primary a">Edit</a>
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                             </div>
 
                             <div class="row">
-                                <a th:href="@{/editgrave/{id}(id=${grave.id})}" class="btn btn-primary">Edit</a>
+                                <a th:href="@{/{id}/editgrave (id=${grave.id})}" class="btn btn-primary">Edit</a>
                             </div>
                         </div>
                     </div>
