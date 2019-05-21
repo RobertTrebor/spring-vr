@@ -18,6 +18,7 @@
         <table class="table">
           <thead>
             <tr>
+                <th>Foto</th>
               <th>Id</th>
               <th>Name</th>
               <th>City</th>
@@ -28,39 +29,26 @@
           </thead>
           <tbody>
           <tr th:each="cemetery:${cemeteries}">
+              <td><img th:src="@{/cemeteries/{id}/imageDisplay (id=${cemetery.id})}" th:alt="IMAGE"/></td>
             <td th:text="${cemetery.id}">Id</td>
             <td th:text="${cemetery.name}">Name</td>
               <td th:text="${cemetery.city}">City</td>
               <td th:text="${cemetery.street}">Street</td>
               <td><a th:href="@{/{id}/edit (id=${cemetery.id})}" class="btn btn-primary">Edit</a></td>
-              <td><a th:href="@{/{id}/graves (id=${cemetery.id})}" class="btn btn-primary">Graves</a></td>
+              <td><a th:href="@{/cemeteries/{id}/graves (id=${cemetery.id})}" class="btn btn-primary">Graves</a></td>
           </tr>
           </tbody>
         </table>
             <div>
                 <p>Images</p>
-                <img th:src="@{/imageDisplay/{id}(id=${selectedcemetery.id})}" th:alt="${selectedcemetery.id}"/>
+                <img th:src="@{imageDisplay}" th:alt="IMAGE"/>
             </div>
       </div>
         <div class="col-xl-6">
         <div th:insert="fragments/gravesfragment2"></div>
       </div>
 
-        <div class="row">
-            <div class="col-md-6">
-                <form action="#" enctype="multipart/form-data" id="fileUploadForm"
-                      th:action="@{/updatecemeteryimg/{id}(id=${selectedcemetery.id})}" method="post">
-                    <div class="form-group">
-                        <label class="control-label" for="files">Upload Multiple Files:</label>
-                        <input type="file" class="form-control" id="files"
-                               placeholder="Upload Multiple Files" name="files"/>
-                    </div>
-                    <button type="submit" class="btn btn-default" id="btnSubmit">Upload</button>
-                    <a th:href="@{/files/{id}(id=${selectedcemetery.id})}" class="btn btn-default"
-                       role="button">Files</a>
-                </form>
-            </div>
-      </div>
+
     </div>
   </div>
 

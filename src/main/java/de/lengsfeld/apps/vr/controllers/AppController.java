@@ -66,12 +66,11 @@ public class AppController {
         return "home";
     }
 
-    @GetMapping(value = "/cemeteries")
-    public String showCemeteries(Model model){
+    @GetMapping(value = "/cemeteries/{id}")
+    public String showCemeteries(@PathVariable("id") long id, Model model){
         List<Cemetery> cemeteries = cemeteryRepository.findAll();
         model.addAttribute("cemeteries", cemeteries);
-        Cemetery cemetery = cemeteryRepository.findById(1L).get();
-        model.addAttribute("selectedcemetery", cemetery);
+        Cemetery cemetery = cemeteryRepository.findById(id).get();
         List<Grave> graves = graveRepository.findGraveByCemetery(cemetery);
         model.addAttribute("graves", graves);
         return "cemeteries";
@@ -89,7 +88,6 @@ public class AppController {
         }
         cemeteryRepository.save(cemetery);
         model.addAttribute("cemeteries", cemeteryRepository.findAll());
-        model.addAttribute("selectedcemetery", cemetery);
         return "cemeteries";
     }
 
@@ -109,11 +107,10 @@ public class AppController {
         cemeteryRepository.save(cemetery);
         model.addAttribute("cemeteries", cemeteryRepository.findAll());
         model.addAttribute("cemetery", cemetery);
-        model.addAttribute("selectedcemetery", cemetery);
         return "cemeteries";
     }
 
-    @GetMapping(value = "/imageDisplay/{id}")
+    @GetMapping(value = "/cemeteries/{id}/imageDisplay")
     @ResponseBody
     public void showImage(@PathVariable("id") long id, HttpServletResponse response, HttpServletRequest request)
             throws ServletException, IOException {

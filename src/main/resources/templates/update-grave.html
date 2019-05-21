@@ -11,11 +11,9 @@
     <h2 class="mb-5">Update Grave</h2>
     <div class="row">
         <div class="col-md-6">
-            <form action="#" th:action="@{/{id}/updategrave (id=${grave.id})}" th:object="${grave}" method="post">
+            <form action="#" th:action="@{updategrave }" th:object="${grave}" method="post">
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <input type="hidden" th:value="${selectedcemeteryid}" name="cemetery"
-                               class="form-control" id="cemetery">
                         <label for="firstName" class="col-form-label">First Name</label>
                         <input type="text" th:field="*{firstName}" class="form-control" id="firstName"
                                placeholder="firstName">
@@ -52,13 +50,13 @@
         </div>
         <div class="col-md-6">
             <p>Images</p>
-            <img th:src="@{/graveimageDisplay/{id}(id=${grave.id})}" th:alt="${grave.id}"/>
+            <img th:src="@{graveimageDisplay}" th:alt="${grave.id}"/>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
             <form action="#" enctype="multipart/form-data" id="fileUploadForm"
-                  th:action="@{/updategraveimage/{id}(id=${grave.id})}" method="POST">
+                  th:action="@{updategraveimage}" method="POST">
                 <div class="form-group">
                     <label class="control-label" for="files">Upload Multiple Files:</label>
                     <input type="file" class="form-control" id="files"
