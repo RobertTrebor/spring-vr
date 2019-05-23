@@ -139,11 +139,13 @@ public class GraveController {
     @ResponseBody
     public void showImage(@PathVariable("graveid") long id, HttpServletResponse response, HttpServletRequest request)
             throws ServletException, IOException {
-        Grave grave = graveRepository.findById(id).get();
-        List<GraveImage> images = imageRepository.findImagesByGrave(grave);
-        if (images != null && !images.isEmpty()) {
-            response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-            response.getOutputStream().write(images.get(0).getImageData());
+        Optional<Grave> grave = graveRepository.findById(id);
+        if(grave.isPresent()) {
+            List<GraveImage> images = imageRepository.findImagesByGrave(grave.get());
+            if (images != null && !images.isEmpty()) {
+                response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+                response.getOutputStream().write(images.get(0).getImageData());
+            }
         }
         response.getOutputStream().close();
     }

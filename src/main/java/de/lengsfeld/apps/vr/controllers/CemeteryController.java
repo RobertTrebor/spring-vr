@@ -8,6 +8,8 @@ import de.lengsfeld.apps.vr.repository.CemeteryRepository;
 import de.lengsfeld.apps.vr.repository.GraveRepository;
 import de.lengsfeld.apps.vr.repository.ImageRepository;
 import de.lengsfeld.apps.vr.util.ImageUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +32,8 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "cemeteries/{id}")
 public class CemeteryController {
 
+    public static final Logger logger = LoggerFactory.getLogger(CemeteryController.class);
+
     @Autowired
     private CemeteryRepository cemeteryRepository;
 
@@ -39,14 +43,23 @@ public class CemeteryController {
     @Autowired
     private ImageRepository imageRepository;
 
+    @ModelAttribute("cemeteries")
+    public List<Cemetery> cemeteries() {
+        return cemeteryRepository.findAll();
+    }
+
     @GetMapping
     public String showCemeteries(@PathVariable("id") long id, Model model){
-        List<Cemetery> cemeteries = cemeteryRepository.findAll();
-        model.addAttribute("cemeteries", cemeteries);
-        Cemetery cemetery = cemeteryRepository.findById(id).get();
-        List<Grave> graves = graveRepository.findGraveByCemetery(cemetery);
-        model.addAttribute("graves", graves);
-        return "cemeteries";
+        Optional<Cemetery> cemetery = cemeteryRepository.findById(id);
+        if(cemetery.isPresent()) {
+            List<Cemetery> cemeteries = cemeteryRepository.findAll();
+            model.addAttribute("cemeteries", cemeteries);
+            List<Grave> graves = graveRepository.findGraveByCemetery(cemetery.get());
+            model.addAttribute("graves", graves);
+            return "cemeteries";
+        } else {
+            return "index";
+        }
     }
 
     @GetMapping(value = "add-cemetery")
@@ -79,7 +92,6 @@ public class CemeteryController {
             return "update-cemetery";
         }
         cemeteryRepository.save(cemetery);
-        model.addAttribute("cemeteries", cemeteryRepository.findAll());
         model.addAttribute("cemetery", cemetery);
         return "cemeteries";
     }
@@ -88,12 +100,13 @@ public class CemeteryController {
     @ResponseBody
     public void showImage(@PathVariable("id") long id, HttpServletResponse response, HttpServletRequest request)
             throws ServletException, IOException {
-
-        Cemetery cemetery = cemeteryRepository.findById(id).get();
-        List<CemeteryImage> images = imageRepository.findImagesByCemetery(cemetery);
-        if (images != null && !images.isEmpty()) {
-            response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-            response.getOutputStream().write(images.get(0).getImageData());
+        Optional<Cemetery> cemetery = cemeteryRepository.findById(id);
+        if(cemetery.isPresent()) {
+            List<CemeteryImage> images = imageRepository.findImagesByCemetery(cemetery.get());
+            if (images != null && !images.isEmpty()) {
+                response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+                response.getOutputStream().write(images.get(0).getImageData());
+            }
         }
         response.getOutputStream().close();
     }
