@@ -20,23 +20,23 @@
                 <table class="table">
                   <thead>
                     <tr>
-                        <th>Foto</th>
                       <th>Id</th>
                       <th>Name</th>
                       <th>City</th>
                       <th>Street</th>
+                        <th></th>
                       <th></th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
                   <tr th:each="cemetery:${cemeteries}">
-                      <td><img th:src="@{/cemeteries/{id}/imageDisplay (id=${cemetery.id})}" th:alt="IMAGE"/></td>
                     <td th:text="${cemetery.id}">Id</td>
                     <td th:text="${cemetery.name}">Name</td>
                       <td th:text="${cemetery.city}">City</td>
                       <td th:text="${cemetery.street}">Street</td>
                       <td><a th:href="@{/cemeteries/{id}/edit (id=${cemetery.id})}" class="btn btn-primary">Edit</a></td>
+                      <td><a th:href="@{/cemeteries/{id}/delete (id=${cemetery.id})}" class="btn btn-primary">X</a></td>
                       <td><a th:href="@{/cemeteries/{id}/graves (id=${cemetery.id})}" class="btn btn-primary">Graves</a></td>
                   </tr>
                   </tbody>
@@ -51,7 +51,7 @@
                     </div>
                     <div class="card rounded-bottom" style="background-color: #EAE7E7;">
                         <div class="card-header rounded-top">
-                            <img th:src="@{imageDisplay}" th:alt="IMAGE" th:class="img-thumbnail"/>
+                            <img th:src="@{imageDisplay}" th:alt="IMG" th:class="img-thumbnail"/>
                         </div>
                     </div>
                 </div>
