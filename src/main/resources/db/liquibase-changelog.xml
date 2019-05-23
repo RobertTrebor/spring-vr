@@ -7,5 +7,6 @@
     <include relativeToChangelogFile="true" file="changelog/0.0.1-timecolumns.xml"/>
     <include relativeToChangelogFile="true" file="changelog/0.0.2-setup.xml"/>
     <include relativeToChangelogFile="true" file="changelog/0.0.3-image.xml"/>
+    <include relativeToChangelogFile="true" file="changelog/0.0.4-cemetery-image.xml"/>
 
 </databaseChangeLog>

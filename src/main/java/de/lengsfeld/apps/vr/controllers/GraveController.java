@@ -1,9 +1,13 @@
 package de.lengsfeld.apps.vr.controllers;
 
-import de.lengsfeld.apps.vr.entity.*;
+import de.lengsfeld.apps.vr.entity.Cemetery;
+import de.lengsfeld.apps.vr.entity.FileInfo;
+import de.lengsfeld.apps.vr.entity.Grave;
+import de.lengsfeld.apps.vr.entity.GraveImage;
 import de.lengsfeld.apps.vr.repository.CemeteryRepository;
 import de.lengsfeld.apps.vr.repository.GraveRepository;
 import de.lengsfeld.apps.vr.repository.ImageRepository;
+import de.lengsfeld.apps.vr.util.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,30 +72,22 @@ public class GraveController {
                               @RequestParam("files") MultipartFile[] files, Model model) {
         Grave grave = graveRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid: " + id));
         List<String> fileNames = new ArrayList<>();
+        List<GraveImage> storedFile = new ArrayList<>();
         try {
-            List<GraveImage> storedFile = new ArrayList<>();
-
             for (MultipartFile file : files) {
-                Optional<Image> optionalImage = imageRepository.findById(file.getOriginalFilename());
-                GraveImage image;
-                if (optionalImage.isPresent()) {
-                    image = (GraveImage) optionalImage.get();
-                    image.setImageData(file.getBytes());
-                } else {
-                    image = new GraveImage(file.getOriginalFilename(), file.getContentType(), file.getBytes());
-                }
-                fileNames.add(file.getOriginalFilename());
+                GraveImage image = (GraveImage) ImageUtils.getImage(file, new GraveImage());
                 image.setGrave(grave);
                 storedFile.add(image);
+                fileNames.add(file.getOriginalFilename());
             }
             imageRepository.saveAll(storedFile);
             model.addAttribute("message", "Files uploaded successfully!");
             model.addAttribute("files", fileNames);
-            model.addAttribute("grave", grave);
         } catch (Exception e) {
             model.addAttribute("message", "Fail!");
             model.addAttribute("files", fileNames);
         }
+        model.addAttribute("grave", grave);
         return "update-grave";
     }
 
@@ -112,9 +108,9 @@ public class GraveController {
         return "cemeteries";
     }
 
-    @GetMapping("/files/{id}")
-    public String getListFiles(@PathVariable("id") long id, Model model) {
-        Grave grave = graveRepository.getOne(id);
+    @GetMapping("/graves/{graveid}/files")
+    public String getListFiles(@PathVariable("graveid") long graveid, Model model) {
+        Grave grave = graveRepository.getOne(graveid);
         List<FileInfo> fileInfos = imageRepository.findImagesByGrave(grave).stream().map(
                 fileModel -> {
                     String filename = fileModel.getFileName();

@@ -1,38 +1,43 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Virtual Remembrance Thyme</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Virtual Remembrance</title>
     <div th:replace="fragments/header :: header-css"/>
 </head>
 <body>
 <div th:replace="fragments/header :: header"/>
-<div class="container my-5">
-    <h2 class="mb-5">Update Grave</h2>
+<div class="container-fluid">
+    <h2>Update Grave</h2>
     <div class="row">
         <div class="col-md-6">
-            <form action="#" th:action="@{updategrave }" th:object="${grave}" method="post">
-                <div class="row">
-                    <div class="form-group col-md-6">
+            <form action="#" th:action="@{updategrave}" th:object="${grave}" method="post">
+                <div class="container-fluid">
+                    <div class="form-group">
                         <label for="firstName" class="col-form-label">First Name</label>
                         <input type="text" th:field="*{firstName}" class="form-control" id="firstName"
                                placeholder="firstName">
                         <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
                               class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
                         <label for="lastName" class="col-form-label">Last Name</label>
                         <input type="text" th:field="*{lastName}" class="form-control" id="lastName"
                                placeholder="lastName">
                         <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
                               class="text-danger"></span>
-
+                    </div>
+                    <div class="form-group">
                         <label for="datebirth" class="col-form-label">Date of Birth</label>
                         <input type="text" th:field="*{datebirth}" class="form-control date-picker" id="datebirth"
                                th:alt-title="${#dates.format(grave.datebirth, 'dd.MM.yyyy')}"
                                th:placeholder="${#dates.format(grave.datedeath, 'dd.MM.yyyy')}">
                         <span th:if="${#fields.hasErrors('datebirth')}" th:errors="*{datebirth}"
                               class="text-danger"></span>
+                    </div>
                         <!--onfocus="(this.type='date')" onblur="(this.type='text')"-->
-
+                    <div class="form-group">
                         <label for="datedeath" class="col-form-label">Date of Death</label>
                         <input type="text" th:field="*{datedeath}" class="form-control date-picker" id="datedeath"
                                th:alt-title="${#dates.format(grave.datedeath, 'dd.MM.yyyy')}"
@@ -40,31 +45,30 @@
                         <span th:if="${#fields.hasErrors('datedeath')}" th:errors="*{datedeath}"
                               class="text-danger"></span>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mt-5">
+                        <br/>
                         <input type="submit" class="btn btn-primary" value="Update Grave">
-                    </div>
                 </div>
             </form>
         </div>
-        <div class="col-md-6">
-            <p>Images</p>
-            <img th:src="@{graveimageDisplay}" th:alt="${grave.id}"/>
+        <div class="col-md-6 container-fluid">
+            <img th:src="@{graveimageDisplay}" th:class="img-responsive"
+                 th:alt="${grave.id}"/>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
+            <div class="card bg-transparent">
             <form action="#" enctype="multipart/form-data" id="fileUploadForm"
                   th:action="@{updategraveimage}" method="POST">
                 <div class="form-group">
-                    <label class="control-label" for="files">Upload Multiple Files:</label>
-                    <input type="file" class="form-control" id="files"
+                    <label class="col-form-label" for="files">Upload Multiple Files:</label>
+                    <input type="file" class="form-control-file" id="files"
                            placeholder="Upload Multiple Files" name="files" multiple/>
                 </div>
-                <button type="submit" class="btn btn-default" id="btnSubmit">Upload</button>
-                <a th:href="@{/files/{id}(id=${grave.id})}" class="btn btn-default" role="button">Files</a>
+                <button type="submit" class="btn btn-light" id="btnSubmit">Upload</button>
+                <a th:href="@{files}" class="btn btn-light" role="button">Files</a>
             </form>
+            </div>
             <div th:if="${message}">
                 <strong><span th:text="${message}"/></strong>
                 <hr>

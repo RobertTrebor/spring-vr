@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -23,6 +24,7 @@ public class Grave implements Serializable {
     private Long id;
 
     @Column(name = "FIRSTNAME")
+    @NotBlank
     private String firstName;
 
     @Column(name = "LASTNAME")

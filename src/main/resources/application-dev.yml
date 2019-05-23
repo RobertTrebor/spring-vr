@@ -3,7 +3,7 @@ server:
 spring:
   liquibase:
     change-log: classpath:db/liquibase-changelog.xml
-    drop-first: false
+    drop-first: true
   datasource:
     url: jdbc:mysql://localhost:3306/vr?useLegacyDatetimeCode=false&serverTimezone=America/New_York
     username: rl
@@ -21,8 +21,8 @@ spring:
     multipart:
       enabled: true
       file-size-threshold: 2KB
-      max-file-size: 20MB
-      max-request-size: 25MB
+      max-file-size: 128MB
+      max-request-size: 128MB
 security:
   oauth2:
     client:

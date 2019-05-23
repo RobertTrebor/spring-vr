@@ -1,44 +1,59 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Virtual Remembrance Thyme</title>
-  <link rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Virtual Remembrance</title>
+    <div th:replace="fragments/header :: header-css"/>
 </head>
 <body>
-<div class="container my-5">
-  <h2 class="mb-5">Update Cemetery</h2>
+<div th:replace="fragments/header :: header"/>
+<div class="container-fluid">
+  <h2>Update Cemetery</h2>
   <div class="row">
     <div class="col-md-6">
-        <form action="#" th:action="@{/{id}/update (id=${cemetery.id})}" th:object="${cemetery}" method="post">
-        <div class="row">
-          <div class="form-group col-md-6">
+        <form action="#" th:action="@{update}" th:object="${cemetery}" method="post">
+        <div class="container-fluid">
+          <div class="form-group">
             <label for="name" class="col-form-label">Name</label>
             <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Name">
             <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6 mt-5">
-            <input type="submit" class="btn btn-primary" value="Update Cemetery">
+          <div class="form-group">
+            <label for="street" class="col-form-label">Street</label>
+            <input type="text" th:field="*{street}" class="form-control" id="street" placeholder="Street">
+            <span th:if="${#fields.hasErrors('street')}" th:errors="*{street}" class="text-danger"></span>
           </div>
+          <div class="form-group">
+            <label for="city" class="col-form-label">Name</label>
+            <input type="text" th:field="*{city}" class="form-control" id="city" placeholder="City">
+            <span th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="text-danger"></span>
+          </div>
+            <br/>
+            <input type="submit" class="btn btn-primary" value="Update Cemetery">
         </div>
       </form>
+    </div>
+    <div class="col-md-6 container-fluid">
+      <img th:src="@{imageDisplay}" th:class="img-responsive"
+           th:alt="${cemetery.id}"/>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
-      <form action="#" enctype="multipart/form-data" id="fileUploadForm"
-            th:action="@{/updatecemeteryimage/{id}(id=${cemetery.id})}" method="POST">
-        <div class="form-group">
-          <label class="control-label" for="files">Upload Multiple Files:</label>
-          <input type="file" class="form-control" id="files"
-                 placeholder="Upload Multiple Files" name="files" multiple/>
-        </div>
-        <button type="submit" class="btn btn-default" id="btnSubmit">Upload</button>
-        <a th:href="@{/files/{id}(id=${cemetery.id})}" class="btn btn-default" role="button">Files</a>
-      </form>
+      <div class="card bg-transparent">
+        <form action="#" enctype="multipart/form-data" id="fileUploadForm"
+              th:action="@{updatecemeteryimage}" method="POST">
+
+          <div class="form-group">
+            <label class="col-form-label" for="files">Upload Multiple Files:</label>
+            <input type="file" class="form-control-file" id="files"
+                   placeholder="Upload Multiple Files" name="files" multiple/>
+          </div>
+          <button type="submit" class="btn btn-light" id="btnSubmit">Upload</button>
+          <a th:href="@{files}" class="btn btn-light" role="button">Files</a>
+        </form>
+      </div>
       <div th:if="${message}">
         <strong><span th:text="${message}"/></strong>
         <hr>
@@ -49,5 +64,6 @@
     </div>
   </div>
 </div>
+<div th:replace="fragments/footer :: footer"/>
 </body>
 </html>

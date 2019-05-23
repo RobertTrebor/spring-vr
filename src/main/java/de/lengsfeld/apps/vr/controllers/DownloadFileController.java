@@ -17,22 +17,6 @@ public class DownloadFileController {
     private ImageRepository imageRepository;
 
     /*
-        @GetMapping("/files")
-        public String getListFiles(Model model) {
-            List<FileInfo> fileInfos = imageRepository.findAll().stream().map(
-                    fileModel ->  {
-                        String filename = fileModel.getFileName();
-                        String url = MvcUriComponentsBuilder.fromMethodName(DownloadFileController.class,
-                                "downloadFile", fileModel.getFileName().toString()).build().toString();
-                        return new FileInfo(filename, url);
-                    }
-            ).collect(Collectors.toList());
-
-            model.addAttribute("files", fileInfos);
-            return "listfiles";
-        }
-    */
-    /*
      * Download Files
      */
     @GetMapping("/files/{filename}/{id}")

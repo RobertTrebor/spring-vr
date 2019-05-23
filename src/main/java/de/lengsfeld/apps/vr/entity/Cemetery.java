@@ -3,14 +3,14 @@ package de.lengsfeld.apps.vr.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
-@NoArgsConstructor
 @EqualsAndHashCode
 @Getter
 @Setter
@@ -21,6 +21,8 @@ public class Cemetery implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
+
+    @NotBlank
     private String name;
     private String city;
     private String country;
@@ -35,7 +37,15 @@ public class Cemetery implements Serializable {
     @OneToMany(mappedBy = "cemetery")
     private List<CemeteryImage> images;
 
+    private LocalDateTime created;
+    private LocalDateTime modified;
+
+    public Cemetery(){
+        created = LocalDateTime.now();
+    }
+
     public Cemetery(String name) {
+        this();
         this.name = name;
     }
 
