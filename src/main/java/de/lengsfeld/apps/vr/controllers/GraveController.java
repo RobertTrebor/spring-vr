@@ -67,6 +67,16 @@ public class GraveController {
         return "update-grave";
     }
 
+    @GetMapping(value = "/graves/{graveid}/delete")
+    public String deleteGrave(@PathVariable("graveid") long graveid, Model model){
+        Grave grave = graveRepository.findById(graveid).orElseThrow(()-> new IllegalArgumentException("Invalid: " + graveid));
+        List<GraveImage> graveImages = imageRepository.findImagesByGrave(grave);
+        imageRepository.deleteAll(graveImages);
+        graveRepository.delete(grave);
+        model.addAttribute("cemeteries", cemeteryRepository.findAll());
+        return "cemeteries";
+    }
+
     @PostMapping(value = "/graves/{graveid}/updategraveimage")
     public String uploadImage(@PathVariable("graveid") long id,
                               @RequestParam("files") MultipartFile[] files, Model model) {
@@ -105,6 +115,7 @@ public class GraveController {
         }
         graveRepository.save(grave);
         model.addAttribute("cemeteries", cemeteryRepository.findAll());
+        model.addAttribute("graves", graveRepository.findGraveByCemetery(grave.getCemetery()));
         return "cemeteries";
     }
 
