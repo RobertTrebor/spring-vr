@@ -62,6 +62,16 @@ public class CemeteryController {
         return "update-cemetery";
     }
 
+    @GetMapping(value = "delete")
+    public String deleteCemetery(@PathVariable("id") long id, Model model){
+        Cemetery cemetery = cemeteryRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid: " + id));
+        List<CemeteryImage> cemeteryImages = imageRepository.findImagesByCemetery(cemetery);
+        imageRepository.deleteAll(cemeteryImages);
+        cemeteryRepository.delete(cemetery);
+        model.addAttribute("cemeteries", cemeteryRepository.findAll());
+        return "cemeteries";
+    }
+
     @PostMapping(value = "update")
     public String showUpdateCemetery(@PathVariable("id") long id, @Valid Cemetery cemetery, BindingResult result, Model model){
         if(result.hasErrors()){
