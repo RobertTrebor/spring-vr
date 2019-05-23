@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-xl-12 col-lg-12">
             <div class="row justify-content-end">
-                <form method="GET" th:action="@{add-cemetery}">
+                <form method="GET" th:action="@{/cemeteries/{id}/add-cemetery (id=${0})}">
                   <button id="add_cemetery_btn" class="btn btn-info" type="submit">Add Cemetery</button>
                 </form>
             </div>
