@@ -12,7 +12,7 @@
     <h2>Update Grave</h2>
     <div class="row">
         <div class="col-md-6">
-            <form action="#" th:action="@{updategrave}" th:object="${grave}" method="post">
+            <form action="#" id="update-grave" th:action="@{updategrave}" th:object="${grave}" method="post">
                 <div class="container-fluid">
                     <div class="form-group">
                         <label for="firstName" class="col-form-label">First Name</label>
@@ -46,7 +46,7 @@
                               class="text-danger"></span>
                     </div>
                         <br/>
-                        <input type="submit" class="btn btn-primary" value="Update Grave">
+                        <input id="updategravebtn" type="submit" class="btn btn-primary" value="Update Grave">
                 </div>
             </form>
         </div>

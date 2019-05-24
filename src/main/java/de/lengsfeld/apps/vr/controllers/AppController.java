@@ -1,15 +1,18 @@
 package de.lengsfeld.apps.vr.controllers;
 
+import de.lengsfeld.apps.vr.model.AjaxResponseBody;
+import de.lengsfeld.apps.vr.model.GraveForm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class AppController {
@@ -44,6 +47,33 @@ public class AppController {
     @GetMapping("/t")
     public String home(){
         return "home";
+    }
+
+    @PostMapping("/update-grave")
+    public ResponseEntity<?> getSearchResultViaAjax(@Valid @RequestBody GraveForm loginForm, Errors errors) {
+
+        AjaxResponseBody result = new AjaxResponseBody();
+
+        //If error, just return a 400 bad request, along with the error message
+        if (errors.hasErrors()) {
+
+            result.setMsg(errors.getAllErrors()
+                    .stream().map(x -> x.getDefaultMessage())
+                    .collect(Collectors.joining(",")));
+            return ResponseEntity.badRequest().body(result);
+
+        }
+
+/*        List<User> users = userService.login(loginForm);
+        if (users.isEmpty()) {
+            result.setMsg("no user found!");
+        } else {
+            result.setMsg("success");
+        }
+        result.setResult(users);*/
+
+        return ResponseEntity.ok(result);
+
     }
 
 }
