@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Virtual Remembrance</title>
+  <div th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+<div th:replace="fragments/header :: header"/>
+  <div class="container-fluid">
+    <div class="container h-100">
+      <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-md-7 table-responsive">
+          <h2>Uploaded Files</h2>
+          <table>
+            <tr>
+              <td>Date</td>
+              <td th:text="${timestamp}"/>
+            </tr>
+            <tr>
+              <td>Path</td>
+              <td th:text="${path}"/>
+            </tr>
+            <tr>
+              <td>Error</td>
+              <td th:text="${error}"/>
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td th:text="${status}"/>
+            </tr>
+            <tr>
+              <td>Message</td>
+              <td th:text="${message}"/>
+            </tr>
+            <tr>
+              <td>Exception</td>
+              <td th:text="${exception}"/>
+            </tr>
+            <tr>
+              <td>Trace</td>
+              <td>
+                <pre th:text="${trace}"/>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>

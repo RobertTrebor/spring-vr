@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Map;
 
 @Controller
+@RequestMapping(value = {""})
 public class AppController {
 
     @Value("${app.security.basic.enabled}")

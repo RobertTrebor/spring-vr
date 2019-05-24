@@ -37,7 +37,7 @@
                       <td th:text="${cemetery.street}">Street</td>
                       <td><a th:href="@{/cemeteries/{id}/edit (id=${cemetery.id})}" class="btn btn-primary">Edit</a></td>
                       <td><a th:href="@{/cemeteries/{id}/delete (id=${cemetery.id})}" class="btn btn-primary">X</a></td>
-                      <td><a th:href="@{/cemeteries/{id}/graves (id=${cemetery.id})}" class="btn btn-primary">Graves</a></td>
+                      <td><a th:href="@{/cemeteries/{id}/graves/ (id=${cemetery.id})}" class="btn btn-primary">Graves</a></td>
                   </tr>
                   </tbody>
                 </table>

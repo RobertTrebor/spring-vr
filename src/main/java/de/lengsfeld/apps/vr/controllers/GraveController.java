@@ -28,7 +28,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping(value = "cemeteries/{id}")
+@RequestMapping(value = "/cemeteries/{id}/graves")
 public class GraveController {
 
     @Autowired
@@ -45,7 +45,7 @@ public class GraveController {
         return graveRepository.findAll();
     }
 
-    @GetMapping(value = "/graves")
+    @GetMapping(value = "/")
     public String showGraves(@PathVariable("id") long id, Model model){
         model.addAttribute("cemeteries", cemeteryRepository.findAll());
         Cemetery cemetery = cemeteryRepository.findById(id).get();
@@ -54,20 +54,20 @@ public class GraveController {
         return "cemeteries";
     }
 
-    @GetMapping(value = "/graves/{graveid}/add-grave")
+    @GetMapping(value = "/{graveid}/add-grave")
     public String showAddGrave(Grave grave, Model model){
         model.addAttribute("grave", grave);
         return "update-grave";
     }
 
-    @GetMapping(value = "/graves/{graveid}/editgrave")
+    @GetMapping(value = "/{graveid}/editgrave")
     public String showUpdateGraveForm(@PathVariable("graveid") long graveid, Model model){
         Grave grave = graveRepository.findById(graveid).orElseThrow(()-> new IllegalArgumentException("Invalid: " + graveid));
         model.addAttribute("grave", grave);
         return "update-grave";
     }
 
-    @GetMapping(value = "/graves/{graveid}/delete")
+    @GetMapping(value = "/{graveid}/delete")
     public String deleteGrave(@PathVariable("graveid") long graveid, Model model){
         Grave grave = graveRepository.findById(graveid).orElseThrow(()-> new IllegalArgumentException("Invalid: " + graveid));
         List<GraveImage> graveImages = imageRepository.findImagesByGrave(grave);
@@ -77,7 +77,7 @@ public class GraveController {
         return "cemeteries";
     }
 
-    @PostMapping(value = "/graves/{graveid}/updategraveimage")
+    @PostMapping(value = "/{graveid}/updategraveimage")
     public String uploadImage(@PathVariable("graveid") long id,
                               @RequestParam("files") MultipartFile[] files, Model model) {
         Grave grave = graveRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid: " + id));
@@ -101,7 +101,7 @@ public class GraveController {
         return "update-grave";
     }
 
-    @PostMapping(value = "/graves/{graveid}/updategrave")
+    @PostMapping(value = "/{graveid}/updategrave")
     public String showUpdateGrave(@PathVariable("id") long id, @Valid Grave grave, BindingResult result, Model model){
         Optional<Cemetery> cemetery = cemeteryRepository.findById(id);
         if (!cemetery.isPresent()) {
@@ -119,7 +119,7 @@ public class GraveController {
         return "cemeteries";
     }
 
-    @GetMapping("/graves/{graveid}/files")
+    @GetMapping("/{graveid}/files")
     public String getListFiles(@PathVariable("graveid") long graveid, Model model) {
         Grave grave = graveRepository.getOne(graveid);
         List<FileInfo> fileInfos = imageRepository.findImagesByGrave(grave).stream().map(
@@ -135,7 +135,7 @@ public class GraveController {
         return "listfiles";
     }
 
-    @GetMapping(value = "/graves/{graveid}/graveimageDisplay")
+    @GetMapping(value = "/{graveid}/graveimageDisplay")
     @ResponseBody
     public void showImage(@PathVariable("graveid") long id, HttpServletResponse response, HttpServletRequest request)
             throws ServletException, IOException {

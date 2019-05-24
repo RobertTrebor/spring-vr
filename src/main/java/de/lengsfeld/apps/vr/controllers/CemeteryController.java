@@ -29,7 +29,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping(value = "cemeteries/{id}")
+@RequestMapping(value = "/cemeteries/{id}")
 public class CemeteryController {
 
     public static final Logger logger = LoggerFactory.getLogger(CemeteryController.class);
@@ -48,7 +48,7 @@ public class CemeteryController {
         return cemeteryRepository.findAll();
     }
 
-    @GetMapping
+    @GetMapping(value = "/")
     public String showCemeteries(@PathVariable("id") long id, Model model){
         Optional<Cemetery> cemetery = cemeteryRepository.findById(id);
         if(cemetery.isPresent()) {
