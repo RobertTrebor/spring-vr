@@ -1,5 +1,6 @@
 package de.lengsfeld.apps.vr.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -72,4 +73,8 @@ public class Grave implements Serializable {
         this.cemetery = cemetery;
     }
 
+    @JsonIgnore
+    public List<GraveImage> getImages() {
+        return images;
+    }
 }

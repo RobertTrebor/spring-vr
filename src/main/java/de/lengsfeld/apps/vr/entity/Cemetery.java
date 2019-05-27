@@ -54,6 +54,11 @@ public class Cemetery implements Serializable {
         return graves;
     }
 
+    @JsonIgnore
+    public List<CemeteryImage> getImages(){
+        return images;
+    }
+
     public Image getImage() {
         if (images != null && !images.isEmpty()) {
             return images.get(0);
