@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GraveForm {
+    private String id;
     private String firstName;
     private String lastName;
 }

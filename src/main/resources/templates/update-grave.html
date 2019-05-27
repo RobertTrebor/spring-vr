@@ -14,6 +14,7 @@
         <div class="col-md-6">
             <form action="#" id="update-grave" th:action="@{updategrave}" th:object="${grave}" method="post">
                 <div class="container-fluid">
+                    <input type="hidden" id="graveid" th:value="${grave.id}"/>
                     <div class="form-group">
                         <label for="firstName" class="col-form-label">First Name</label>
                         <input type="text" th:field="*{firstName}" class="form-control" id="firstName"

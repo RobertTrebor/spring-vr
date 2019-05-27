@@ -7,6 +7,7 @@
             <footer>
                 <div class="container-fluid" th:if="${#httpServletRequest.remoteUser != null}">
                     <p>Logged in user: <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b></p>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                 </div>
             </footer>
         </div>

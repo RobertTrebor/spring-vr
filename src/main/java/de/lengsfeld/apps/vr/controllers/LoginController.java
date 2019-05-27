@@ -29,7 +29,7 @@ public class LoginController {
             Map details = (LinkedHashMap) userAuthentication.getDetails();
             map.put("fullname", (String) details.get("name"));
             if(details.get("id") != null) {
-                map.put("id", (String) details.get("id"));
+                map.put("id", String.valueOf(details.get("id")));
             }
         }
         return map;

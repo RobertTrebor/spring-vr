@@ -11,9 +11,9 @@ $(document).ready(function () {
         //stop submit the form event. Do this manually using ajax post function
         event.preventDefault();
 
-        var loginForm = {}
-        loginForm["firstName"] = $("#firstName").val();
-        loginForm["lastName"] = $("#lastName").val();
+        var graveForm = {}
+        graveForm["firstName"] = $("#firstName").val();
+        graveForm["lastName"] = $("#lastName").val();
 
         $("#updategravebtn").prop("disabled", true);
 
@@ -21,7 +21,7 @@ $(document).ready(function () {
             type: "POST",
             contentType: "application/json",
             url: "/update-grave",
-            data: JSON.stringify(loginForm),
+            data: JSON.stringify(graveForm),
             dataType: 'json',
             cache: false,
             timeout: 600000,
@@ -33,7 +33,8 @@ $(document).ready(function () {
 
                 console.log("SUCCESS : ", data);
                 $("#updategravebtn").prop("disabled", false);
-
+                //window.location.href = "/cemeteries";
+                window.history.back();
             },
             error: function (e) {
 
