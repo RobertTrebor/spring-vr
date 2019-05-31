@@ -157,4 +157,28 @@ public class AppController {
         response.getOutputStream().close();
     }
 
+    @DeleteMapping(value = "/deletecemetery/{id}")
+    public String delete(@PathVariable("id") long id){
+        Optional<Cemetery> cemetery = cemeteryRepository.findById(id);
+        if(cemetery.isPresent()) {
+            if(graveRepository.findGraveByCemetery(cemetery.get()).isEmpty()) {
+                if(imageRepository.findImagesByCemetery(cemetery.get()).isEmpty()) {
+                    cemeteryRepository.delete(cemetery.get());
+                }
+            }
+        }
+        return "redirect:/listcemeteries";
+    }
+
+    @DeleteMapping(value = "/deletecemeteryimages/{id}")
+    public String deleteImages(@PathVariable("id") long id){
+        Optional<Cemetery> optional = cemeteryRepository.findById(id);
+        if(optional.isPresent()){
+            Cemetery cemetery = optional.get();
+            List<CemeteryImage> images = imageRepository.findImagesByCemetery(cemetery);
+            imageRepository.deleteAll(images);
+        }
+        return "redirect:/listcemeteries";
+    }
+
 }

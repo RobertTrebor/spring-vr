@@ -3,12 +3,13 @@ package de.lengsfeld.apps.vr.service;
 import de.lengsfeld.apps.vr.dto.GraveDTO;
 import de.lengsfeld.apps.vr.entity.Grave;
 import de.lengsfeld.apps.vr.repository.GraveRepository;
+import de.lengsfeld.apps.vr.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,7 +28,7 @@ public class GraveServiceDTO {
     private GraveRepository graveRepository;
 
     @Autowired
-    private RestTemplate restTemplate;
+    private ImageRepository imageRepository;
 
 
     public List<GraveDTO> findAll() {
@@ -45,8 +46,12 @@ public class GraveServiceDTO {
     }
 
     public void delete(Long id){
-        String idStr = String.valueOf(id);
-        restTemplate.delete("http://localhost:8080/delete/" + id, id);
+        Optional<Grave> grave = graveRepository.findById(id);
+        if(grave.isPresent()) {
+            if(imageRepository.findImagesByGrave(grave.get()).isEmpty()) {
+                graveRepository.delete(grave.get());
+            }
+        }
     }
 
 }

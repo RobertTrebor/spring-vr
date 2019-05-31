@@ -172,7 +172,18 @@ public class GraveController {
     @DeleteMapping(value = "/delete")
     public String delete(@RequestParam Long id){
         graveServiceDTO.delete(id);
-        return "redirect:/";
+        return "redirect:/listcemeteries";
+    }
+
+    @DeleteMapping(value = "/deletegraveimages/{id}")
+    public String deleteImages(@PathVariable("id") long id){
+        Optional<Grave> graveOpt = graveRepository.findById(id);
+        if(graveOpt.isPresent()){
+            Grave grave = graveOpt.get();
+            List<GraveImage> images =imageRepository.findImagesByGrave(grave);
+            imageRepository.deleteAll(images);
+        }
+        return "redirect:/listcemeteries";
     }
 
 

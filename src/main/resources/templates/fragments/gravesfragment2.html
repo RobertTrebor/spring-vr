@@ -27,7 +27,7 @@
                         <div class="col-md-1">
                             <form th:method="delete" th:action="@{/delete}">
                                 <input type="hidden" name="id" th:value="${grave.id}">
-                                <button class="button" type="submit">x</button>
+                                <button class="btn btn-danger" type="submit">x</button>
                             </form>
                         </div>
                     </div>
@@ -36,6 +36,9 @@
                     <div class="col-md-4">
                         <img th:src="@{/graveimageDisplay/{id}(id=${grave.id})}"
                              th:alt="${grave.id}" class="img-thumbnail"/>
+                        <form th:method="delete" th:action="@{/deletegraveimages/{id}(id=${grave.id})}">
+                            <button class="btn btn-danger" type="submit">x</button>
+                        </form>
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
