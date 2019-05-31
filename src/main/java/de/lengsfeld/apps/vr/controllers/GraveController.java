@@ -7,6 +7,7 @@ import de.lengsfeld.apps.vr.entity.GraveImage;
 import de.lengsfeld.apps.vr.repository.CemeteryRepository;
 import de.lengsfeld.apps.vr.repository.GraveRepository;
 import de.lengsfeld.apps.vr.repository.ImageRepository;
+import de.lengsfeld.apps.vr.service.GraveServiceDTO;
 import de.lengsfeld.apps.vr.util.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,9 @@ public class GraveController {
 
     @Autowired
     private GraveRepository graveRepository;
+
+    @Autowired
+    private GraveServiceDTO graveServiceDTO;
 
     @Autowired
     private ImageRepository imageRepository;
@@ -164,4 +168,12 @@ public class GraveController {
         }
         response.getOutputStream().close();
     }
+
+    @DeleteMapping(value = "/delete")
+    public String delete(@RequestParam Long id){
+        graveServiceDTO.delete(id);
+        return "redirect:/";
+    }
+
+
 }

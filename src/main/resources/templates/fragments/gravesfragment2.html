@@ -21,8 +21,14 @@
                             <span class="font-weight-bold" th:text="${grave.firstName}"/>
                             <span class="font-weight-bold" th:text="${grave.lastName}"/>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <a th:href="@{/editgrave/{id}(id=${grave.id})}" class="btn btn-primary a">Edit</a>
+                        </div>
+                        <div class="col-md-1">
+                            <form th:method="delete" th:action="@{/delete}">
+                                <input type="hidden" name="id" th:value="${grave.id}">
+                                <button class="button" type="submit">x</button>
+                            </form>
                         </div>
                     </div>
                 </div>

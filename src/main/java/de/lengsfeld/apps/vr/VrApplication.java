@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.web.client.RestTemplate;
 
 /*
     mvn spring-boot:run -Dspring.profiles.active=dev
@@ -52,6 +53,11 @@ public class VrApplication {
         return args -> {
             log.info("Server Port is: " + serverPort);
         };
+    }
+
+    @Bean
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
     }
 
 }
