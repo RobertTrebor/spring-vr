@@ -26,6 +26,7 @@
                         <th>Street</th>
                         <th></th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,6 +37,11 @@
                         <td th:text="${cemetery.street}">Street</td>
                         <td><a th:href="@{/edit/{id}(id=${cemetery.id})}" class="btn btn-primary">Edit</a></td>
                         <td><a th:href="@{/show-graves/{id}(id=${cemetery.id})}" class="btn btn-primary">Graves</a></td>
+                        <td>
+                            <form th:method="delete" th:action="@{/deletecemetery/{id}(id=${cemetery.id})}">
+                                <button class="btn btn-danger" type="submit">x</button>
+                            </form>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -52,6 +58,9 @@
                             <img th:src="@{/imageDisplay/{id}(id=${selectedcemetery.id})}"
                                  th:class="img-thumbnail" th:alt="${selectedcemetery.id}"/>
                         </div>
+                        <form th:method="delete" th:action="@{/deletecemeteryimages/{id}(id=${selectedcemetery.id})}">
+                            <button class="btn btn-danger" type="submit">x</button>
+                        </form>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-12">

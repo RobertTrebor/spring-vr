@@ -164,4 +164,29 @@ public class GraveController {
         }
         response.getOutputStream().close();
     }
+
+    @DeleteMapping(value = "/delete")
+    public String delete(@RequestParam Long id){
+        Optional<Grave> optional = graveRepository.findById(id);
+        if(optional.isPresent()){
+            Grave grave = optional.get();
+            if(imageRepository.findImagesByGrave(grave).isEmpty()){
+                graveRepository.delete(grave);
+            }
+        }
+        return "redirect:/listcemeteries";
+    }
+
+    @DeleteMapping(value = "/deletegraveimages/{id}")
+    public String deleteImages(@PathVariable("id") long id){
+        Optional<Grave> graveOpt = graveRepository.findById(id);
+        if(graveOpt.isPresent()){
+            Grave grave = graveOpt.get();
+            List<GraveImage> images =imageRepository.findImagesByGrave(grave);
+            imageRepository.deleteAll(images);
+        }
+        return "redirect:/listcemeteries";
+    }
+
+
 }
