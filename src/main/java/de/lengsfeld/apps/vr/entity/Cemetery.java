@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @EqualsAndHashCode
@@ -56,6 +57,9 @@ public class Cemetery implements Serializable {
 
     @JsonIgnore
     public List<CemeteryImage> getImages(){
+        if(images == null){
+            return Collections.emptyList();
+        }
         return images;
     }
 

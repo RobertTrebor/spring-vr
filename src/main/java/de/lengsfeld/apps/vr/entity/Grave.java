@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -75,6 +76,9 @@ public class Grave implements Serializable {
 
     @JsonIgnore
     public List<GraveImage> getImages() {
+        if(images == null){
+            return Collections.emptyList();
+        }
         return images;
     }
 }
