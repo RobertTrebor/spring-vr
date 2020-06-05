@@ -1,7 +1,9 @@
 package de.lengsfeld.apps.vr.controllers;
 
+import de.lengsfeld.apps.vr.EmailServiceImpl;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,9 @@ public class LoginController {
 
     protected final Log log = LogFactory.getLog(getClass());
 
+    @Autowired
+    public EmailServiceImpl emailService;
+
     @RequestMapping({"/user", "/me"})
     public Map<String, String> user(Principal principal) {
         Map<String, String> map = new LinkedHashMap<>();
@@ -31,7 +36,9 @@ public class LoginController {
             if(details.get("id") != null) {
                 map.put("id", String.valueOf(details.get("id")));
             }
+            emailService.sendSimpleMessage("robert@lengsfeld.de", "Hallo: ", (String) details.get("name") );
         }
+
         return map;
     }
 
