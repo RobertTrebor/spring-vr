@@ -36,7 +36,7 @@ public class LoginController {
             if(details.get("id") != null) {
                 map.put("id", String.valueOf(details.get("id")));
             }
-            emailService.sendSimpleMessage("robert@lengsfeld.de", "Hallo: ", (String) details.get("name") );
+            //emailService.sendSimpleMessage("robert@lengsfeld.de", "Hallo: ", (String) details.get("name") );
         }
 
         return map;

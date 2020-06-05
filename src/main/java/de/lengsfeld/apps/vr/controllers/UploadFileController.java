@@ -50,7 +50,7 @@ public class UploadFileController {
             model.addAttribute("message", "Fail!");
             model.addAttribute("files", fileNames);
         }
-        emailService.sendSimpleMessage("robert@lengsfeld.de", "Image Uploaded: ", storedFiles.toString() );
+        emailService.sendSimpleMessage("robert@lengsfeld.de", "Cemetery Image Uploaded: ", storedFiles.toString() );
         model.addAttribute("cemetery", cemetery);
         return "update-cemetery";
     }

@@ -1,5 +1,6 @@
 package de.lengsfeld.apps.vr.controllers;
 
+import de.lengsfeld.apps.vr.EmailServiceImpl;
 import de.lengsfeld.apps.vr.entity.Cemetery;
 import de.lengsfeld.apps.vr.entity.FileInfo;
 import de.lengsfeld.apps.vr.entity.Grave;
@@ -38,6 +39,9 @@ public class GraveController {
 
     @Autowired
     private ImageRepository imageRepository;
+
+    @Autowired
+    public EmailServiceImpl emailService;
 
     @RequestMapping(value = "allgraves", method = RequestMethod.GET)
     public Iterable<Grave> getAllGraves() {
@@ -90,6 +94,7 @@ public class GraveController {
             model.addAttribute("message", "Fail!");
             model.addAttribute("files", fileNames);
         }
+        emailService.sendSimpleMessage("robert@lengsfeld.de", "Grave Image Uploaded: ", storedFile.toString() );
         model.addAttribute("grave", grave);
         model.addAttribute("selectedcemeteryid", grave.getCemetery().getId());
         return "update-grave";
