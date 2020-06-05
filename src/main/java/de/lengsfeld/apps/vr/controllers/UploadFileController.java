@@ -1,5 +1,6 @@
 package de.lengsfeld.apps.vr.controllers;
 
+import de.lengsfeld.apps.vr.EmailServiceImpl;
 import de.lengsfeld.apps.vr.entity.Cemetery;
 import de.lengsfeld.apps.vr.entity.CemeteryImage;
 import de.lengsfeld.apps.vr.repository.CemeteryRepository;
@@ -26,6 +27,9 @@ public class UploadFileController {
     @Autowired
     private CemeteryRepository cemeteryRepository;
 
+    @Autowired
+    public EmailServiceImpl emailService;
+
     @PostMapping(value = "/updatecemeteryimage/{id}")
     public String updateCemeteryImg(@PathVariable("id") long id,
                                     @RequestParam("files") MultipartFile[] files, Model model) {
@@ -46,6 +50,7 @@ public class UploadFileController {
             model.addAttribute("message", "Fail!");
             model.addAttribute("files", fileNames);
         }
+        emailService.sendSimpleMessage("robert@lengsfeld.de", "Image Uploaded: ", storedFiles.toString() );
         model.addAttribute("cemetery", cemetery);
         return "update-cemetery";
     }
