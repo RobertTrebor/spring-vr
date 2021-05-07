@@ -67,7 +67,11 @@ github:
 
 logging:
   level:
-    org.springframework.security: DEBUG
+    org:
+      springframework:
+        security:
+          web.access.intercept: DEBUG
+
 app:
   security:
     basic:
