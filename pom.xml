@@ -87,11 +87,12 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- Add Hikari Connection Pooling support -->
+        <!-- Add Hikari Connection Pooling support
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
         </dependency>
+        -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
