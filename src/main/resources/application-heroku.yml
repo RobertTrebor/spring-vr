@@ -5,7 +5,6 @@ spring:
     change-log: classpath:db/liquibase-changelog.xml
     drop-first:
     enabled: true
-    url:
   datasource:
     url:
     username:
