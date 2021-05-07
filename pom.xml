@@ -87,12 +87,11 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- Add Hikari Connection Pooling support
+        <!-- Add Hikari Connection Pooling support -->
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
         </dependency>
-        -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
@@ -100,7 +99,6 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.20</version>
         </dependency>
         <dependency>
             <groupId>org.liquibase</groupId>
