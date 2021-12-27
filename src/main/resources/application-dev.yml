@@ -23,6 +23,16 @@ spring:
       file-size-threshold: 2KB
       max-file-size: 128MB
       max-request-size: 128MB
+  mail:
+    host:
+    port:
+    username:
+    password:
+    properties:
+      smtp:
+        auth: true
+        starttls:
+          enable: true
 security:
   oauth2:
     client:
