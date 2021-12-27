@@ -3,7 +3,7 @@ server:
 spring:
   liquibase:
     change-log: classpath:db/liquibase-changelog.xml
-    drop-first:
+    drop-first: true
     enabled: true
   datasource:
     url:
